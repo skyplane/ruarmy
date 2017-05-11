@@ -863,6 +863,9 @@
         </div>
     </div>
 
+    <input type="hidden"
+           name="${_csrf.parameterName}" id="csrfParameter"
+           value="${_csrf.token}"/>
 
 </div>
 

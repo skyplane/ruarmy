@@ -12,7 +12,7 @@ function loadSubjectsByIdAndType(subjectId, objectId, type) {
     });
 }
 
-var app = angular.module('cadetApp');
+var app = angular.module('cadetApp', []);
 
 app.controller('cadetCtrl', function ($scope) {
 
@@ -156,6 +156,64 @@ app.controller('cadetCtrl', function ($scope) {
         $('#rootwizard').bootstrapWizard({
             tabClass: 'nav nav-pills',
             onNext: function (tab, navigation, index) {
+                if ($('#tab1').hasClass('active')) {
+                    var $valid = angular.element('#cadetForm').valid(),
+                        $validator;
+                    if (!$valid) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    } else {
+                        if ($scope.cadet.religion == "10"){
+                            if ($scope.cadet.customReligion.length==""){
+                                $('#customReligionLabel').text("Укажите религию");
+                                return false;
+                            } else {
+                                $('#customReligionLabel').text("");
+                            }
+                        }
+
+                    }
+                }
+                if ($('#tab2').hasClass('active')) {
+                    var $valid = angular.element('#cadetForm').valid(),
+                        $validator;
+                    if (!$valid) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    } else {
+
+                    }
+                }
+                if ($('#tab3').hasClass('active')) {
+                    var $valid = angular.element('#cadetForm').valid(),
+                        $validator;
+                    if (!$valid) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    } else {
+
+                    }
+                }
+                if ($('#tab4').hasClass('active')) {
+                    var $valid = angular.element('#cadetForm').valid(),
+                        $validator;
+                    if (!$valid) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    } else {
+
+                    }
+                }
+                if ($('#tab5').hasClass('active')) {
+                    var $valid = angular.element('#cadetForm').valid(),
+                        $validator;
+                    if (!$valid) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    } else {
+                        $('.finish').attr('style','');
+                    }
+                }
 
             }
         });
@@ -169,17 +227,150 @@ app.controller('cadetCtrl', function ($scope) {
         $('#dateOfBirth').datepicker({
             language: 'ru'
         });
-    };
 
 
-    $scope.validationOpt = {
-        rules: {
-            faculty: {
-                required: true,
-                minlength: 3
+        $.validator.addMethod("date", function (value, element) {
+            return this.optional(element) || /^\d{1,2}\.\d{1,2}\.\d{4}$/.test(value);
+        }, "Пожалуйста, введите дату в формате DD.MM.YYYY");
+
+        $.validator.addMethod("phone", function (value, element) {
+            return this.optional(element) || /^[0-9\-\(\)\s]+$/.test(value);
+        }, "Номер телефона должен быть корректен.");
+
+        $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+            return arg != value;
+        }, "Выберите нужное значение");
+
+
+        $("#cadetForm").validate({
+            rules: {
+                faculty: {
+                    required: true,
+                    minlength: 3
+                },
+                specialty: {
+                    required: true,
+                    minlength: 3
+                },
+                yearOfAdmission: {
+                    required: true,
+                    number: true,
+                    minlength: 4,
+                    maxlength: 4
+                },
+                militaryRank: {
+                    valueNotEquals: "? undefined:undefined ?"
+                },
+                surname: {
+                    required: true,
+                    minlength: 3
+                },
+                name: {
+                    required: true,
+                    minlength: 3
+                },
+                patronymic: {
+                    required: true,
+                    minlength: 3
+                },
+                dateOfBirth: {
+                    required: true,
+                    date: true
+                },
+                passportNumber: {
+                    required: true,
+                    minlength: 3
+                },
+                militaryIdNumber: {
+                    required: true,
+                    minlength: 3
+                },
+                nationality: {
+                    required: true,
+                    minlength: 3
+                },
+                religion: {
+                        valueNotEquals: "? undefined:undefined ?"
+                },
+                phone: {
+                    required: true,
+                    phone: true
+                },
+                unit: {
+                    required: true
+                },
+                post: {
+                    required: true,
+                    minlength: 3
+                },
+                education: {
+                    required: true,
+                    minlength: 3
+                },
+                skills: {
+                    required: true,
+                    minlength: 3
+                },
+                drivingLicense: {
+                    required: true,
+                    minlength: 3
+                },
+                subjectOfPlaceOfBirth: {
+                    required: true,
+                    minlength: 3
+                },
+                cityOfPlaceOfBirth: {
+                    required: true,
+                    minlength: 3
+                },
+                subjectOfRegisteredAddress: {
+                    required: true,
+                    minlength: 3
+                },
+                cityOfRegisteredAddress: {
+                    required: true,
+                    minlength: 3
+                },
+                streetOfRegisteredAddress: {
+                    required: true,
+                    minlength: 3
+                },
+                subjectOfActualAddress: {
+                    required: true,
+                    minlength: 3
+                },
+                cityOfActualAddress: {
+                    required: true,
+                    minlength: 3
+                },
+                streetOfActualAddress: {
+                    required: true,
+                    minlength: 3
+                },
+
+
+                compositionOfFamily: {
+                    valueNotEquals: "? undefined:undefined ?"
+                },
+                alcohol: {
+                    valueNotEquals: "? undefined:undefined ?"
+                },
+                drugUse: {
+                    valueNotEquals: "? undefined:undefined ?"
+                },
+                chronicDiseases: {
+                    required: true,
+                    minlength: 3
+                },
+                validityCategory: {
+                    required: true,
+                    minlength: 3
+                }
             }
-        }
+        });
+
     };
+
 
 
     $scope.clearData = function () {
@@ -195,9 +386,12 @@ app.controller('cadetCtrl', function ($scope) {
         if (!$valid) {
             alert('Проверьте данные формы');
         } else {
+            var cadetOri = $scope.cadet;
+            var cadet = withCsrfData(cadetOri);
+            k=cadet;
             $.post(
-                "../json/saveProjectSettings",
-                $.param($scope.cadet)
+                "../api/cadet/saveCadet",
+                $.param(cadet)
                 , function (data) {
                     if (data.success == 0) {
                         alert("Обновлено");
@@ -209,3 +403,12 @@ app.controller('cadetCtrl', function ($scope) {
     };
 
 });
+
+var k;
+
+function withCsrfData(param) {
+    var csrfName = $('#csrfParameter').attr('name');
+    var csrfValue = $('#csrfParameter').attr('value');
+    param[csrfName] = csrfValue;
+    return param;
+};

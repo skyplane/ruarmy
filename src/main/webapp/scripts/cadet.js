@@ -372,6 +372,7 @@ app.controller('cadetCtrl', function ($scope) {
     };
 
 
+
     $scope.clearData = function () {
         // $scope.company = {};
         // $scope.company.id = '';
@@ -385,9 +386,12 @@ app.controller('cadetCtrl', function ($scope) {
         if (!$valid) {
             alert('Проверьте данные формы');
         } else {
+            var cadetOri = $scope.cadet;
+            var cadet = withCsrfData(cadetOri);
+            k=cadet;
             $.post(
-                "../json/saveProjectSettings",
-                $.param($scope.cadet)
+                "../api/cadet/saveCadet",
+                $.param(cadet)
                 , function (data) {
                     if (data.success == 0) {
                         alert("Обновлено");
@@ -399,3 +403,12 @@ app.controller('cadetCtrl', function ($scope) {
     };
 
 });
+
+var k;
+
+function withCsrfData(param) {
+    var csrfName = $('#csrfParameter').attr('name');
+    var csrfValue = $('#csrfParameter').attr('value');
+    param[csrfName] = csrfValue;
+    return param;
+};

@@ -2,6 +2,7 @@ package ruarmy.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class Cadet {
     String specialty;
 
     @Basic
-    String yearOfAdmission;
+    Integer yearOfAdmission;
 
     @Basic
     String militaryRank;
@@ -33,7 +34,7 @@ public class Cadet {
     @Basic
     String patronymic;
     @Basic
-    String dateOfBirth;
+    Date dateOfBirth;
     @Basic
     String passportNumber;
     @Basic
@@ -64,11 +65,10 @@ public class Cadet {
     @Basic
     String mother;
 
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OrderBy("id")
     List<FamilyMember> familyMembers = new ArrayList<>();
 
-    @OneToMany
-    @JoinColumn(name="FamilyMemberId")
     public List<FamilyMember> getFamilyMembers() {
         return familyMembers;
     }
@@ -76,6 +76,7 @@ public class Cadet {
     public void setFamilyMembers(List<FamilyMember> familyMembers) {
         this.familyMembers = familyMembers;
     }
+
     @Basic
     Boolean concussionsWereNot;
     @Basic
@@ -83,7 +84,7 @@ public class Cadet {
     @Basic
     Boolean theNarcologWasNot;
     @Basic
-    Boolean faculThePsychiatristWasNotty;
+    Boolean thePsychiatristWasNot;
     @Basic
     String alcohol;
     @Basic
@@ -109,14 +110,11 @@ public class Cadet {
     @Basic
     String abroad;
     @Basic
-    String relativesAndFriendsAbroad;
-
+    Boolean relativesAndFriendsAbroad;
 
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cadet")
-    private AddressData addressData = new AddressData();
-
-
+    private AddressData addressData = new AddressData(this);
 
 
     public Long getId() {
@@ -126,9 +124,6 @@ public class Cadet {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-
 
 
     public AddressData getAddressData() {
@@ -154,14 +149,6 @@ public class Cadet {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
-    }
-
-    public String getYearOfAdmission() {
-        return yearOfAdmission;
-    }
-
-    public void setYearOfAdmission(String yearOfAdmission) {
-        this.yearOfAdmission = yearOfAdmission;
     }
 
     public String getMilitaryRank() {
@@ -196,13 +183,6 @@ public class Cadet {
         this.patronymic = patronymic;
     }
 
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
 
     public String getPassportNumber() {
         return passportNumber;
@@ -309,7 +289,6 @@ public class Cadet {
     }
 
 
-
     public Boolean getConcussionsWereNot() {
         return concussionsWereNot;
     }
@@ -334,12 +313,12 @@ public class Cadet {
         this.theNarcologWasNot = theNarcologWasNot;
     }
 
-    public Boolean getFaculThePsychiatristWasNotty() {
-        return faculThePsychiatristWasNotty;
+    public Boolean getThePsychiatristWasNot() {
+        return thePsychiatristWasNot;
     }
 
-    public void setFaculThePsychiatristWasNotty(Boolean faculThePsychiatristWasNotty) {
-        this.faculThePsychiatristWasNotty = faculThePsychiatristWasNotty;
+    public void setThePsychiatristWasNot(Boolean thePsychiatristWasNot) {
+        this.thePsychiatristWasNot = thePsychiatristWasNot;
     }
 
     public String getAlcohol() {
@@ -438,11 +417,27 @@ public class Cadet {
         this.abroad = abroad;
     }
 
-    public String getRelativesAndFriendsAbroad() {
+    public Boolean getRelativesAndFriendsAbroad() {
         return relativesAndFriendsAbroad;
     }
 
-    public void setRelativesAndFriendsAbroad(String relativesAndFriendsAbroad) {
+    public void setRelativesAndFriendsAbroad(Boolean relativesAndFriendsAbroad) {
         this.relativesAndFriendsAbroad = relativesAndFriendsAbroad;
+    }
+
+    public Integer getYearOfAdmission() {
+        return yearOfAdmission;
+    }
+
+    public void setYearOfAdmission(Integer yearOfAdmission) {
+        this.yearOfAdmission = yearOfAdmission;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

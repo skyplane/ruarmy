@@ -23,6 +23,25 @@ public class AddressData implements Serializable {
     @PrimaryKeyJoinColumn
     private Cadet cadet;
 
+    public AddressData(Cadet cadet) {
+        this.cadet = cadet;
+    }
+
+    @Basic
+    String cityOfPlaceOfBirthType;
+
+    @Basic
+    String cityOfRegisteredAddressType;
+
+    @Basic
+    String cityOfActualAddressType;
+
+    @Basic
+    String streetOfRegisteredAddressType;
+
+    @Basic
+    String streetOfActualAddressType;
+
     @Basic
     String subjectOfPlaceOfBirth;
 
@@ -216,5 +235,45 @@ public class AddressData implements Serializable {
 
     public void setIndexOfActualAddress(String indexOfActualAddress) {
         this.indexOfActualAddress = indexOfActualAddress;
+    }
+
+    public String getCityOfPlaceOfBirthType() {
+        return cityOfPlaceOfBirthType;
+    }
+
+    public void setCityOfPlaceOfBirthType(String cityOfPlaceOfBirthType) {
+        this.cityOfPlaceOfBirthType = cityOfPlaceOfBirthType;
+    }
+
+    public String getCityOfRegisteredAddressType() {
+        return cityOfRegisteredAddressType;
+    }
+
+    public void setCityOfRegisteredAddressType(String cityOfRegisteredAddressType) {
+        this.cityOfRegisteredAddressType = cityOfRegisteredAddressType;
+    }
+
+    public String getCityOfActualAddressType() {
+        return cityOfActualAddressType;
+    }
+
+    public void setCityOfActualAddressType(String cityOfActualAddressType) {
+        this.cityOfActualAddressType = cityOfActualAddressType;
+    }
+
+    public String getStreetOfRegisteredAddressType() {
+        return streetOfRegisteredAddressType;
+    }
+
+    public void setStreetOfRegisteredAddressType(String streetOfRegisteredAddressType) {
+        this.streetOfRegisteredAddressType = streetOfRegisteredAddressType;
+    }
+
+    public String getStreetOfActualAddressType() {
+        return streetOfActualAddressType;
+    }
+
+    public void setStreetOfActualAddressType(String streetOfActualAddressType) {
+        this.streetOfActualAddressType = streetOfActualAddressType;
     }
 }

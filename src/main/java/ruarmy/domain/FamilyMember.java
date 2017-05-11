@@ -21,6 +21,17 @@ public class FamilyMember {
     @Enumerated(EnumType.STRING)
     private FamilyMemberType type;
 
+    @ManyToOne
+    private Cadet cadet;
+
+    public Cadet getCadet() {
+        return cadet;
+    }
+
+    public void setCadet(Cadet cadet) {
+        this.cadet = cadet;
+    }
+
     public Long getId() {
         return id;
     }
