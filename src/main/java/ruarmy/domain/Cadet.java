@@ -1,6 +1,8 @@
 package ruarmy.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by skyplane on 02.05.17.
@@ -63,6 +65,17 @@ public class Cadet {
     String mother;
 
 
+    List<FamilyMember> familyMembers = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name="FamilyMemberId")
+    public List<FamilyMember> getFamilyMembers() {
+        return familyMembers;
+    }
+
+    public void setFamilyMembers(List<FamilyMember> familyMembers) {
+        this.familyMembers = familyMembers;
+    }
     @Basic
     Boolean concussionsWereNot;
     @Basic
@@ -78,7 +91,7 @@ public class Cadet {
     @Basic
     String chronicDiseases;
     @Basic
-    String categoryDate;
+    String validityCategory;
     @Basic
     Boolean thoughtsOfSuicideDoesNotHave;
     @Basic
@@ -101,7 +114,7 @@ public class Cadet {
 
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cadet")
-    private AddressData addressData;
+    private AddressData addressData = new AddressData();
 
 
 
@@ -127,4 +140,309 @@ public class Cadet {
         addressData.setCadet(this);
     }
 
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
+    public String getYearOfAdmission() {
+        return yearOfAdmission;
+    }
+
+    public void setYearOfAdmission(String yearOfAdmission) {
+        this.yearOfAdmission = yearOfAdmission;
+    }
+
+    public String getMilitaryRank() {
+        return militaryRank;
+    }
+
+    public void setMilitaryRank(String militaryRank) {
+        this.militaryRank = militaryRank;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
+
+    public String getMilitaryIdNumber() {
+        return militaryIdNumber;
+    }
+
+    public void setMilitaryIdNumber(String militaryIdNumber) {
+        this.militaryIdNumber = militaryIdNumber;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getReligion() {
+        return religion;
+    }
+
+    public void setReligion(String religion) {
+        this.religion = religion;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public void setPost(String post) {
+        this.post = post;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getDrivingLicense() {
+        return drivingLicense;
+    }
+
+    public void setDrivingLicense(String drivingLicense) {
+        this.drivingLicense = drivingLicense;
+    }
+
+    public String getCompositionOfFamily() {
+        return compositionOfFamily;
+    }
+
+    public void setCompositionOfFamily(String compositionOfFamily) {
+        this.compositionOfFamily = compositionOfFamily;
+    }
+
+    public String getFather() {
+        return father;
+    }
+
+    public void setFather(String father) {
+        this.father = father;
+    }
+
+    public String getMother() {
+        return mother;
+    }
+
+    public void setMother(String mother) {
+        this.mother = mother;
+    }
+
+
+
+    public Boolean getConcussionsWereNot() {
+        return concussionsWereNot;
+    }
+
+    public void setConcussionsWereNot(Boolean concussionsWereNot) {
+        this.concussionsWereNot = concussionsWereNot;
+    }
+
+    public Boolean getTraumaticBrainInjuryWasNot() {
+        return traumaticBrainInjuryWasNot;
+    }
+
+    public void setTraumaticBrainInjuryWasNot(Boolean traumaticBrainInjuryWasNot) {
+        this.traumaticBrainInjuryWasNot = traumaticBrainInjuryWasNot;
+    }
+
+    public Boolean getTheNarcologWasNot() {
+        return theNarcologWasNot;
+    }
+
+    public void setTheNarcologWasNot(Boolean theNarcologWasNot) {
+        this.theNarcologWasNot = theNarcologWasNot;
+    }
+
+    public Boolean getFaculThePsychiatristWasNotty() {
+        return faculThePsychiatristWasNotty;
+    }
+
+    public void setFaculThePsychiatristWasNotty(Boolean faculThePsychiatristWasNotty) {
+        this.faculThePsychiatristWasNotty = faculThePsychiatristWasNotty;
+    }
+
+    public String getAlcohol() {
+        return alcohol;
+    }
+
+    public void setAlcohol(String alcohol) {
+        this.alcohol = alcohol;
+    }
+
+    public String getDrugUse() {
+        return drugUse;
+    }
+
+    public void setDrugUse(String drugUse) {
+        this.drugUse = drugUse;
+    }
+
+    public String getChronicDiseases() {
+        return chronicDiseases;
+    }
+
+    public void setChronicDiseases(String chronicDiseases) {
+        this.chronicDiseases = chronicDiseases;
+    }
+
+    public String getValidityCategory() {
+        return validityCategory;
+    }
+
+    public void setValidityCategory(String validityCategory) {
+        this.validityCategory = validityCategory;
+    }
+
+    public Boolean getThoughtsOfSuicideDoesNotHave() {
+        return thoughtsOfSuicideDoesNotHave;
+    }
+
+    public void setThoughtsOfSuicideDoesNotHave(Boolean thoughtsOfSuicideDoesNotHave) {
+        this.thoughtsOfSuicideDoesNotHave = thoughtsOfSuicideDoesNotHave;
+    }
+
+    public Boolean getSuicideAttemptsDidNotCommit() {
+        return suicideAttemptsDidNotCommit;
+    }
+
+    public void setSuicideAttemptsDidNotCommit(Boolean suicideAttemptsDidNotCommit) {
+        this.suicideAttemptsDidNotCommit = suicideAttemptsDidNotCommit;
+    }
+
+    public Boolean getAdministrativeOffenseDidNotCommit() {
+        return administrativeOffenseDidNotCommit;
+    }
+
+    public void setAdministrativeOffenseDidNotCommit(Boolean administrativeOffenseDidNotCommit) {
+        this.administrativeOffenseDidNotCommit = administrativeOffenseDidNotCommit;
+    }
+
+    public Boolean getPoliceRecordDoesNotHave() {
+        return policeRecordDoesNotHave;
+    }
+
+    public void setPoliceRecordDoesNotHave(Boolean policeRecordDoesNotHave) {
+        this.policeRecordDoesNotHave = policeRecordDoesNotHave;
+    }
+
+    public Boolean getCriminalLiabilityWasNotInvolved() {
+        return criminalLiabilityWasNotInvolved;
+    }
+
+    public void setCriminalLiabilityWasNotInvolved(Boolean criminalLiabilityWasNotInvolved) {
+        this.criminalLiabilityWasNotInvolved = criminalLiabilityWasNotInvolved;
+    }
+
+    public String getScars() {
+        return scars;
+    }
+
+    public void setScars(String scars) {
+        this.scars = scars;
+    }
+
+    public String getTattoo() {
+        return tattoo;
+    }
+
+    public void setTattoo(String tattoo) {
+        this.tattoo = tattoo;
+    }
+
+    public String getAbroad() {
+        return abroad;
+    }
+
+    public void setAbroad(String abroad) {
+        this.abroad = abroad;
+    }
+
+    public String getRelativesAndFriendsAbroad() {
+        return relativesAndFriendsAbroad;
+    }
+
+    public void setRelativesAndFriendsAbroad(String relativesAndFriendsAbroad) {
+        this.relativesAndFriendsAbroad = relativesAndFriendsAbroad;
+    }
 }

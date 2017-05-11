@@ -30,6 +30,8 @@
     <script src="../bower_components/datatables/media/js/jquery.dataTables.js"></script>
     <script src="../bower_components/datatables/media/js/dataTables.bootstrap.js"></script>
     <script src="../bower_components/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="../bower_components/jquery-validation/dist/additional-methods.js"></script>
+    <script src="../bower_components/jquery-validation/src/localization/messages_ru.js"></script>
     <script src="../bower_components/twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
     <script src="../bower_components/autocomplete/jquery.autocomplete.js"></script>
     <script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
@@ -41,9 +43,27 @@
 
 <div ng-app="cadetApp" data-ng-controller="cadetCtrl" data-ng-init="init()">
 
+
+
+
+
+    <script>
+        $(document).ready(function () {
+
+
+        });
+
+    </script>
+
     <br>
     <br>
     <br>
+
+    <style>
+        .disabledTab{
+            pointer-events: none;
+        }
+    </style>
 
     <div class="container form-group">
         <div class="row" align="center">
@@ -72,12 +92,12 @@
                                 <div class="navbar-inner">
                                     <div class="container">
                                         <ul>
-                                            <li><a href="#tab1" data-toggle="tab">Общие данные</a></li>
-                                            <li><a href="#tab2" data-toggle="tab">Адресные данные</a></li>
-                                            <li><a href="#tab3" data-toggle="tab">Состав семьи</a></li>
-                                            <li><a href="#tab4" data-toggle="tab">Здоровье</a></li>
-                                            <li><a href="#tab5" data-toggle="tab">Поведение</a></li>
-                                            <li><a href="#tab6" data-toggle="tab">Дополнительно</a></li>
+                                            <li class="disabledTab"><a href="#tab1" data-toggle="tab">Общие данные</a></li>
+                                            <li class="disabledTab"><a href="#tab2" data-toggle="tab">Адресные данные</a></li>
+                                            <li class="disabledTab"><a href="#tab3" data-toggle="tab">Состав семьи</a></li>
+                                            <li class="disabledTab"><a href="#tab4" data-toggle="tab">Здоровье</a></li>
+                                            <li class="disabledTab"><a href="#tab5" data-toggle="tab">Поведение</a></li>
+                                            <li class="disabledTab"><a href="#tab6" data-toggle="tab">Дополнительно</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -205,6 +225,7 @@
                                                 <input type="text" style="display: none" class="form-control"
                                                        name="customReligion" id="customReligion"
                                                        ng-model="cadet.customReligion">
+                                                <label id="customReligionLabel"></label>
                                             </div>
                                         </div>
                                         <br>
@@ -654,8 +675,8 @@
                                         <div class="row">
                                             <label class="col-sm-4 control-label">Категория годности</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="categoryDate"
-                                                       id="categoryDate" ng-model="cadet.categoryDate">
+                                                <input type="text" class="form-control" name="validityCategory"
+                                                       id="categoryDate" ng-model="cadet.validityCategory">
                                             </div>
                                         </div>
                                     </div>
@@ -827,16 +848,10 @@
                                 </div>
                                 <br>
                                 <ul class="pager wizard">
-
-                                    <button class="btn btn-success pull-right" type="submit" name="submit" id="submit">Send</button>
-
                                     <li class="previous"><a href="javascript:;">Предыдущая</a></li>
                                     <li class="next"><a href="javascript:;">Следующая</a></li>
-
-                                    <li class="finish"><a href="javascript:;" ng-click="submit()">Сохранить</a></li>
-
+                                    <li class="finish" style="display:none"><a href="javascript:;" ng-click="submit()">Сохранить</a></li>
                                 </ul>
-
                             </div>
                         </div>
                     </form>
