@@ -1,0 +1,36 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+		 xmlns:b="http://www.springframework.org/schema/beans"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+	<http auto-config="true">
+		<intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/welcome" access="hasRole('ROLE_CADET')" />
+		<!--<intercept-url pattern="/home" access="hasAnyRole('ROLE_ADMIN','ROLE_OFFICER','ROLE_CADET')" />-->
+		<intercept-url pattern="/api**" access="hasAnyRole('ROLE_CADET','ROLE_ADMIN')" />
+		<form-login
+				login-page="/login"
+				default-target-url="/home"
+				authentication-failure-url="/loginError.html"
+				username-parameter="username"
+				password-parameter="password" />
+		<logout logout-success-url="/" logout-url="/logout" />
+	</http>
+
+	<b:bean id="userDetailsService" class="ruarmy.service.UserDetailsServiceCustom"/>
+
+	<b:bean id="userDetailsProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<b:property name="userDetailsService" ref="userDetailsService"/>
+		<b:property name="passwordEncoder" ref="passwordEncoder"/>
+	</b:bean>
+
+	<b:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="userDetailsProvider"/>
+	</authentication-manager>
+	<b:bean id="securityContextPersistenceFilter"
+				class="org.springframework.security.web.context.SecurityContextPersistenceFilter" />
+
+</b:beans>
