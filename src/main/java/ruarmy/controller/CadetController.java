@@ -50,7 +50,7 @@ public class CadetController extends BaseController {
             @RequestParam(value = "addressData[buildingOfActualAddress]", defaultValue = "") String buildingOfActualAddress,
             @RequestParam(value = "addressData[apartmentOfActualAddress]", defaultValue = "") String apartmentOfActualAddress,
             @RequestParam(value = "addressData[indexOfActualAddress]", defaultValue = "") String indexOfActualAddress,
-            @RequestParam(value = "brothers[]", defaultValue ="") String[] brothers,
+            @RequestParam(value = "brothers[]", defaultValue = "") String[] brothers,
             @RequestParam(value = "sisters[]", defaultValue = "") String[] sisters,
             @RequestParam("concussionsWereNot") Boolean concussionsWereNot,
             @RequestParam("traumaticBrainInjuryWasNot") Boolean traumaticBrainInjuryWasNot,
@@ -127,13 +127,11 @@ public class CadetController extends BaseController {
             for (String brother : brothers) {
                 FamilyMember familyMember = new FamilyMember();
                 familyMember.setType(FamilyMemberType.BROTHER);
-                familyMember.setText(brother);
                 cadet.getFamilyMembers().add(familyMember);
             }
             for (String sister : sisters) {
                 FamilyMember familyMember = new FamilyMember();
                 familyMember.setType(FamilyMemberType.SISTER);
-                familyMember.setText(sister);
                 cadet.getFamilyMembers().add(familyMember);
             }
 

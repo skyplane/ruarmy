@@ -120,7 +120,6 @@ public class HomeController {
 
    @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView home(HttpServletRequest request) {
-      // User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
        ModelAndView model = new ModelAndView();
        model.addObject("title", "Spring Security Hello World");
@@ -143,6 +142,12 @@ public class HomeController {
         return "login";
     }
 
-
+    @RequestMapping("/logout")
+    public ModelAndView showLoggedout(HttpServletRequest request) {
+        SecurityContextHolder.clearContext();
+        ModelAndView model = new ModelAndView();
+        model.setViewName("login");
+        return model;
+    }
 
 }
