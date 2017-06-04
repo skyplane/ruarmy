@@ -7,11 +7,11 @@
 	<http auto-config="true">
 		<intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/welcome" access="hasRole('ROLE_CADET')" />
-		<intercept-url pattern="/home" access="hasAnyRole('ROLE_ADMIN','ROLE_OFFICER','ROLE_CADET')" />
-		<intercept-url pattern="/api*" access="hasAnyRole('ROLE_CADET','ROLE_ADMIN')" />
+		<!--<intercept-url pattern="/home" access="hasAnyRole('ROLE_ADMIN','ROLE_OFFICER','ROLE_CADET')" />-->
+		<intercept-url pattern="/api**" access="hasAnyRole('ROLE_CADET','ROLE_ADMIN')" />
 		<form-login
 				login-page="/login"
-				default-target-url="/api"
+				default-target-url="/home"
 				authentication-failure-url="/loginError.html"
 				username-parameter="username"
 				password-parameter="password" />

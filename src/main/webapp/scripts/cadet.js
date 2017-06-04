@@ -2,10 +2,11 @@ function loadSubjectsByIdAndType(subjectId, objectId, type) {
     $('#' + subjectId).autocomplete({
         serviceUrl: '/api/autocomplete/subjectByTerm?type=' + type,
         onSelect: function (subjectSuggestion) {
+            $('#' + subjectId).change().keyup();
             $('#' + objectId).autocomplete({
                 serviceUrl: '/api/autocomplete/cityByTerm?subjectId=' + subjectSuggestion.data,
                 onSelect: function (suggestion) {
-
+                    $('#' + objectId).change().keyup();
                 }
             });
         }
@@ -16,6 +17,46 @@ var k;
 
 var app = angular.module('cadetApp', ["checklist-model"]);
 
+app.directive('uiPassport', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("0000 000000");
+        }
+    };
+});
+app.directive('uiMilitaryTicket', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask(
+                'MM 0000000', {
+                    translation: {
+                        'M': {
+                            pattern: /[А-Я]/, optional: false
+                        }
+                    },
+                    placeholder: "** *******"
+                });
+        }
+    };
+});
+app.directive('uiPhone', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("+7(Z00)000-0000", {
+                translation: {
+                    'Z': {
+                        pattern: /[9]/
+                    }
+                }
+            });
+        }
+    };
+});
+
+
 app.controller('cadetCtrl', function ($scope) {
 
 
@@ -23,24 +64,33 @@ app.controller('cadetCtrl', function ($scope) {
     $scope.options = {};
 
 
-    $scope.driversLicensesAll = ['M','A','B','C','D','A1','B1','C1','D1','BE','CE','DE','C1E','D1E'];
+    $scope.driversLicensesAll = ['M', 'A', 'B', 'C', 'D', 'A1', 'B1', 'C1', 'D1', 'BE', 'CE', 'DE', 'C1E', 'D1E'];
     $scope.driversLicenses = [];
 
 
     $scope.division = {};
     $scope.divisions = [];
     $.post(
-        "../api/division/loadDivisions" ,
+        "../api/division/loadDivisions",
         withCsrfData({})
         , function (json) {
             $scope.$apply(function () {
-                $scope.divisions=json.data;
+                $scope.divisions = json.data;
             });
         },
         "json"
     );
 
-    $scope.tripsAbroad= {
+
+    $('#tripsAbroadCountry').autocomplete({
+        serviceUrl: '/api/autocomplete/countries',
+        onSelect: function (countrySuggestion) {
+            $('#tripsAbroadCountry').change().keyup();
+        }
+    });
+
+
+    $scope.tripsAbroad = {
         who: '',
         firstName: '',
         lastName: '',
@@ -48,7 +98,7 @@ app.controller('cadetCtrl', function ($scope) {
         country: '',
         doMaintainARelationship: null
     };
-    $scope.cadet.tripsAbroads= [];
+    $scope.cadet.tripsAbroads = [];
 
     $scope.tripsAbroadIndex = 0;
     $scope.addTripsAbroad = function () {
@@ -76,6 +126,7 @@ app.controller('cadetCtrl', function ($scope) {
         $scope.cadet.tripsAbroads.splice(index, 1);
     };
     $scope.saveTripsAbroad = function () {
+        k = $scope.tripsAbroad.country;
         $scope.cadet.tripsAbroads[$scope.tripsAbroadIndex] = $scope.tripsAbroad;
         $('#tripsAbroadModal').modal('hide');
     };
@@ -132,7 +183,7 @@ app.controller('cadetCtrl', function ($scope) {
 
     $scope.skillsRunByFieldOfActivity = function (val) {
         $.get(
-            "../api/skill/loadByFieldOfActivity?fieldOfActivity=" +val
+            "../api/skill/loadByFieldOfActivity?fieldOfActivity=" + val
             , function (json) {
                 $scope.$apply(function () {
                     $.each(json.data, function () {
@@ -165,8 +216,6 @@ app.controller('cadetCtrl', function ($scope) {
             "json"
         );
     };
-
-
 
 
     $scope.familyMember = {};
@@ -325,10 +374,14 @@ app.controller('cadetCtrl', function ($scope) {
         if (Number($scope.education.institutionType) < 5) {
             $('#highAchieverDiv').attr('style', 'display:none');
             $('#redDiplomaDiv').attr('style', '');
+            $('#unfinishedDiv').attr('style', '');
+            $('#notSchoolEducationDiv').attr('style', '');
             $scope.setEducationHighAchiever(null);
         } else {
             $('#redDiplomaDiv').attr('style', 'display:none');
-            $('#highAchieverDiv').attr('style', '');
+            $('#highAchieverDiv').attr('style', 'display:none');
+            $('#unfinishedDiv').attr('style', 'display:none');
+            $('#notSchoolEducationDiv').attr('style', 'display:none');
             $scope.setEducationRedDiploma(null);
         }
     };
@@ -688,8 +741,8 @@ app.controller('cadetCtrl', function ($scope) {
         }, "Пожалуйста, введите дату в формате DD.MM.YYYY");
 
         $.validator.addMethod("phone", function (value, element) {
-            return this.optional(element) || /^\+79\d{9}$/.test(value);
-        }, "Пожалуйста, введите номер телефона в формате +79*********");
+            return this.optional(element) || /^\+7(9\d{2})\d{3}-\d{3}$/.test(value);
+        }, "Пожалуйста, введите номер телефона в формате +7(9**)***-****");
 
         $.validator.addMethod("passportNumber", function (value, element) {
             return this.optional(element) || /^\d{4}\s\d{6}$/.test(value);

@@ -5,6 +5,8 @@ package ruarmy.enums;
  */
 public enum FamilyMemberType {
 
+    FATHER("FamilyMemberType.FATHER"),
+    MOTHER("FamilyMemberType.MOTHER"),
     BROTHER("FamilyMemberType.BROTHER"),
     SISTER("FamilyMemberType.SISTER");
 

@@ -1,8 +1,11 @@
 package ruarmy.domain;
 
+import org.springframework.data.annotation.Persistent;
 import ruarmy.enums.UserRole;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by skyplane on 05.05.17.
@@ -20,10 +23,23 @@ public class User {
     @Basic
     private String password;
 
+    @ManyToOne
+    private Profile profile;
+
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.ROLE_CADET;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    Set<Division> divisions = new HashSet<Division>();
 
+
+    public Set<Division> getDivisions() {
+        return divisions;
+    }
+
+    public void setDivisions(Set<Division> divisions) {
+        this.divisions = divisions;
+    }
 
     public Long getId() {
         return id;
@@ -57,5 +73,11 @@ public class User {
         this.role = role;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
 
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 }

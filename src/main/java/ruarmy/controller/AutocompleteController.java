@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ruarmy.domain.City;
+import ruarmy.domain.Country;
 import ruarmy.domain.Subject;
 import ruarmy.repository.CityRepository;
+import ruarmy.repository.CountryRepository;
 import ruarmy.repository.SubjectRepository;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,13 +27,39 @@ import java.util.List;
 @RequestMapping("/api/autocomplete")
 public class AutocompleteController  extends BaseController {
 
-
+    @Autowired
+    private CountryRepository countryRepository;
 
     @Autowired
     private SubjectRepository subjectRepository;
 
     @Autowired
     private CityRepository cityRepository;
+
+
+    @RequestMapping(value = "/countries", method = RequestMethod.GET)
+    public void countries(@RequestParam("query") String query, HttpServletResponse response) throws UnsupportedEncodingException {
+        List<Country> countries = countryRepository.findByNameLike( "%"+query+"%");
+        try {
+            JsonWriter jsonWriter = getJsonWriter(response);
+            jsonWriter.beginObject();
+            jsonWriter.name("query").value(query);
+            jsonWriter.name("suggestions");
+            jsonWriter.beginArray();
+            for (Country country : countries){
+                jsonWriter.beginObject();
+                jsonWriter.name("value").value(country.getName());
+                jsonWriter.name("data").value(country.getId());
+                jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+            jsonWriter.endObject();
+            closeJsonWriter(response, jsonWriter);
+        } catch (IOException e) {
+            ;
+        }
+    }
+
 
 
     @RequestMapping(value = "/subjectByTerm", method = RequestMethod.GET)

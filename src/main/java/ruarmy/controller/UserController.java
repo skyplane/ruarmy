@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ruarmy.domain.AddressData;
+import ruarmy.domain.Division;
+import ruarmy.domain.Profile;
 import ruarmy.domain.User;
 import ruarmy.enums.UserRole;
+import ruarmy.repository.DivisionRepository;
 import ruarmy.repository.ProfileRepository;
 import ruarmy.repository.UserRepository;
 
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -31,6 +35,10 @@ public class UserController  extends BaseController {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private DivisionRepository divisionRepository;
+
 
     @Autowired
     ShaPasswordEncoder passwordEncoder;
@@ -84,6 +92,27 @@ public class UserController  extends BaseController {
                 jsonWriter.name("password").value(user.getPassword());
                 jsonWriter.name("role").value(ruarmyResources.getString(user.getRole().getResourceKey()));
 
+                jsonWriter.name("profile");
+                jsonWriter.beginObject();
+                if (user.getProfile()!=null){
+                    jsonWriter.name("id").value(user.getProfile().getId());
+                    jsonWriter.name("profileName").value(user.getProfile().getProfileName());
+                } else {
+                    jsonWriter.name("id").value("");
+                    jsonWriter.name("profileName").value("");
+                }
+                jsonWriter.endObject();
+
+                jsonWriter.name("divisions");
+                jsonWriter.beginArray();
+                for (Division division : user.getDivisions()){
+                    jsonWriter.beginObject();
+                    jsonWriter.name("id").value(division.getId());
+                    jsonWriter.name("name").value(division.getName());
+                    jsonWriter.endObject();
+                }
+                jsonWriter.endArray();
+
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
@@ -100,11 +129,27 @@ public class UserController  extends BaseController {
             @RequestParam("user[login]") String login,
             @RequestParam("user[password]") String password,
             @RequestParam("user[role]") String role,
+            @RequestParam(value = "divisions[]",  defaultValue = "") Long[] divisionIds,
+            @RequestParam(value = "profile",  defaultValue = "") Long profileId,
             HttpServletResponse response) throws UnsupportedEncodingException {
 
         User user = new User();
         if (id != null) {
             user = userRepository.findOne(id);
+        }
+
+        if (profileId!=null){
+            Profile profile = profileRepository.findOne(profileId);
+            user.setProfile(profile);
+        }
+
+        if (divisionIds!=null){
+            HashSet<Division> divisions = new HashSet<>();
+            for (Long divisionId : divisionIds){
+                Division division = divisionRepository.findOne(divisionId);
+                divisions.add(division);
+            }
+            user.setDivisions(divisions);
         }
 
         user.setLogin(login);
@@ -124,6 +169,57 @@ public class UserController  extends BaseController {
 
         printSuccessStatus(response);
     }
+
+
+
+    @RequestMapping(value = "/loadUserById", method = RequestMethod.GET)
+    public void loadUserById(@RequestParam(value = "id", defaultValue = "0") Long id, HttpServletResponse response) throws UnsupportedEncodingException {
+        try {
+            User user = new User();
+            if (id != null && !id.equals(0L)) {
+                user = userRepository.findOne(id);
+            }
+
+            JsonWriter jsonWriter = getJsonWriter(response);
+            jsonWriter.beginObject();
+            jsonWriter.name("id").value(user.getId());
+            jsonWriter.name("login").value(user.getLogin());
+            jsonWriter.name("password").value(user.getPassword());
+
+            jsonWriter.name("role").value(ruarmyResources.getString(user.getRole().getResourceKey()));
+
+            jsonWriter.name("profile");
+            jsonWriter.beginObject();
+            if (user.getProfile()!=null){
+                jsonWriter.name("id").value(user.getProfile().getId());
+                jsonWriter.name("profileName").value(user.getProfile().getProfileName());
+            } else {
+                jsonWriter.name("id").value("");
+                jsonWriter.name("profileName").value("");
+            }
+            jsonWriter.endObject();
+
+            jsonWriter.name("divisions");
+            jsonWriter.beginArray();
+            for (Division division : user.getDivisions()){
+                jsonWriter.value(division.getId());
+                //jsonWriter.beginObject();
+             //   jsonWriter.name("id").value(division.getId());
+              //  jsonWriter.name("name").value(division.getName());
+              //  jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+
+
+
+            jsonWriter.endObject();
+
+            closeJsonWriter(response, jsonWriter);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 }

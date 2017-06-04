@@ -18,13 +18,10 @@ public class Cadet {
 
     @Basic
     String faculty;
-
     @Basic
     String specialty;
-
     @Basic
     Integer yearOfAdmission;
-
     @Basic
     String militaryRank;
     @Basic
@@ -58,7 +55,6 @@ public class Cadet {
     String drivingLicense;
     @Basic
     String compositionOfFamily;
-
 
     @Basic
     String father;
@@ -111,7 +107,6 @@ public class Cadet {
     String abroad;
     @Basic
     Boolean relativesAndFriendsAbroad;
-
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cadet")
     private AddressData addressData = new AddressData(this);
