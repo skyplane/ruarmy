@@ -680,36 +680,7 @@ app.controller('cadetCtrl', function ($scope) {
                         }
 
                     }
-                }
-                if ($('#tab2').hasClass('active')) {
-                    var $valid = angular.element('#cadetForm').valid(),
-                        $validator;
-                    if (!$valid) {
-                        alert('Проверьте данные формы');
-                        return false;
-                    } else {
 
-                    }
-                }
-                if ($('#tab3').hasClass('active')) {
-                    var $valid = angular.element('#cadetForm').valid(),
-                        $validator;
-                    if (!$valid) {
-                        alert('Проверьте данные формы');
-                        return false;
-                    } else {
-
-                    }
-                }
-                if ($('#tab4').hasClass('active')) {
-                    var $valid = angular.element('#cadetForm').valid(),
-                        $validator;
-                    if (!$valid) {
-                        alert('Проверьте данные формы');
-                        return false;
-                    } else {
-
-                    }
                 }
                 if ($('#tab5').hasClass('active')) {
                     var $valid = angular.element('#cadetForm').valid(),
@@ -718,10 +689,107 @@ app.controller('cadetCtrl', function ($scope) {
                         alert('Проверьте данные формы');
                         return false;
                     } else {
-                        $('.finish').attr('style', '');
+
                     }
                 }
+                if ($('#tab6').hasClass('active')) {
+                    var $valid = angular.element('#cadetForm').valid(),
+                        $validator;
+                    if (!$valid) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    } else {
 
+                    }
+                }
+                if ($('#tab7').hasClass('active')) {
+                    /* var $valid = angular.element('#cadetForm').valid(),
+                     $validator;
+                     if (!$valid) {
+                     alert('Проверьте данные формы');
+                     return false;
+                     } else {
+
+                     }*/
+
+
+                    if ($scope.cadet.compositionOfFamily == 2 && $scope.cadet.withoutFather == undefined) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.compositionOfFamily == 3 && $scope.cadet.withoutMother == undefined) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+
+
+                    if ($scope.cadet.compositionOfFamily == 2 || $scope.cadet.compositionOfFamily == 3) {
+                        if (($scope.cadet.withoutFather == 1 || $scope.cadet.withoutFather == 2)
+                            && $scope.cadet.fatherExist == null) {
+                            alert('Проверьте данные формы');
+                            return false;
+                        }
+                        if (($scope.cadet.withoutMother == 1 || $scope.cadet.withoutMother == 2)
+                            && $scope.cadet.motherExist == null) {
+                            alert('Проверьте данные формы');
+                            return false;
+                        }
+                    }
+
+                }
+                if ($('#tab8').hasClass('active')) {
+                    var $valid = angular.element('#cadetForm').valid(),
+                        $validator;
+                    if (!$valid) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    } else {
+                        $('.finish').attr('style', '');
+                    }
+
+                    if ($scope.cadet.concussionsWereNot == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.traumaticBrainInjuryWasNot == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.theNarcologWasNot == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.thePsychiatristWasNot == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+
+
+                }
+                if ($('#tab9').hasClass('active')) {
+
+                    if ($scope.cadet.thoughtsOfSuicideDoesNotHave == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.suicideAttemptsDidNotCommit == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.administrativeOffenseDidNotCommit == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.policeRecordDoesNotHave == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.criminalLiabilityWasNotInvolved == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+
+                }
             }
         });
 
@@ -741,7 +809,7 @@ app.controller('cadetCtrl', function ($scope) {
         }, "Пожалуйста, введите дату в формате DD.MM.YYYY");
 
         $.validator.addMethod("phone", function (value, element) {
-            return this.optional(element) || /^\+7(9\d{2})\d{3}-\d{3}$/.test(value);
+            return this.optional(element) || /^\+7\(9\d{2}\)\d{3}-\d{4}$/.test(value);
         }, "Пожалуйста, введите номер телефона в формате +7(9**)***-****");
 
         $.validator.addMethod("passportNumber", function (value, element) {
@@ -973,25 +1041,134 @@ app.controller('cadetCtrl', function ($scope) {
 
 
     $scope.submit = function () {
-        var $valid = angular.element('#cadetForm').valid(),
-            $validator;
-        if (!$valid) {
-            alert('Проверьте данные формы');
-        } else {
-            var cadetOri = $scope.cadet;
-            var cadet = withCsrfData(cadetOri);
-            k = cadet;
-            $.post(
-                "../api/cadet/saveCadet",
-                $.param(cadet)
-                , function (data) {
-                    if (data.success == 0) {
-                        alert("Обновлено");
-                    }
-                },
-                "json"
-            );
-        }
+        /*var $valid = angular.element('#cadetForm').valid(),
+         $validator;
+         if (!$valid) {
+         alert('Проверьте данные формы');
+         } else {*/
+        var cadetOri = $scope.cadet;
+        var cadet = withCsrfData(cadetOri);
+        cadet['driversLicenses'] = $scope.driversLicenses;
+        cadet['division'] = $scope.division;
+        cadet['skills'] = $scope.skills;
+
+
+        var tripsAbroads_who = [];
+        var tripsAbroads_firstName = [];
+        var tripsAbroads_lastName = [];
+        var tripsAbroads_patronymic = [];
+        var tripsAbroads_country = [];
+        var tripsAbroads_doMaintainARelationship = [];
+        $.each(cadet.tripsAbroads, function () {
+            tripsAbroads_who.push(this.who);
+            tripsAbroads_firstName.push(this.firstName);
+            tripsAbroads_lastName.push(this.lastName);
+            tripsAbroads_patronymic.push(this.patronymic);
+            tripsAbroads_country.push(this.country);
+            tripsAbroads_doMaintainARelationship.push(this.doMaintainARelationship);
+        });
+        cadet['tripsAbroads_who'] = tripsAbroads_who;
+        cadet['tripsAbroads_firstName'] = tripsAbroads_firstName;
+        cadet['tripsAbroads_lastName'] = tripsAbroads_lastName;
+        cadet['tripsAbroads_patronymic'] = tripsAbroads_patronymic;
+        cadet['tripsAbroads_country'] = tripsAbroads_country;
+        cadet['tripsAbroads_doMaintainARelationship'] = tripsAbroads_doMaintainARelationship;
+        cadet.tripsAbroads = [];
+
+        var familyMembers_firstName = [];
+        var familyMembers_lastName = [];
+        var familyMembers_patronymic = [];
+        var familyMembers_dateOfBirth = [];
+        var familyMembers_occupation = [];
+        var familyMembers_phone = [];
+        var familyMembers_wasTreatedForAlcoholism = [];
+        var familyMembers_wasTreatedForAddiction = [];
+        var familyMembers_hasACriminalRecord = [];
+        var familyMembers_hasAMentalIllness = [];
+        var familyMembers_hasSuicideAttempts = [];
+        var familyMembers_hasADisability = [];
+        var familyMembers_hasDied = [];
+        var familyMembers_isBroughtUpSeparately = [];
+        $.each(cadet.familyMembers, function () {
+            familyMembers_firstName.push(this.firstName);
+            familyMembers_lastName.push(this.lastName);
+            familyMembers_patronymic.push(this.patronymic);
+            familyMembers_dateOfBirth.push(this.dateOfBirth);
+            familyMembers_occupation.push(this.occupation);
+            familyMembers_phone.push(this.phone);
+            familyMembers_wasTreatedForAlcoholism.push(this.wasTreatedForAlcoholism);
+            familyMembers_wasTreatedForAddiction.push(this.wasTreatedForAddiction);
+            familyMembers_hasACriminalRecord.push(this.hasACriminalRecord);
+            familyMembers_hasAMentalIllness.push(this.hasAMentalIllness);
+            familyMembers_hasSuicideAttempts.push(this.hasSuicideAttempts);
+            familyMembers_hasADisability.push(this.hasADisability);
+            familyMembers_hasDied.push(this.hasDied);
+            familyMembers_isBroughtUpSeparately.push(this.isBroughtUpSeparately);
+        });
+        cadet['familyMembers_firstName'] = familyMembers_firstName;
+        cadet['familyMembers_lastName'] = familyMembers_lastName;
+        cadet['familyMembers_patronymic'] = familyMembers_patronymic;
+        cadet['familyMembers_dateOfBirth'] = familyMembers_dateOfBirth;
+        cadet['familyMembers_occupation'] = familyMembers_occupation;
+        cadet['familyMembers_phone'] = familyMembers_phone;
+        cadet['familyMembers_wasTreatedForAlcoholism'] = familyMembers_wasTreatedForAlcoholism;
+        cadet['familyMembers_wasTreatedForAddiction'] = familyMembers_wasTreatedForAddiction;
+        cadet['familyMembers_hasACriminalRecord'] = familyMembers_hasACriminalRecord;
+        cadet['familyMembers_hasAMentalIllness'] = familyMembers_hasAMentalIllness;
+        cadet['familyMembers_hasSuicideAttempts'] = familyMembers_hasSuicideAttempts;
+        cadet['familyMembers_hasADisability'] = familyMembers_hasADisability;
+        cadet['familyMembers_hasDied'] = familyMembers_hasDied;
+        cadet['familyMembers_isBroughtUpSeparately'] = familyMembers_isBroughtUpSeparately;
+        cadet.familyMembers = [];
+
+        var educations_institutionType = [];
+        var educations_institutionName = [];
+        var educations_specialty = [];
+        var educations_yearOfEnding = [];
+        var educations_unfinished = [];
+        var educations_highAchiever = [];
+        var educations_redDiploma = [];
+        $.each(cadet.educations, function () {
+            educations_institutionType.push(this.institutionType);
+            educations_institutionName.push(this.institutionName);
+            educations_specialty.push(this.specialty);
+            educations_yearOfEnding.push(this.yearOfEnding);
+            educations_unfinished.push(this.unfinished);
+            educations_highAchiever.push(this.highAchiever);
+            educations_redDiploma.push(this.redDiploma);
+        });
+        cadet['educations_institutionType'] = educations_institutionType;
+        cadet['educations_institutionName'] = educations_institutionName;
+        cadet['educations_specialty'] = educations_specialty;
+        cadet['educations_yearOfEnding'] = educations_yearOfEnding;
+        cadet['educations_unfinished'] = educations_unfinished;
+        cadet['educations_highAchiever'] = educations_highAchiever;
+        cadet['educations_redDiploma'] = educations_redDiploma;
+        cadet.educations = [];
+
+
+        var foreignLanguages_language = [];
+        var foreignLanguages_level = [];
+        $.each(cadet.foreignLanguages, function () {
+            foreignLanguages_language.push(this.language);
+            foreignLanguages_level.push(this.level);
+        });
+        cadet['foreignLanguages_language'] = foreignLanguages_language;
+        cadet['foreignLanguages_level'] = foreignLanguages_level;
+        cadet.foreignLanguages = [];
+
+
+        $.post(
+            "../api/cadet/saveCadet",
+            $.param(cadet)
+            , function (data) {
+                if (data.success == 0) {
+                    alert("Обновлено");
+                }
+            },
+            "json"
+        );
+        //}
     };
 
 });

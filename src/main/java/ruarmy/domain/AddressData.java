@@ -23,6 +23,9 @@ public class AddressData implements Serializable {
     @PrimaryKeyJoinColumn
     private Cadet cadet;
 
+    public AddressData() {
+    }
+
     public AddressData(Cadet cadet) {
         this.cadet = cadet;
     }
@@ -91,6 +94,39 @@ public class AddressData implements Serializable {
 
     @Basic
     String indexOfActualAddress;
+
+
+
+
+    public String getRegisteredAddress(){
+        return
+                subjectOfRegisteredAddress+" "+
+                        cityOfRegisteredAddressType+" "+
+                        cityOfRegisteredAddress+" "+
+                        streetOfRegisteredAddressType+" "+
+                        streetOfRegisteredAddress+" "+
+                        houseOfRegisteredAddress+" "+
+                        buildingOfRegisteredAddress+" "+
+                        apartmentOfRegisteredAddress+" "+
+                        indexOfRegisteredAddress;
+    }
+
+    public String getActualAddress(){
+        return
+                subjectOfActualAddress+" "+
+                        cityOfActualAddressType+" "+
+                        cityOfActualAddress+" "+
+                        streetOfActualAddressType+" "+
+                        streetOfActualAddress+" "+
+                        houseOfActualAddress+" "+
+                        buildingOfActualAddress+" "+
+                        apartmentOfActualAddress+" "+
+                        indexOfActualAddress;
+    }
+
+    public String getBirthAddress(){
+        return subjectOfPlaceOfBirth+" "+cityOfPlaceOfBirthType+" "+cityOfPlaceOfBirth;
+    }
 
 
     public Long getId() {

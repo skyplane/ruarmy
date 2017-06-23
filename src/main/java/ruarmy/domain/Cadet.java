@@ -42,24 +42,58 @@ public class Cadet {
     String religion;
     @Basic
     String phone;
-    @Basic
-    String unit;
+
+    @ManyToOne
+    private Division division;
+
     @Basic
     String post;
 
-    @Basic
-    String education;
+
+
     @Basic
     String skills;
     @Basic
     String drivingLicense;
-    @Basic
-    String compositionOfFamily;
 
     @Basic
     String father;
     @Basic
     String mother;
+
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OrderBy("id")
+    List<Education> educations = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OrderBy("id")
+    List<ForeignLanguage> foreignLanguages = new ArrayList<>();
+
+    @Basic
+    String compositionOfFamily;
+
+    @Basic
+    Boolean hasInformationAboutParents;
+
+    @Basic
+    String withoutFather;
+
+    @Basic
+    Boolean fatherExist;
+
+    @Basic
+    String withoutMother;
+
+    @Basic
+    Boolean motherExist;
+
+    @Basic
+    String married;
+
+    @Basic
+    String marrieds;
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
     @OrderBy("id")
@@ -111,6 +145,9 @@ public class Cadet {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cadet")
     private AddressData addressData = new AddressData(this);
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OrderBy("id")
+    List<TripsAbroad> tripsAbroads = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -178,7 +215,6 @@ public class Cadet {
         this.patronymic = patronymic;
     }
 
-
     public String getPassportNumber() {
         return passportNumber;
     }
@@ -219,28 +255,12 @@ public class Cadet {
         this.phone = phone;
     }
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
     public String getPost() {
         return post;
     }
 
     public void setPost(String post) {
         this.post = post;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
     }
 
     public String getSkills() {
@@ -434,5 +454,95 @@ public class Cadet {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
+    }
+
+    public List<ForeignLanguage> getForeignLanguages() {
+        return foreignLanguages;
+    }
+
+    public void setForeignLanguages(List<ForeignLanguage> foreignLanguages) {
+        this.foreignLanguages = foreignLanguages;
+    }
+
+
+    public Boolean getHasInformationAboutParents() {
+        return hasInformationAboutParents;
+    }
+
+    public void setHasInformationAboutParents(Boolean hasInformationAboutParents) {
+        this.hasInformationAboutParents = hasInformationAboutParents;
+    }
+
+    public String getWithoutFather() {
+        return withoutFather;
+    }
+
+    public void setWithoutFather(String withoutFather) {
+        this.withoutFather = withoutFather;
+    }
+
+    public Boolean getFatherExist() {
+        return fatherExist;
+    }
+
+    public void setFatherExist(Boolean fatherExist) {
+        this.fatherExist = fatherExist;
+    }
+
+    public String getWithoutMother() {
+        return withoutMother;
+    }
+
+    public void setWithoutMother(String withoutMother) {
+        this.withoutMother = withoutMother;
+    }
+
+    public Boolean getMotherExist() {
+        return motherExist;
+    }
+
+    public void setMotherExist(Boolean motherExist) {
+        this.motherExist = motherExist;
+    }
+
+    public String getMarried() {
+        return married;
+    }
+
+    public void setMarried(String married) {
+        this.married = married;
+    }
+
+    public String getMarrieds() {
+        return marrieds;
+    }
+
+    public void setMarrieds(String marrieds) {
+        this.marrieds = marrieds;
+    }
+
+    public List<TripsAbroad> getTripsAbroads() {
+        return tripsAbroads;
+    }
+
+    public void setTripsAbroads(List<TripsAbroad> tripsAbroads) {
+        this.tripsAbroads = tripsAbroads;
     }
 }

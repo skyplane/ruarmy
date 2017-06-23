@@ -55,6 +55,9 @@ public class FamilyMember {
     @Basic
     Boolean hasDied;
 
+    @Basic
+    Boolean isBroughtUpSeparately;
+
 
 
 
@@ -193,5 +196,11 @@ public class FamilyMember {
         this.hasDied = hasDied;
     }
 
+    public Boolean getBroughtUpSeparately() {
+        return isBroughtUpSeparately;
+    }
 
+    public void setBroughtUpSeparately(Boolean broughtUpSeparately) {
+        isBroughtUpSeparately = broughtUpSeparately;
+    }
 }

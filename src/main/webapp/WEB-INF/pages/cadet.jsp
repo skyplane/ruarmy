@@ -923,7 +923,7 @@
                                         <label class="col-sm-4 control-label">Категория годности</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" name="validityCategory"
-                                                   id="categoryDate" ng-model="cadet.validityCategory">
+                                                   id="validityCategory" ng-model="cadet.validityCategory">
                                         </div>
                                     </div>
                                 </div>
