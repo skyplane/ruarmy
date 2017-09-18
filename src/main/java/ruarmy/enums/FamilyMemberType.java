@@ -5,10 +5,17 @@ package ruarmy.enums;
  */
 public enum FamilyMemberType {
 
-    FATHER("FamilyMemberType.FATHER"),
     MOTHER("FamilyMemberType.MOTHER"),
+    FATHER("FamilyMemberType.FATHER"),
+    STEPMOTHER("FamilyMemberType.STEPMOTHER"),
+    STEPFATHER("FamilyMemberType.STEPFATHER"),
+    GUARDIAN("FamilyMemberType.GUARDIAN"),
     BROTHER("FamilyMemberType.BROTHER"),
-    SISTER("FamilyMemberType.SISTER");
+    SISTER("FamilyMemberType.SISTER"),
+    WIFE("FamilyMemberType.WIFE"),
+    SON("FamilyMemberType.SON"),
+    DAUGHTER("FamilyMemberType.DAUGHTER");
+
 
     private String resourceKey;
 

@@ -15,6 +15,8 @@ function loadSubjectsByIdAndType(subjectId, objectId, type) {
 
 var k;
 
+
+
 var app = angular.module('cadetApp', ["checklist-model"]);
 
 app.directive('uiPassport', function () {
@@ -126,7 +128,6 @@ app.controller('cadetCtrl', function ($scope) {
         $scope.cadet.tripsAbroads.splice(index, 1);
     };
     $scope.saveTripsAbroad = function () {
-        k = $scope.tripsAbroad.country;
         $scope.cadet.tripsAbroads[$scope.tripsAbroadIndex] = $scope.tripsAbroad;
         $('#tripsAbroadModal').modal('hide');
     };
@@ -148,7 +149,6 @@ app.controller('cadetCtrl', function ($scope) {
     $scope.getSkillsTextByFoa = function (val) {
         var str = '';
 
-        k = $scope.systemSkills;
 
         $.each($scope.skills, function () {
             var skVal = this;
@@ -272,6 +272,7 @@ app.controller('cadetCtrl', function ($scope) {
     $scope.familyMemberIndex = 0;
     $scope.addFamilyMember = function () {
         $scope.cadet.familyMembers.push({
+            familyMemberType: 1,
             firstName: '',
             lastName: '',
             patronymic: '',
@@ -1046,7 +1047,8 @@ app.controller('cadetCtrl', function ($scope) {
          if (!$valid) {
          alert('Проверьте данные формы');
          } else {*/
-        var cadetOri = $scope.cadet;
+
+        var cadetOri = jQuery.extend(true, {}, $scope.cadet);
         var cadet = withCsrfData(cadetOri);
         cadet['driversLicenses'] = $scope.driversLicenses;
         cadet['division'] = $scope.division;
@@ -1075,6 +1077,7 @@ app.controller('cadetCtrl', function ($scope) {
         cadet['tripsAbroads_doMaintainARelationship'] = tripsAbroads_doMaintainARelationship;
         cadet.tripsAbroads = [];
 
+        var familyMembers_type = [];
         var familyMembers_firstName = [];
         var familyMembers_lastName = [];
         var familyMembers_patronymic = [];
@@ -1090,6 +1093,7 @@ app.controller('cadetCtrl', function ($scope) {
         var familyMembers_hasDied = [];
         var familyMembers_isBroughtUpSeparately = [];
         $.each(cadet.familyMembers, function () {
+            familyMembers_type.push(this.familyMemberType);
             familyMembers_firstName.push(this.firstName);
             familyMembers_lastName.push(this.lastName);
             familyMembers_patronymic.push(this.patronymic);
@@ -1103,8 +1107,15 @@ app.controller('cadetCtrl', function ($scope) {
             familyMembers_hasSuicideAttempts.push(this.hasSuicideAttempts);
             familyMembers_hasADisability.push(this.hasADisability);
             familyMembers_hasDied.push(this.hasDied);
-            familyMembers_isBroughtUpSeparately.push(this.isBroughtUpSeparately);
+
+            if (this.isBroughtUpSeparately==null){
+                familyMembers_isBroughtUpSeparately.push(false);
+            } else {
+                familyMembers_isBroughtUpSeparately.push(this.isBroughtUpSeparately);
+            }
+
         });
+        cadet['familyMembers_type'] = familyMembers_type;
         cadet['familyMembers_firstName'] = familyMembers_firstName;
         cadet['familyMembers_lastName'] = familyMembers_lastName;
         cadet['familyMembers_patronymic'] = familyMembers_patronymic;
@@ -1130,12 +1141,36 @@ app.controller('cadetCtrl', function ($scope) {
         var educations_redDiploma = [];
         $.each(cadet.educations, function () {
             educations_institutionType.push(this.institutionType);
-            educations_institutionName.push(this.institutionName);
-            educations_specialty.push(this.specialty);
-            educations_yearOfEnding.push(this.yearOfEnding);
-            educations_unfinished.push(this.unfinished);
-            educations_highAchiever.push(this.highAchiever);
-            educations_redDiploma.push(this.redDiploma);
+            if (this.institutionName==null){
+                educations_institutionName.push('');
+            } else {
+                educations_institutionName.push(this.institutionName);
+            }
+            if (this.specialty==null){
+                educations_specialty.push('');
+            } else {
+                educations_specialty.push(this.specialty);
+            }
+            if (this.yearOfEnding==null){
+                educations_yearOfEnding.push(0);
+            } else {
+                educations_yearOfEnding.push(this.yearOfEnding);
+            }
+            if (this.unfinished==null){
+                educations_unfinished.push(false);
+            } else {
+                educations_unfinished.push(this.unfinished);
+            }
+            if (this.highAchiever==null){
+                educations_highAchiever.push(false);
+            } else {
+                educations_highAchiever.push(this.highAchiever);
+            }
+            if (this.redDiploma==null){
+                educations_redDiploma.push(false);
+            } else {
+                educations_redDiploma.push(this.redDiploma);
+            }
         });
         cadet['educations_institutionType'] = educations_institutionType;
         cadet['educations_institutionName'] = educations_institutionName;
@@ -1157,6 +1192,7 @@ app.controller('cadetCtrl', function ($scope) {
         cadet['foreignLanguages_level'] = foreignLanguages_level;
         cadet.foreignLanguages = [];
 
+        k=cadet;
 
         $.post(
             "../api/cadet/saveCadet",

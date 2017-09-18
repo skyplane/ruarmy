@@ -1,7 +1,6 @@
 package ruarmy.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.servlet.ModelAndView;
 import ruarmy.repository.DataRowRepository;
 import org.json.JSONArray;
@@ -18,7 +17,6 @@ import ruarmy.domain.SelectInputField;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -133,6 +131,23 @@ public class HomeController {
            model.setViewName("cadet");
        }
        return model;
+
+    }
+
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ModelAndView profile(HttpServletRequest request) {
+
+        ModelAndView model = new ModelAndView();
+        model.addObject("title", "Spring Security Hello World");
+        model.addObject("message", "This is welcome page!");
+
+        if (request.isUserInRole("ROLE_OFFICER")) {
+            model.addObject("cursantId", request.getParameter("cursantId"));
+
+            model.setViewName("officerProfile");
+        }
+        return model;
 
     }
 

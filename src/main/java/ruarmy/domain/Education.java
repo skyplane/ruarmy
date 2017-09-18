@@ -19,7 +19,7 @@ public class Education {
     String institutionName;
 
     @Basic
-    String specialty;
+    String speciality;
 
     @Basic
     String yearOfEnding;
@@ -60,12 +60,12 @@ public class Education {
         this.institutionName = institutionName;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpeciality(String specialty) {
+        this.speciality = specialty;
     }
 
     public String getYearOfEnding() {

@@ -52,6 +52,14 @@ public class BaseController {
         }
     }
 
+
+    String nnl(Object obj){
+        if (obj == null)
+            return "";
+        else
+            return obj.toString();
+    }
+
  /*   @RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public ModelAndView welcomePage() {
 

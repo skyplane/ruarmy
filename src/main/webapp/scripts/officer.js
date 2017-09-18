@@ -3,8 +3,6 @@
  */
 
 
-var loadCursantsTableOnce = false;
-
 var datatablesCursantsColumns = [
     {data: "fio", visible: true},
     {data: "militaryRank", visible: false},
@@ -22,6 +20,7 @@ var datatablesCursantsColumns = [
     {data: "dateOfBirth", visible: false}
 ];
 
+var loadCursantsTableOnce = false;
 
 function loadCursantsTable($scope) {
     $.post(
@@ -33,42 +32,30 @@ function loadCursantsTable($scope) {
 
             $('#cursantsTable').DataTable({
                 destroy: true,
-                buttons: ['csv', 'excel',
-                    {extend: 'pdfHtml5', orientation: 'landscape', pageSize: 'LEGAL'}
-                    , 'colvis'],
+                buttons: ['excel', 'colvis'],
                 responsive: true,
                 sScrollX: '100%',
                 language: datatablesLanguage,
                 columns: datatablesCursantsColumns,
+                rowId: 'cursantId',
                 data: json.data,
                 order: [1, 'desc'],
                 "fnInitComplete": function (oSettings) {
                     if (loadCursantsTableOnce == false) {
                         loadCursantsTableOnce = true;
-                        /* $('#profilesTable tbody').on('click', 'tr', function () {
-                         var tr = this;
-                         if ($(tr).hasClass('selected')) {
-                         $(tr).removeClass('selected');
-                         $('.editProfile').fadeOut();
-                         } else {
-                         $('#profilesTable').DataTable().$('tr.selected').removeClass('selected');
-                         $(tr).addClass('selected');
-                         $('.editProfile').fadeIn();
-                         $.get(
-                         "../api/profile/loadProfileById?id=" + $($(tr).find('td')[0]).text()
-                         , function (json) {
-                         $scope.$apply(function () {
-                         $scope.profile = json;
-                         });
-                         },
-                         "json"
-                         );
-                         }
-                         });*/
+                        $('#cursantsTable tbody').on('click', 'tr', function () {
+                            var tr = this;
+                            if ($(tr).hasClass('selected')) {
+                                $(tr).removeClass('selected');
+                            } else {
+                                $('#cursantsTable').DataTable().$('tr.selected').removeClass('selected');
+                                $(tr).addClass('selected');
+                                window.open(window.location.href.replace('home','profile')+'?cursantId='+this.id);
+                            }
+                        });
                     }
                 }
             });
-
 
             $('#cursantsTable').DataTable().buttons().container().appendTo('#cursantsTable_wrapper .col-sm-6:eq(0)');
 

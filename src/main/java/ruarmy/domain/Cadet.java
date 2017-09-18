@@ -95,7 +95,7 @@ public class Cadet {
     String marrieds;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet", fetch = FetchType.EAGER)
     @OrderBy("id")
     List<FamilyMember> familyMembers = new ArrayList<>();
 

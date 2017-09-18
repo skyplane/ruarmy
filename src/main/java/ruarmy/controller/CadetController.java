@@ -1,9 +1,8 @@
 package ruarmy.controller;
 
 import com.google.gson.stream.JsonWriter;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -128,6 +127,7 @@ public class CadetController extends BaseController {
             @RequestParam(value = "tripsAbroads_country[]", defaultValue = "") String[] tripsAbroads_country,
             @RequestParam(value = "tripsAbroads_doMaintainARelationship[]", defaultValue = "") String[] tripsAbroads_doMaintainARelationship,
 
+            @RequestParam(value = "familyMembers_type[]", defaultValue = "0") Integer[] familyMembers_type,
             @RequestParam(value = "familyMembers_firstName[]", defaultValue = "") String[] familyMembers_firstName,
             @RequestParam(value = "familyMembers_lastName[]", defaultValue = "") String[] familyMembers_lastName,
             @RequestParam(value = "familyMembers_patronymic[]", defaultValue = "") String[] familyMembers_patronymic,
@@ -251,25 +251,26 @@ public class CadetController extends BaseController {
             cadet.setAbroad(abroad);
 
             String dlsStr = "";
-            if (driversLicenses.length>0) {
+            if (driversLicenses.length > 0) {
                 for (String dl : driversLicenses) {
                     dlsStr += dl + "|";
                 }
-                cadet.setDrivingLicense(dlsStr.substring(0,dlsStr.length()-1));
+                cadet.setDrivingLicense(dlsStr.substring(0, dlsStr.length() - 1));
             }
 
 
             String skillsStr = "";
-            if (skills.length>0) {
+            if (skills.length > 0) {
                 for (String skill : skills) {
                     skillsStr += skill + "|";
                 }
-                cadet.setSkills(skillsStr.substring(0,skillsStr.length()-1));
+                cadet.setSkills(skillsStr.substring(0, skillsStr.length() - 1));
             }
 
 
             for (int i = 0; i < tripsAbroads_who.length; i++) {
                 TripsAbroad tripsAbroad = new TripsAbroad();
+                tripsAbroad.setCadet(cadet);
                 tripsAbroad.setWho(tripsAbroads_who[i]);
                 tripsAbroad.setFirstName(tripsAbroads_firstName[i]);
                 tripsAbroad.setLastName(tripsAbroads_lastName[i]);
@@ -281,6 +282,10 @@ public class CadetController extends BaseController {
 
             for (int i = 0; i < familyMembers_firstName.length; i++) {
                 FamilyMember familyMember = new FamilyMember();
+                familyMember.setCadet(cadet);
+                familyMember.setType(
+                        FamilyMemberType.getByInt(familyMembers_type[i]-1)
+                        );
                 familyMember.setFirstName(familyMembers_firstName[i]);
                 familyMember.setLastName(familyMembers_lastName[i]);
                 familyMember.setPatronymic(familyMembers_patronymic[i]);
@@ -301,9 +306,10 @@ public class CadetController extends BaseController {
 
             for (int i = 0; i < educations_institutionType.length; i++) {
                 Education education = new Education();
+                education.setCadet(cadet);
                 education.setInstitutionType(educations_institutionType[i]);
                 education.setInstitutionName(educations_institutionName[i]);
-                education.setSpecialty(educations_specialty[i]);
+                education.setSpeciality(educations_specialty[i]);
                 education.setYearOfEnding(educations_yearOfEnding[i]);
                 education.setUnfinished("true".equals(educations_unfinished[i]));
                 education.setHighAchiever("true".equals(educations_highAchiever[i]));
@@ -313,11 +319,11 @@ public class CadetController extends BaseController {
 
             for (int i = 0; i < foreignLanguages_language.length; i++) {
                 ForeignLanguage foreignLanguage = new ForeignLanguage();
+                foreignLanguage.setCadet(cadet);
                 foreignLanguage.setLanguage(foreignLanguages_language[i]);
                 foreignLanguage.setLevel(foreignLanguages_level[i]);
                 cadet.getForeignLanguages().add(foreignLanguage);
             }
-
 
 
             cadetRepository.save(cadet);
@@ -346,19 +352,20 @@ public class CadetController extends BaseController {
             for (Cadet cadet : cadets) {
                 jsonWriter.beginObject();
                 jsonWriter.name("id").value(cadet.getId());
-                jsonWriter.name("fio").value(cadet.getName()+" "+cadet.getSurname()+" "+cadet.getPatronymic());
+                jsonWriter.name("cursantId").value(cadet.getId());
+                jsonWriter.name("fio").value(cadet.getName() + " " + cadet.getSurname() + " " + cadet.getPatronymic());
                 jsonWriter.name("militaryRank").value(cadet.getMilitaryRank());
                 jsonWriter.name("post").value(cadet.getPost());
-                jsonWriter.name("division").value(cadet.getDivision()==null?"":cadet.getDivision().getName());
+                jsonWriter.name("division").value(cadet.getDivision() == null ? "" : cadet.getDivision().getName());
                 jsonWriter.name("faculty").value(cadet.getFaculty());
                 jsonWriter.name("speciality").value(cadet.getSpecialty());
                 jsonWriter.name("nationality").value(cadet.getNationality());
                 jsonWriter.name("religion").value(cadet.getReligion());
 
                 String family = "";
-                family+= cadet.getCompositionOfFamily() +" "+cadet.getHasInformationAboutParents()+" "+
-                        cadet.getWithoutFather()+" "+cadet.getWithoutMother()+" "+
-                        cadet.getFatherExist() +" "+cadet.getMotherExist()+" "+cadet.getMarried();
+                family += cadet.getCompositionOfFamily() + " " + cadet.getHasInformationAboutParents() + " " +
+                        cadet.getWithoutFather() + " " + cadet.getWithoutMother() + " " +
+                        cadet.getFatherExist() + " " + cadet.getMotherExist() + " " + cadet.getMarried();
 
                 jsonWriter.name("family").value(family);
                 jsonWriter.name("validityCategory").value(cadet.getValidityCategory());
@@ -372,6 +379,199 @@ public class CadetController extends BaseController {
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
+            jsonWriter.endObject();
+            closeJsonWriter(response, jsonWriter);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @RequestMapping(value = "/loadCadet", method = RequestMethod.POST)
+    public void loadCadet(@RequestParam("cursantId") Long cursantId,
+                          HttpServletResponse response) throws UnsupportedEncodingException {
+        try {
+
+            Cadet cadet = cadetRepository.findOne(cursantId);
+
+            JsonWriter jsonWriter = getJsonWriter(response);
+            jsonWriter.beginObject();
+            jsonWriter.name("id").value(cadet.getId());
+
+
+            jsonWriter.name("addressData");
+            jsonWriter.beginObject();
+            jsonWriter.name("birthData");
+            jsonWriter.beginObject();
+            jsonWriter.name("cityOfPlaceOfBirthType").value(nnl(cadet.getAddressData().getCityOfPlaceOfBirthType()));
+            jsonWriter.name("cityOfPlaceOfBirth").value(nnl(cadet.getAddressData().getCityOfPlaceOfBirth()));
+            jsonWriter.name("subjectOfPlaceOfBirth").value(nnl(cadet.getAddressData().getSubjectOfPlaceOfBirth()));
+            jsonWriter.endObject();
+            jsonWriter.name("registeredData");
+            jsonWriter.beginObject();
+            jsonWriter.name("cityOfRegisteredAddressType").value(nnl(cadet.getAddressData().getCityOfRegisteredAddressType()));
+            jsonWriter.name("streetOfRegisteredAddressType").value(nnl(cadet.getAddressData().getStreetOfRegisteredAddressType()));
+            jsonWriter.name("cityOfRegisteredAddress").value(nnl(cadet.getAddressData().getCityOfRegisteredAddress()));
+            jsonWriter.name("streetOfRegisteredAddress").value(nnl(cadet.getAddressData().getStreetOfRegisteredAddress()));
+            jsonWriter.name("subjectOfRegisteredAddress").value(nnl(cadet.getAddressData().getSubjectOfRegisteredAddress()));
+            jsonWriter.name("houseOfRegisteredAddress").value(nnl(cadet.getAddressData().getHouseOfRegisteredAddress()));
+            jsonWriter.name("buildingOfRegisteredAddress").value(nnl(cadet.getAddressData().getBuildingOfRegisteredAddress()));
+            jsonWriter.name("apartmentOfRegisteredAddress").value(nnl(cadet.getAddressData().getApartmentOfRegisteredAddress()));
+            jsonWriter.name("indexOfRegisteredAddress").value(nnl(cadet.getAddressData().getIndexOfRegisteredAddress()));
+            jsonWriter.endObject();
+            jsonWriter.name("actualData");
+            jsonWriter.beginObject();
+            jsonWriter.name("cityOfActualAddressType").value(nnl(cadet.getAddressData().getCityOfActualAddressType()));
+            jsonWriter.name("streetOfActualAddressType").value(nnl(cadet.getAddressData().getStreetOfActualAddressType()));
+            jsonWriter.name("cityOfActualAddress").value(nnl(cadet.getAddressData().getCityOfActualAddress()));
+            jsonWriter.name("streetOfActualAddress").value(nnl(cadet.getAddressData().getStreetOfActualAddress()));
+            jsonWriter.name("subjectOfActualAddress").value(nnl(cadet.getAddressData().getSubjectOfActualAddress()));
+            jsonWriter.name("houseOfActualAddress").value(nnl(cadet.getAddressData().getHouseOfActualAddress()));
+            jsonWriter.name("buildingOfActualAddress").value(nnl(cadet.getAddressData().getBuildingOfActualAddress()));
+            jsonWriter.name("apartmentOfActualAddress").value(nnl(cadet.getAddressData().getApartmentOfActualAddress()));
+            jsonWriter.name("indexOfActualAddress").value(nnl(cadet.getAddressData().getIndexOfActualAddress()));
+            jsonWriter.endObject();
+            jsonWriter.endObject();
+
+
+            jsonWriter.name("health");
+            jsonWriter.beginObject();
+            jsonWriter.name("concussionsWereNot").value(nnl(cadet.getConcussionsWereNot()));
+            jsonWriter.name("traumaticBrainInjuryWasNot").value(nnl(cadet.getTraumaticBrainInjuryWasNot()));
+            jsonWriter.name("theNarcologWasNot").value(nnl(cadet.getTheNarcologWasNot()));
+            jsonWriter.name("thePsychiatristWasNot").value(nnl(cadet.getThePsychiatristWasNot()));
+            jsonWriter.name("alcohol").value(nnl(cadet.getAlcohol()));
+            jsonWriter.name("drugUse").value(nnl(cadet.getDrugUse()));
+            jsonWriter.name("chronicDiseases").value(nnl(cadet.getChronicDiseases()));
+            jsonWriter.name("validityCategory").value(nnl(cadet.getValidityCategory()));
+            jsonWriter.endObject();
+
+
+            jsonWriter.name("behavior");
+            jsonWriter.beginObject();
+            jsonWriter.name("thoughtsOfSuicideDoesNotHave").value(nnl(cadet.getThoughtsOfSuicideDoesNotHave()));
+            jsonWriter.name("administrativeOffenseDidNotCommit").value(nnl(cadet.getAdministrativeOffenseDidNotCommit()));
+            jsonWriter.name("policeRecordDoesNotHave").value(nnl(cadet.getPoliceRecordDoesNotHave()));
+            jsonWriter.name("criminalLiabilityWasNotInvolved").value(nnl(cadet.getCriminalLiabilityWasNotInvolved()));
+            jsonWriter.name("relativesAndFriendsAbroad").value(nnl(cadet.getRelativesAndFriendsAbroad()));
+            jsonWriter.endObject();
+
+
+            jsonWriter.name("familyComposition");
+            jsonWriter.beginObject();
+            jsonWriter.name("fatherExist").value(nnl(cadet.getFatherExist()));
+            jsonWriter.name("motherExist").value(nnl(cadet.getMotherExist()));
+            jsonWriter.name("hasInformationAboutParents").value(nnl(cadet.getHasInformationAboutParents()));
+            jsonWriter.name("withoutFather").value(nnl(cadet.getWithoutFather()));
+            jsonWriter.name("withoutMother").value(nnl(cadet.getWithoutMother()));
+            jsonWriter.name("married").value(nnl(cadet.getMarried()));
+            jsonWriter.name("marrieds").value(nnl(cadet.getMarrieds()));
+            jsonWriter.name("compositionOfFamily").value(nnl(cadet.getCompositionOfFamily()));
+            jsonWriter.name("familyMembers");
+            jsonWriter.beginArray();
+
+
+            for (FamilyMember familyMember : cadet.getFamilyMembers()) {
+                jsonWriter.beginObject();
+                jsonWriter.name("firstName").value(nnl(familyMember.getFirstName()));
+                jsonWriter.name("lastName").value(nnl(familyMember.getLastName()));
+                jsonWriter.name("patronymic").value(nnl(familyMember.getPatronymic()));
+                jsonWriter.name("dateOfBirth").value(nnl(RuarmyUtils.SIMPLE_DATE_FORMAT.format(familyMember.getDateOfBirth())));
+                jsonWriter.name("occupation").value(nnl(familyMember.getOccupation()));
+                jsonWriter.name("phone").value(nnl(familyMember.getPhone()));
+                jsonWriter.name("wasTreatedForAlcoholism").value(nnl(familyMember.getWasTreatedForAlcoholism()));
+                jsonWriter.name("wasTreatedForAddiction").value(nnl(familyMember.getWasTreatedForAddiction()));
+                jsonWriter.name("hasACriminalRecord").value(nnl(familyMember.getHasACriminalRecord()));
+                jsonWriter.name("hasAMentalIllness").value(nnl(familyMember.getHasAMentalIllness()));
+                jsonWriter.name("hasSuicideAttempts").value(nnl(familyMember.getHasSuicideAttempts()));
+                jsonWriter.name("hasADisability").value(nnl(familyMember.getHasADisability()));
+                jsonWriter.name("hasDied").value(nnl(familyMember.getHasDied()));
+                jsonWriter.name("broughtUpSeparately").value(nnl(familyMember.getBroughtUpSeparately()));
+                jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+            jsonWriter.endObject();
+
+
+            jsonWriter.name("totalInformation");
+            jsonWriter.beginObject();
+            jsonWriter.name("name").value(nnl(cadet.getName()));
+            jsonWriter.name("patronymic").value(nnl(cadet.getPatronymic()));
+            jsonWriter.name("surname").value(nnl(cadet.getSurname()));
+            jsonWriter.name("dateOfBirth").value(nnl(RuarmyUtils.SIMPLE_DATE_FORMAT.format(cadet.getDateOfBirth())));
+            jsonWriter.name("nationality").value(nnl(cadet.getNationality()));
+            jsonWriter.name("religion").value(nnl(cadet.getReligion()));
+            jsonWriter.name("militaryRank").value(nnl(cadet.getMilitaryRank()));
+            jsonWriter.name("division");
+            jsonWriter.beginObject();
+            jsonWriter.name("id").value(nnl(cadet.getDivision().getId()));
+            jsonWriter.name("name").value(nnl(cadet.getDivision().getName()));
+            jsonWriter.endObject();
+            jsonWriter.name("post").value(nnl(cadet.getPost()));
+            jsonWriter.name("passportNumber").value(nnl(cadet.getPassportNumber()));
+            jsonWriter.name("militaryIdNumber").value(nnl(cadet.getMilitaryIdNumber()));
+            jsonWriter.name("phone").value(nnl(cadet.getPhone()));
+            jsonWriter.endObject();
+
+
+            jsonWriter.name("educationAndSkills");
+            jsonWriter.beginObject();
+            jsonWriter.name("faculty").value(nnl(cadet.getFaculty()));
+            jsonWriter.name("specialty").value(nnl(cadet.getSpecialty()));
+            jsonWriter.name("yearOfAdmission").value(nnl(cadet.getYearOfAdmission()));
+            jsonWriter.name("phone").value(nnl(cadet.getPhone()));
+            jsonWriter.name("familyMembers");
+            jsonWriter.beginArray();
+            for (Education education : cadet.getEducations()) {
+                jsonWriter.beginObject();
+                jsonWriter.name("institutionType").value(nnl(education.getInstitutionType()));
+                jsonWriter.name("institutionName").value(nnl(education.getInstitutionName()));
+                jsonWriter.name("speciality").value(nnl(education.getSpeciality()));
+                jsonWriter.name("yearOfEnding").value(nnl(education.getYearOfEnding()));
+                jsonWriter.name("unfinished").value(nnl(education.getUnfinished()));
+                jsonWriter.name("highAchiever").value(nnl(education.getHighAchiever()));
+                jsonWriter.name("redDiploma").value(nnl(education.getRedDiploma()));
+                jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+            jsonWriter.name("skillsString").value(nnl(cadet.getSkills()));
+            jsonWriter.name("driversLicensesString").value(nnl(cadet.getDrivingLicense()));
+            jsonWriter.name("foreignLanguages");
+            jsonWriter.beginArray();
+            for (ForeignLanguage foreignLanguage : cadet.getForeignLanguages()) {
+                jsonWriter.beginObject();
+                jsonWriter.name("language").value(nnl(foreignLanguage.getLanguage()));
+                jsonWriter.name("level").value(nnl(foreignLanguage.getLevel()));
+                jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+            jsonWriter.endObject();
+
+
+            jsonWriter.name("tripsAbroad");
+            jsonWriter.beginArray();
+            for (TripsAbroad tripsAbroad : cadet.getTripsAbroads()) {
+                jsonWriter.beginObject();
+                jsonWriter.name("who").value(nnl(tripsAbroad.getWho()));
+                jsonWriter.name("firstName").value(nnl(tripsAbroad.getFirstName()));
+                jsonWriter.name("lastName").value(nnl(tripsAbroad.getLastName()));
+                jsonWriter.name("patronymic").value(nnl(tripsAbroad.getPatronymic()));
+                jsonWriter.name("country").value(nnl(tripsAbroad.getCountry()));
+                jsonWriter.name("doMaintainARelationship").value(nnl(tripsAbroad.getDoMaintainARelationship()));
+                jsonWriter.endObject();
+            }
+            jsonWriter.endArray();
+
+
+            jsonWriter.name("additionally");
+            jsonWriter.beginObject();
+            jsonWriter.name("scars").value(nnl(cadet.getScars()));
+            jsonWriter.name("tattoo").value(nnl(cadet.getTattoo()));
+            jsonWriter.name("abroad").value(nnl(cadet.getAbroad()));
+            jsonWriter.endObject();
+
+
+
             jsonWriter.endObject();
             closeJsonWriter(response, jsonWriter);
         } catch (IOException e) {
