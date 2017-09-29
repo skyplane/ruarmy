@@ -19,7 +19,7 @@ public class Cadet {
     @Basic
     String faculty;
     @Basic
-    String specialty;
+    String speciality;
     @Basic
     Integer yearOfAdmission;
     @Basic
@@ -49,8 +49,6 @@ public class Cadet {
     @Basic
     String post;
 
-
-
     @Basic
     String skills;
     @Basic
@@ -62,11 +60,11 @@ public class Cadet {
     String mother;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet", orphanRemoval = true)
     @OrderBy("id")
     List<Education> educations = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet", orphanRemoval = true)
     @OrderBy("id")
     List<ForeignLanguage> foreignLanguages = new ArrayList<>();
 
@@ -94,8 +92,7 @@ public class Cadet {
     @Basic
     String marrieds;
 
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet", fetch = FetchType.EAGER, orphanRemoval = true)
     @OrderBy("id")
     List<FamilyMember> familyMembers = new ArrayList<>();
 
@@ -145,7 +142,7 @@ public class Cadet {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cadet")
     private AddressData addressData = new AddressData(this);
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cadet", orphanRemoval = true)
     @OrderBy("id")
     List<TripsAbroad> tripsAbroads = new ArrayList<>();
 
@@ -175,12 +172,12 @@ public class Cadet {
         this.faculty = faculty;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 
     public String getMilitaryRank() {
@@ -456,7 +453,6 @@ public class Cadet {
         this.dateOfBirth = dateOfBirth;
     }
 
-
     public Division getDivision() {
         return division;
     }
@@ -480,7 +476,6 @@ public class Cadet {
     public void setForeignLanguages(List<ForeignLanguage> foreignLanguages) {
         this.foreignLanguages = foreignLanguages;
     }
-
 
     public Boolean getHasInformationAboutParents() {
         return hasInformationAboutParents;
@@ -545,4 +540,5 @@ public class Cadet {
     public void setTripsAbroads(List<TripsAbroad> tripsAbroads) {
         this.tripsAbroads = tripsAbroads;
     }
+
 }

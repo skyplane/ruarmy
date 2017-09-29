@@ -1,17 +1,20 @@
 package ruarmy.controller;
 
 import com.google.gson.stream.JsonWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Logger;
 
 @Controller
 public class BaseController {
 
-
+    @Autowired
+    protected Logger logger;
 
     protected JsonWriter getJsonWriter(HttpServletResponse response) throws IOException{
         OutputStreamWriter os;

@@ -31,19 +31,10 @@ public class AddressData implements Serializable {
     }
 
     @Basic
-    String cityOfPlaceOfBirthType;
+    Integer cityOfPlaceOfBirthType;
 
     @Basic
-    String cityOfRegisteredAddressType;
-
-    @Basic
-    String cityOfActualAddressType;
-
-    @Basic
-    String streetOfRegisteredAddressType;
-
-    @Basic
-    String streetOfActualAddressType;
+    Integer subjectOfPlaceOfBirthType;
 
     @Basic
     String subjectOfPlaceOfBirth;
@@ -53,10 +44,19 @@ public class AddressData implements Serializable {
 
 
     @Basic
+    Integer subjectOfRegisteredAddressType;
+
+    @Basic
     String subjectOfRegisteredAddress;
 
     @Basic
+    Integer cityOfRegisteredAddressType;
+
+    @Basic
     String cityOfRegisteredAddress;
+
+    @Basic
+    Integer streetOfRegisteredAddressType;
 
     @Basic
     String streetOfRegisteredAddress;
@@ -75,10 +75,19 @@ public class AddressData implements Serializable {
 
 
     @Basic
+    Integer subjectOfActualAddressType;
+
+    @Basic
     String subjectOfActualAddress;
 
     @Basic
+    Integer cityOfActualAddressType;
+
+    @Basic
     String cityOfActualAddress;
+
+    @Basic
+    Integer streetOfActualAddressType;
 
     @Basic
     String streetOfActualAddress;
@@ -101,9 +110,9 @@ public class AddressData implements Serializable {
     public String getRegisteredAddress(){
         return
                 subjectOfRegisteredAddress+" "+
-                        cityOfRegisteredAddressType+" "+
+                        //cityOfRegisteredAddressType+" "+
                         cityOfRegisteredAddress+" "+
-                        streetOfRegisteredAddressType+" "+
+                       // streetOfRegisteredAddressType+" "+
                         streetOfRegisteredAddress+" "+
                         houseOfRegisteredAddress+" "+
                         buildingOfRegisteredAddress+" "+
@@ -114,9 +123,9 @@ public class AddressData implements Serializable {
     public String getActualAddress(){
         return
                 subjectOfActualAddress+" "+
-                        cityOfActualAddressType+" "+
+                       // cityOfActualAddressType+" "+
                         cityOfActualAddress+" "+
-                        streetOfActualAddressType+" "+
+                       // streetOfActualAddressType+" "+
                         streetOfActualAddress+" "+
                         houseOfActualAddress+" "+
                         buildingOfActualAddress+" "+
@@ -273,43 +282,67 @@ public class AddressData implements Serializable {
         this.indexOfActualAddress = indexOfActualAddress;
     }
 
-    public String getCityOfPlaceOfBirthType() {
+    public Integer getCityOfPlaceOfBirthType() {
         return cityOfPlaceOfBirthType;
     }
 
-    public void setCityOfPlaceOfBirthType(String cityOfPlaceOfBirthType) {
+    public void setCityOfPlaceOfBirthType(Integer cityOfPlaceOfBirthType) {
         this.cityOfPlaceOfBirthType = cityOfPlaceOfBirthType;
     }
 
-    public String getCityOfRegisteredAddressType() {
+    public Integer getSubjectOfPlaceOfBirthType() {
+        return subjectOfPlaceOfBirthType;
+    }
+
+    public void setSubjectOfPlaceOfBirthType(Integer subjectOfPlaceOfBirthType) {
+        this.subjectOfPlaceOfBirthType = subjectOfPlaceOfBirthType;
+    }
+
+    public Integer getSubjectOfRegisteredAddressType() {
+        return subjectOfRegisteredAddressType;
+    }
+
+    public void setSubjectOfRegisteredAddressType(Integer subjectOfRegisteredAddressType) {
+        this.subjectOfRegisteredAddressType = subjectOfRegisteredAddressType;
+    }
+
+    public Integer getCityOfRegisteredAddressType() {
         return cityOfRegisteredAddressType;
     }
 
-    public void setCityOfRegisteredAddressType(String cityOfRegisteredAddressType) {
+    public void setCityOfRegisteredAddressType(Integer cityOfRegisteredAddressType) {
         this.cityOfRegisteredAddressType = cityOfRegisteredAddressType;
     }
 
-    public String getCityOfActualAddressType() {
-        return cityOfActualAddressType;
-    }
-
-    public void setCityOfActualAddressType(String cityOfActualAddressType) {
-        this.cityOfActualAddressType = cityOfActualAddressType;
-    }
-
-    public String getStreetOfRegisteredAddressType() {
+    public Integer getStreetOfRegisteredAddressType() {
         return streetOfRegisteredAddressType;
     }
 
-    public void setStreetOfRegisteredAddressType(String streetOfRegisteredAddressType) {
+    public void setStreetOfRegisteredAddressType(Integer streetOfRegisteredAddressType) {
         this.streetOfRegisteredAddressType = streetOfRegisteredAddressType;
     }
 
-    public String getStreetOfActualAddressType() {
+    public Integer getSubjectOfActualAddressType() {
+        return subjectOfActualAddressType;
+    }
+
+    public void setSubjectOfActualAddressType(Integer subjectOfActualAddressType) {
+        this.subjectOfActualAddressType = subjectOfActualAddressType;
+    }
+
+    public Integer getCityOfActualAddressType() {
+        return cityOfActualAddressType;
+    }
+
+    public void setCityOfActualAddressType(Integer cityOfActualAddressType) {
+        this.cityOfActualAddressType = cityOfActualAddressType;
+    }
+
+    public Integer getStreetOfActualAddressType() {
         return streetOfActualAddressType;
     }
 
-    public void setStreetOfActualAddressType(String streetOfActualAddressType) {
+    public void setStreetOfActualAddressType(Integer streetOfActualAddressType) {
         this.streetOfActualAddressType = streetOfActualAddressType;
     }
 }

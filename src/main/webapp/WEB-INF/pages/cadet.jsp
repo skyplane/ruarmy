@@ -234,6 +234,31 @@
                                                    ng-model="cadet.phone" placeholder="+7(***)***-****" ui-phone>
                                         </div>
                                     </div>
+                                    <hr>
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">Факультет</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="faculty" id="faculty"
+                                                   ng-model="cadet.faculty">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">Специальность</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="specialty" id="specialty"
+                                                   ng-model="cadet.specialty">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <label class="col-sm-4 control-label">Год поступления</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="yearOfAdmission"
+                                                   id="yearOfAdmission"
+                                                   ng-model="cadet.yearOfAdmission">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab5">
@@ -243,7 +268,8 @@
                                             <label class="control-label">Место рождения:</label>
                                         </div>
                                         <div class="col-sm-3" align="right">
-                                            <select name="subjectOfPlaceOfBirthType" id="subjectOfPlaceOfBirthType">
+                                            <select name="subjectOfPlaceOfBirthType" id="subjectOfPlaceOfBirthType"
+                                                    ng-model="cadet.addressData.subjectOfPlaceOfBirthType">
                                                 <option value="1" selected
                                                         onclick="loadSubjectsByIdAndType('subjectOfPlaceOfBirth', 'cityOfPlaceOfBirth', 1);">
                                                     область
@@ -465,31 +491,7 @@
                             </div>
                             <div class="tab-pane" id="tab6">
                                 <div class="container-fluid">
-                                    <div class="row">
-                                        <label class="col-sm-4 control-label">Факультет</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="faculty" id="faculty"
-                                                   ng-model="cadet.faculty">
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <label class="col-sm-4 control-label">Специальность</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="specialty" id="specialty"
-                                                   ng-model="cadet.specialty">
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <label class="col-sm-4 control-label">Год поступления</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="yearOfAdmission"
-                                                   id="yearOfAdmission"
-                                                   ng-model="cadet.yearOfAdmission">
-                                        </div>
-                                    </div>
-                                    <hr>
+
                                     <div class="row" align="center">
                                         <label class="control-label">Образование</label>
                                     </div>
@@ -500,7 +502,7 @@
                                     <div class="row" ng-repeat="education in cadet.educations track by $index">
                                         <div class="col-sm-8">
                                             {{textByInstitutionType(education.institutionType)}}
-                                            {{education.institutionType<5?(', '+education.institutionName+', '+education.specialty+', '+education.yearOfEnding+educationSubData(education)):''}}
+                                            {{education.institutionType<5?(', '+education.institutionName+', '+education.speciality+', '+education.yearOfEnding+educationSubData(education)):''}}
                                         </div>
                                         <div class="col-sm-4">
                                             <button ng-click="editEducation($index)">Редактировать</button>
@@ -606,7 +608,7 @@
                                         </div>
 
                                         <div class="col-lg-2">
-                                            <button ng-click="removeFamilyMember($index)">Удалить</button>
+                                            <button ng-click="removeForeignLanguage($index)">Удалить</button>
                                         </div>
                                     </div>
 
@@ -1109,27 +1111,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <%--<div class="row">
-                                        <label class="col-sm-4 control-label">Родственники, друзья за
-                                            границей</label>
-                                        <div class="col-sm-3"></div>
-                                        <div class="col-sm-2">
-                                            <div class="btn-group btn-group-justified" role="group">
-                                                <div class="btn-group" role="group">
-                                                    <button type="button"
-                                                            class="btn btn-default trueRelativesAndFriendsAbroad"
-                                                            ng-click="setRelativesAndFriendsAbroad(true)">Да
-                                                    </button>
-                                                </div>
-                                                <div class="btn-group" role="group">
-                                                    <button type="button"
-                                                            class="btn btn-default falseRelativesAndFriendsAbroad"
-                                                            ng-click="setRelativesAndFriendsAbroad(false)">Нет
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>--%>
+
                                 </div>
                             </div>
                             <br>
@@ -1522,9 +1504,9 @@
                                         <div class="row">
                                             <label class="col-sm-4 control-label">Специальность</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="educationSpecialty"
-                                                       id="educationSpecialty"
-                                                       ng-model="education.specialty">
+                                                <input type="text" class="form-control" name="educationSpeciality"
+                                                       id="educationSpeciality"
+                                                       ng-model="education.speciality">
                                             </div>
                                         </div>
                                         <br>

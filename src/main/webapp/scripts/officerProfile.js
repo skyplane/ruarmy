@@ -7,18 +7,90 @@ var app = angular.module('cursantsApp', ["checklist-model"]);
 
 var k;
 
+app.directive('uiPassport', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("0000 000000");
+        }
+    };
+});
+app.directive('uiMilitaryTicket', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask(
+                'MM 0000000', {
+                    translation: {
+                        'M': {
+                            pattern: /[А-Я]/, optional: false
+                        }
+                    },
+                    placeholder: "** *******"
+                });
+        }
+    };
+});
+app.directive('uiPhone', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("+7(Z00)000-0000", {
+                translation: {
+                    'Z': {
+                        pattern: /[9]/
+                    }
+                }
+            });
+        }
+    };
+});
+
+
 app.controller('officerProfileCtrl', function ($scope) {
+
+    $scope.toggleWithCustomItem = function (item, val) {
+        if (val == null) {
+            $('.' + false + item).removeClass('active').removeClass('btn-primary').removeClass('btn-default')
+                .addClass('btn-default');
+            $('.' + true + item).removeClass('active').removeClass('btn-primary').removeClass('btn-default')
+                .addClass('btn-default');
+        } else {
+            $('.' + !val + item).removeClass('active').removeClass('btn-primary').removeClass('btn-default')
+                .addClass('btn-default');
+            $('.' + val + item).removeClass('active').removeClass('btn-primary').removeClass('btn-default').addClass('active').addClass('btn-primary');
+        }
+    };
+
+
+    $scope.options={};
+    $scope.options.educationAndSkills={};
+    $scope.options.addressData={};
 
 
     $scope.cursantId = $('#cursantId').attr('value');
 
+    $scope.cadet={};
 
     $.post(
         "../api/cadet/loadCadet?cursantId="+$scope.cursantId,
         withCsrfData({})
         , function (json) {
 
-            k=json;
+
+            $scope.$apply(function () {
+                $scope.cadet=json;
+            });
+
+            initTotalInformation($scope);
+            initEducationAndSkills($scope);
+            initAddressData($scope);
+            initFamilyComposition($scope);
+            initHealth($scope);
+            initBehavior($scope);
+            initTripsAbroad($scope);
+            initAdditionally($scope);
+
 
         },
         "json"
