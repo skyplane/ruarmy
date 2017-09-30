@@ -33,26 +33,41 @@ function initBehavior($scope){
 
     $scope.basicBehaviorText = function () {
         var str = '';
-        if ($.parseJSON($scope.cadet.behavior.thoughtsOfSuicideDoesNotHave)){
-            str += 'мыслей о суициде не имеет';
-        } else
-            str += 'имеет мысли о суициде';
-        if ($.parseJSON($scope.cadet.behavior.suicideAttemptsDidNotCommit)){
-            str += ', попыток суицида не совершал';
-        } else
-            str += ', совершал попытки суицида';
-        if ($.parseJSON($scope.cadet.behavior.administrativeOffenseDidNotCommit)){
-            str += ', административные правонарушения не совершал';
-        } else
-            str += ', совершал административные правонарушения';
-        if ($.parseJSON($scope.cadet.behavior.policeRecordDoesNotHave)){
-            str += ', приводов в полицию не имеет';
-        } else
-            str += ', имеет приводы в полицию';
-        if ($.parseJSON($scope.cadet.behavior.criminalLiabilityWasNotInvolved)){
-            str += ', к уголовной ответственности не привлекался';
-        } else
-            str += ', привлекался к уголовной ответственности';
+
+        var notEmpty = false;
+
+        if (!$.parseJSON($scope.cadet.behavior.thoughtsOfSuicideDoesNotHave)){
+           str += 'имеет мысли о суициде';
+            notEmpty=true;
+        }
+
+        if (!$.parseJSON($scope.cadet.behavior.suicideAttemptsDidNotCommit)){
+            if (notEmpty)
+                str+=', ';
+            str += 'совершал попытки суицида';
+            notEmpty=true;
+        }
+
+        if (!$.parseJSON($scope.cadet.behavior.administrativeOffenseDidNotCommit)){
+            if (notEmpty)
+                str+=', ';
+            str += 'совершал административные правонарушения';
+            notEmpty=true;
+        }
+
+        if (!$.parseJSON($scope.cadet.behavior.policeRecordDoesNotHave)){
+            if (notEmpty)
+                str+=', ';
+            str += 'имеет приводы в полицию';
+            notEmpty=true;
+        }
+
+        if (!$.parseJSON($scope.cadet.behavior.criminalLiabilityWasNotInvolved)){
+            if (notEmpty)
+                str+=', ';
+            str += 'привлекался к уголовной ответственности';
+        }
+
         return str;
     };
 

@@ -3,19 +3,20 @@
 
 <div class="panel panel2 container-fluid" id="behaviorShow">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9 caption" align="left">
             Поведение
         </div>
         <div class="col-md-3">
             <button class="btn btn-link" ng-click="editBehavior()">Редактировать</button>
         </div>
     </div>
-
+    <br>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 info2">
             {{basicBehaviorText()}}
         </div>
     </div>
+    <br>
 </div>
 
 

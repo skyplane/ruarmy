@@ -13,21 +13,14 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-sm-2 info" align="right" style="padding-right: 6px;">
-            Семейное положение
+    <div class="row container">
+        <div class="col-sm-7" align="left" >
+            <div class="row info">{{textByCompositionOfFamily()}}</div>
+            <div class="row"><label class="signature">состав семьи</label></div>
         </div>
-        <div class="col-sm-10 info2" align="left" style="padding-left: 6px;">
-            {{textByCompositionOfFamily()}}
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-sm-2 info" align="right" style="padding-right: 6px;">
-            Состав семьи
-        </div>
-        <div class="col-sm-10 info2" align="left" style="padding-left: 6px;">
-            {{textByMarried()}}
+        <div class="col-sm-5" align="left">
+            <div class="row info">{{textByMarried()}}</div>
+            <div class="row"><label class="signature">семейное положение</label></div>
         </div>
     </div>
 
@@ -42,28 +35,20 @@
     <div ng-repeat="familyMember in cadet.familyComposition.familyMembers track by $index">
         <div class="row">
             <div class="col-sm-12">
-                <div class="col-sm-1 info2">
+                <div class="col-sm-1 info">
                     {{textByFamilyMemberType(familyMember.familyMemberType)}}
                 </div>
 
-                <div class="col-sm-5 info2">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            {{familyMember.lastName+' '+familyMember.firstName+'
-                            '+familyMember.patronymic}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-
-                        </div>
-                    </div>
+                <div class="col-sm-5 info2" align="left">
+                    <div class="row info">{{familyMember.lastName+' '+familyMember.firstName+'
+                        '+familyMember.patronymic}}</div>
+                    <div class="row"><label class="signature">{{familyMember.occupation}}</label></div>
                 </div>
 
-                <div class="col-sm-2 info2">
+                <div class="col-sm-2 info">
                     {{familyMember.dateOfBirth}}
                 </div>
-                <div class="col-sm-3 info2">
+                <div class="col-sm-3 info">
                     {{familyMember.phone}}
                 </div>
             </div>

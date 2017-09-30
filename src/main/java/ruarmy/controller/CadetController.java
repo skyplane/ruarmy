@@ -86,7 +86,7 @@ public class CadetController extends BaseController {
             @RequestParam("nationality") String nationality,
 
             @RequestParam("religion") String religion,
-            @RequestParam("customReligion") String customReligion,
+            @RequestParam(value = "customReligion", defaultValue = "") String customReligion,
 
             @RequestParam("militaryRank") String militaryRank,
 

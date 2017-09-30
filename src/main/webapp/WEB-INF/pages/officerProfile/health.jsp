@@ -3,37 +3,50 @@
 
 <div class="panel panel2 container-fluid" id="healthShow">
 
+
+
     <div class="row">
-        <div class="col-md-9">
-           Здоровье
+        <div class="col-md-9 caption" align="left">
+            Здоровье
         </div>
         <div class="col-md-3">
             <button class="btn btn-link" ng-click="editHealth()">Редактировать</button>
         </div>
     </div>
 
+
+
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 info2">
             {{basicHealthText()}}
         </div>
     </div>
-
+<hr>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 info2">
             {{textByAlcohol()+", "+
             textByDrugUse()}}
         </div>
     </div>
-
+<hr>
     <div class="row">
-        <div class="col-md-6">
-            Хронические заболевания:{{cadet.health.chronicDiseases}}
+        <div class="col-sm-3 info" align="right" style="padding-right: 6px;">
+            Хронические заболевания
         </div>
-        <div class="col-md-6">
-            Категория годности:{{cadet.health.validityCategory}}
+        <div class="col-sm-9 info2" align="left" style="padding-left: 6px;">
+            {{cadet.health.chronicDiseases}}
         </div>
     </div>
-
+    <hr>
+    <div class="row">
+        <div class="col-sm-3 info" align="right" style="padding-right: 6px;">
+            Категория годности
+        </div>
+        <div class="col-sm-9 info2" align="left" style="padding-left: 6px;">
+            {{cadet.health.validityCategory}}
+        </div>
+    </div>
+<br>
 </div>
 
 

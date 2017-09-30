@@ -6,26 +6,36 @@ var k;
 
 function initHealth($scope) {
 
-
-
     $scope.basicHealthText = function () {
         var str = '';
-        if ($.parseJSON($scope.cadet.health.concussionsWereNot)){
-            str += 'сотрясений головного мозга не было';
-        } else
+
+        var notEmpty = false;
+
+        if (!$.parseJSON($scope.cadet.health.concussionsWereNot)){
             str += 'были сотрясения головного мозга';
-        if ($.parseJSON($scope.cadet.health.traumaticBrainInjuryWasNot)){
-            str += ', черепно-мозговых травм не было';
-        } else
-            str += ', были черепно-мозговыe травмы';
-        if ($.parseJSON($scope.cadet.health.theNarcologWasNot)){
-            str += ', на учёте у нарколога не состоял';
-        } else
-            str += ', состоял на учёте у нарколога';
-        if ($.parseJSON($scope.cadet.health.thePsychiatristWasNot)){
-            str += ', на учёте у психиатра не состоял';
-        } else
-            str += ', состоял на учёте у психиатра';
+            notEmpty=true;
+        }
+
+        if (!$.parseJSON($scope.cadet.health.traumaticBrainInjuryWasNot)){
+            if (notEmpty)
+                str+=', ';
+            str += 'были черепно-мозговыe травмы';
+            notEmpty=true;
+        }
+
+        if (!$.parseJSON($scope.cadet.health.theNarcologWasNot)){
+            if (notEmpty)
+                str+=', ';
+            str += 'состоял на учёте у нарколога';
+            notEmpty=true;
+        }
+
+        if (!$.parseJSON($scope.cadet.health.thePsychiatristWasNot)){
+            if (notEmpty)
+                str+=', ';
+            str += 'состоял на учёте у психиатра';
+        }
+
         return str;
     };
 

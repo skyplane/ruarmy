@@ -3,38 +3,39 @@
 
 <div class="panel panel2 container-fluid" id="tripsAbroadShow">
 
+
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9 caption" align="left">
             Выезды за границу
         </div>
         <div class="col-md-3">
             <button class="btn btn-link" ng-click="editTripsAbroad()">Редактировать</button>
         </div>
     </div>
+    <br>
 
-
-    <div class="row"
-         ng-repeat="tripsAbroadItem in cadet.tripsAbroad track by $index">
-        <div class="col-lg-2">
-            <label>{{tripsAbroadItem.who}}</label>
+    <hr>
+    <div ng-repeat="tripsAbroadItem in cadet.tripsAbroad track by $index">
+        <div class="row">
+            <div class="col-lg-2 info2">
+                {{tripsAbroadItem.who}}
+            </div>
+            <div class="col-lg-3 info2">
+              {{tripsAbroadItem.firstName+' '+tripsAbroadItem.lastName+' '+tripsAbroadItem.patronymic}}
+            </div>
+            <div class="col-lg-3 info2">
+                {{tripsAbroadItem.country}}
+            </div>
+            <div class="col-lg-2 info2">
+                    {{(tripsAbroadItem.doMaintainARelationship==true||tripsAbroadItem.doMaintainARelationship=="true")?'Поддерживает
+                    отношения':''}}
+                    {{(tripsAbroadItem.doMaintainARelationship==false||tripsAbroadItem.doMaintainARelationship=="false")?'Не
+                    поддерживает
+                    отношения':''}}
+            </div>
         </div>
-        <div class="col-lg-3">
-            <label>{{tripsAbroadItem.firstName+' '+tripsAbroadItem.lastName+'
-                '+tripsAbroadItem.patronymic}}</label>
-        </div>
-        <div class="col-lg-3">
-            <label>{{tripsAbroadItem.country}}</label>
-        </div>
-        <div class="col-lg-2">
-            <label>
-                {{(tripsAbroadItem.doMaintainARelationship==true||tripsAbroadItem.doMaintainARelationship=="true")?'Поддерживает
-                отношения':''}}
-                {{(tripsAbroadItem.doMaintainARelationship==false||tripsAbroadItem.doMaintainARelationship=="false")?'Не поддерживает
-                отношения':''}}
-            </label>
-        </div>
+        <hr>
     </div>
-
 
 
 </div>
@@ -66,7 +67,8 @@
             <label>
                 {{(tripsAbroadItem.doMaintainARelationship==true||tripsAbroadItem.doMaintainARelationship=="true")?'Поддерживает
                 отношения':''}}
-                {{(tripsAbroadItem.doMaintainARelationship==false||tripsAbroadItem.doMaintainARelationship=="false")?'Не поддерживает
+                {{(tripsAbroadItem.doMaintainARelationship==false||tripsAbroadItem.doMaintainARelationship=="false")?'Не
+                поддерживает
                 отношения':''}}
             </label>
         </div>

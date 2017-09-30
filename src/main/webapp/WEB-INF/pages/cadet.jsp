@@ -246,8 +246,8 @@
                                     <div class="row">
                                         <label class="col-sm-4 control-label">Специальность</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="specialty" id="specialty"
-                                                   ng-model="cadet.specialty">
+                                            <input type="text" class="form-control" name="speciality" id="speciality"
+                                                   ng-model="cadet.speciality">
                                         </div>
                                     </div>
                                     <br>
