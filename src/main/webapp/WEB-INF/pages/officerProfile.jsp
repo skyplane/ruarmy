@@ -56,7 +56,7 @@
             background: #ffffff;
             /*min-height: 100px;
             height: 100%;*/
-            padding: 10px;
+            padding: 50px;
         }
 
         .panel2 {
@@ -64,34 +64,63 @@
             width: 1138px;
         }
 
+        .vcenter {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+        }
+
         .caption {
-            font-family: Roboto regular, Arial, Helvetica, sans-serif;
-            font-size: 14pt; /* Размер шрифта в пунктах */
+            font-family:  Roboto, Arial, Helvetica, sans-serif;
+            font-size: 20pt; /* Размер шрифта в пунктах */
             font-weight: bold;
             color:  #4285f4;
         }
 
         .info {
             font-family: Roboto regular, Arial, Helvetica, sans-serif;
-            font-size: 11pt; /* Размер шрифта в пунктах */
+            font-size: 12pt; /* Размер шрифта в пунктах */
             font-weight: bold;
             color: #333333;
         }
+
+        .infoB {
+            font-family: Roboto regular, Arial, Helvetica, sans-serif;
+            font-size: 14pt; /* Размер шрифта в пунктах */
+            font-weight: bold;
+            color: #333333;
+        }
+
         .info2 {
             font-family: Roboto regular, Arial, Helvetica, sans-serif;
-            font-size: 11pt; /* Размер шрифта в пунктах */
-            color: #666666;
+            font-size: 12pt; /* Размер шрифта в пунктах */
+            color: #777777;
         }
+
+        .info3 {
+            font-family: Roboto regular, Arial, Helvetica, sans-serif;
+            font-size: 14pt; /* Размер шрифта в пунктах */
+            color: #EFEFEF;
+        }
+
+
         .infoC {
             font-family: Roboto regular, Arial, Helvetica, sans-serif;
-            font-size: 11pt; /* Размер шрифта в пунктах */
+            font-size: 14pt; /* Размер шрифта в пунктах */
+            color: #4285f4;
+        }
+
+        .infoCB {
+            font-family: Roboto regular, Arial, Helvetica, sans-serif;
+            font-size: 14pt; /* Размер шрифта в пунктах */
+            font-weight: bold;
             color: #4285f4;
         }
 
         .signature {
             font-family: Roboto regular, Arial, Helvetica, sans-serif;
-            font-size: 9pt; /* Размер шрифта в пунктах */
-            color: #666666;
+            font-size: 10pt; /* Размер шрифта в пунктах */
+            color: #777777;
         }
 
     </style>
@@ -100,6 +129,22 @@
 </head>
 <body>
 
+
+
+
+<div class="container-fluid">
+    <nav class="navbar navbar-default" role="navigation" style="background: #4285f4;">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="/home" style="color:white">ТАБЛИЦА КУРСАНТОВ</a></li>
+                    <li class="active "><a href="#">ПРОФИЛЬ КУРСАНТА</a></li>
+                    <li class=""><a href="/logout" style="color:white">ВЫХОД</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</div>
 
 <div class="container-fluid" ng-app="cursantsApp" data-ng-controller="officerProfileCtrl" data-ng-init="init()"
      align="center">

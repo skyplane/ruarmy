@@ -26,8 +26,8 @@ public class RuarmyResources extends ListResourceBundle {
                 {"Religion.BUDDIST", "буддист"},
 
 
-                {"SubjectType.OBLAST", "об. "},
-                {"SubjectType.KRAI", "кр. "},
+                {"SubjectType.OBLAST", "область"},
+                {"SubjectType.KRAI", "край"},
                 {"SubjectType.RESPUBLICA", "респ. "},
                 {"SubjectType.AUTONUMOUS_OKRUG", "авт. окр. "},
 

@@ -55,6 +55,26 @@
 
 </head>
 <body>
+
+
+
+<div class="container-fluid">
+    <nav class="navbar navbar-default" role="navigation" style="background: #4285f4;">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active "><a href="#">ТАБЛИЦА КУРСАНТОВ</a></li>
+                    <li class=""><a href="/logout" style="color:white">ВЫХОД</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+</div>
+
+
+
+
+
 <div class="container-fluid" ng-app="cursantsApp" data-ng-controller="officerCtrl" data-ng-init="init()">
     <style>
         table.dataTable thead .sorting:after {
@@ -69,9 +89,6 @@
             content: ""
         }
     </style>
-    <div class="row" align="right">
-        <a href="/logout"/>Выход</a></h2>
-    </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Курсанты</h3>

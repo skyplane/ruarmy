@@ -15,6 +15,16 @@ app.directive('uiPassport', function () {
         }
     };
 });
+
+app.directive('uiYear', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("0000");
+        }
+    };
+});
+
 app.directive('uiMilitaryTicket', function () {
     return {
         require: '?ngModel',
@@ -64,8 +74,8 @@ app.controller('officerProfileCtrl', function ($scope) {
 
 
     $scope.options={};
-    $scope.options.educationAndSkills={};
-    $scope.options.addressData={};
+
+
 
 
     $scope.cursantId = $('#cursantId').attr('value');

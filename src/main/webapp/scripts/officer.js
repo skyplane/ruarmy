@@ -50,7 +50,7 @@ function loadCursantsTable($scope) {
                             } else {
                                 $('#cursantsTable').DataTable().$('tr.selected').removeClass('selected');
                                 $(tr).addClass('selected');
-                                window.open(window.location.href.replace('home','profile')+'?cursantId='+this.id);
+                                window.open(window.location.href.replace('home','profile')+'?cursantId='+this.id, '_self');
                             }
                         });
                     }

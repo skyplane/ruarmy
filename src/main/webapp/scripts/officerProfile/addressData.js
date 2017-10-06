@@ -1,6 +1,3 @@
-/**
- * Created by skyplane on 20.09.17.
- */
 
 function loadSubjectsByIdAndType(subjectId, objectId, type) {
     $('#' + subjectId).autocomplete({
@@ -17,8 +14,9 @@ function loadSubjectsByIdAndType(subjectId, objectId, type) {
     });
 }
 
+function initAddressData($scope) {
 
-function initAddressData($scope){
+    $scope.options.addressData = {};
 
     $scope.options.addressData.cityTypes = [
         {'name': 'город', 'value': '1'}, {'name': 'ПГТ', 'value': '2'}, {'name': 'поселок', 'value': '3'},
@@ -32,13 +30,25 @@ function initAddressData($scope){
         {'name': 'бульвар', 'value': '7'}, {'name': 'проезд', 'value': '8'}, {'name': 'в\\ч', 'value': '9'}
     ];
 
-
-    $scope.editAddressData = function (){
+    $scope.editAddressData = function () {
         $('#addressDataShow').toggle();
         $('#addressDataEdit').toggle();
     };
 
-    $scope.saveAndLoadAddressData = function (){
+    $scope.updateActualAddressByRegistered = function () {
+        $scope.cadet.addressData.actualData.subjectOfActualAddressType = $scope.cadet.addressData.registeredData.subjectOfRegisteredAddressType;
+        $scope.cadet.addressData.actualData.subjectOfActualAddress = $('#subjectOfRegisteredAddress').val();
+        $scope.cadet.addressData.actualData.cityOfActualAddressType = $scope.cadet.addressData.registeredData.cityOfRegisteredAddressType;
+        $scope.cadet.addressData.actualData.cityOfActualAddress = $('#cityOfRegisteredAddress').val();
+        $scope.cadet.addressData.actualData.streetOfActualAddressType = $scope.cadet.addressData.registeredData.streetOfRegisteredAddressType;
+        $scope.cadet.addressData.actualData.streetOfActualAddress = $scope.cadet.addressData.registeredData.streetOfRegisteredAddress;
+        $scope.cadet.addressData.actualData.houseOfActualAddress = $scope.cadet.addressData.registeredData.houseOfRegisteredAddress;
+        $scope.cadet.addressData.actualData.buildingOfActualAddress = $scope.cadet.addressData.registeredData.buildingOfRegisteredAddress;
+        $scope.cadet.addressData.actualData.apartmentOfActualAddress = $scope.cadet.addressData.registeredData.apartmentOfRegisteredAddress;
+        $scope.cadet.addressData.actualData.indexOfActualAddress = $scope.cadet.addressData.registeredData.indexOfRegisteredAddress;
+    };
+
+    $scope.saveAndLoadAddressData = function () {
 
         var addressData = jQuery.extend(true, {}, $scope.cadet.addressData);
 
@@ -59,9 +69,6 @@ function initAddressData($scope){
             "json"
         );
 
-
     }
-
-
 
 }

@@ -4,7 +4,7 @@
 
 function initEducationAndSkills($scope) {
 
-
+    $scope.options.educationAndSkills = {};
     $scope.options.educationAndSkills.driversLicensesAll = ['M', 'A', 'B', 'C', 'D', 'A1', 'B1', 'C1', 'D1', 'BE', 'CE', 'DE', 'C1E', 'D1E'];
 
     $scope.options.educationAndSkills.systemSkills = [];
@@ -14,35 +14,32 @@ function initEducationAndSkills($scope) {
 
     $scope.selectedFieldOfActivityCategory = 1;
 
-    $scope.skillsTextByFoa1 = 'не определён';
-    $scope.skillsTextByFoa2 = 'не определён';
-    $scope.skillsTextByFoa3 = 'не определён';
-    $scope.skillsTextByFoa4 = 'не определён';
+    $scope.skillsTextByFoa1 = [];
+    $scope.skillsTextByFoa2 = [];
+    $scope.skillsTextByFoa3 = [];
+    $scope.skillsTextByFoa4 = [];
+
+
+    $scope.options.levels = [{'name': 'свободно владеет', 'value': '1'}, {'name': 'средний уровень', 'value': '2'},
+        {'name': 'базовый уровень', 'value': '3'}];
+
 
     $scope.getSkillsTextByFoa = function (val) {
-        var str = '';
+        var arr = [];
 
         $.each($scope.cadet.educationAndSkills.skills, function () {
             var skVal = this;
             $.each($scope.options.educationAndSkills.systemSkills, function () {
                 if (this.foa == val && this.id == skVal) {
-                    str += this.name + ', ';
+                    arr.push(this.name);
                 }
             });
         });
-        if (str == '') {
-            return 'не определён';
-        } else {
-            return str.substr(0, str.length - 2);
-        }
+
+        return arr;
     };
 
-    /*$scope.loadSkillsByFoaTimer = function () {
-     setTimeout(function () {
-     $scope.loadSkillsByFoa();
-     $scope.loadSkillsByFoaTimer();
-     }, 5000);
-     };*/
+
     $scope.loadSkillsByFoa = function () {
         $scope.skillsTextByFoa1 = $scope.getSkillsTextByFoa(1);
         $scope.skillsTextByFoa2 = $scope.getSkillsTextByFoa(2);
@@ -51,7 +48,6 @@ function initEducationAndSkills($scope) {
     };
 
     $scope.loadSkillsByFoa();
-    // $scope.loadSkillsByFoaTimer();
 
     $scope.skillsRunByFieldOfActivity = function (val) {
         $.get(
@@ -72,7 +68,6 @@ function initEducationAndSkills($scope) {
     $scope.skillsRunByFieldOfActivity(3);
     $scope.skillsRunByFieldOfActivity(4);
 
-
     $scope.skillsByFieldOfActivity = function (val) {
         $('#skillsModal').modal('show');
         $scope.selectedFieldOfActivityCategory = val;
@@ -89,7 +84,6 @@ function initEducationAndSkills($scope) {
             "json"
         );
     };
-
 
     $scope.options.educationAndSkills.educationIndex = 0;
     $scope.addEducation = function () {
@@ -126,7 +120,6 @@ function initEducationAndSkills($scope) {
         $('#educationModal').modal('hide');
     };
 
-
     $scope.textByInstitutionType = function (type) {
         if (type == "1")
             return "Высшее профессиональное (магистр)";
@@ -161,25 +154,25 @@ function initEducationAndSkills($scope) {
     $scope.getForeignLanguagesString = function () {
         var str = '';
         $.each($scope.cadet.educationAndSkills.foreignLanguages, function () {
-        if (Number(this.language)==1)
-            str += 'английский, ';
-            if (Number(this.language)==2)
-            str += 'немецкий, ';
-            if (Number(this.language)==3)
-            str += 'французский, ';
-            if (Number(this.language)==4)
-            str += 'итальянский, ';
-            if (Number(this.language)==5)
-            str += 'испанский, ';
+            if (Number(this.language) == 1)
+                str += 'английский ';
+            if (Number(this.language) == 2)
+                str += 'немецкий ';
+            if (Number(this.language) == 3)
+                str += 'французский ';
+            if (Number(this.language) == 4)
+                str += 'итальянский ';
+            if (Number(this.language) == 5)
+                str += 'испанский ';
 
-            if (Number(this.level)==1)
-            str += 'свободно владеет; ';
-            if (Number(this.level)==2)
-            str += 'средний уровень; ';
-            if (Number(this.level)==3)
-            str += 'базовый уровень; ';
+            if (Number(this.level) == 1)
+                str += '(свободно владеет), ';
+            if (Number(this.level) == 2)
+                str += '(средний уровень), ';
+            if (Number(this.level) == 3)
+                str += '(базовый уровень), ';
         });
-        return str;
+        return str.substr(0, str.length - 2);
     };
 
     $scope.changeInstitutionType = function () {
@@ -211,11 +204,10 @@ function initEducationAndSkills($scope) {
         $scope.options.educationAndSkills.education.redDiploma = val;
     };
 
-
     $scope.addForeignLanguage = function () {
         $scope.cadet.educationAndSkills.foreignLanguages.push({
-            language: 1,
-            level: 1
+            language: '1',
+            level: '1'
         });
     };
     $scope.removeForeignLanguage = function (index) {
@@ -250,7 +242,7 @@ function initEducationAndSkills($scope) {
             if (this.speciality == null) {
                 educations_speciality.push('');
             } else {
-                educations_speciality.push(this.speciality.replace(',','||comma||'));
+                educations_speciality.push(this.speciality.replace(',', '||comma||'));
             }
             if (this.yearOfEnding == null) {
                 educations_yearOfEnding.push(0);

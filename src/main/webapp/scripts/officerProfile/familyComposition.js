@@ -48,92 +48,92 @@ function initFamilyComposition($scope) {
     };
 
     $scope.textByCompositionOfFamily = function () {
-        var str='';
+        var str = '';
 
-            if (Number($scope.cadet.familyComposition.compositionOfFamily) == 1) {
-                str= "полная";
-            }
-            if (Number($scope.cadet.familyComposition.compositionOfFamily) == 2) {
-                str= "без отца";
+        if (Number($scope.cadet.familyComposition.compositionOfFamily) == 1) {
+            str = "полная";
+        }
+        if (Number($scope.cadet.familyComposition.compositionOfFamily) == 2) {
+            str = "без отца";
 
-                if (Number($scope.cadet.familyComposition.withoutFather) == 1) {
-                    str+=', родители в разводе';
-                    if ($scope.cadet.familyComposition.fatherExist) {
-                        str+=', поддерживает отношения';
-                    } else {
-                        str+=', отношения не поддерживает';
-                    }
-                } else if (Number($scope.cadet.familyComposition.withoutFather) == 2) {
-                    str+=', отец ушел из семьи';
-                    if ($scope.cadet.familyComposition.fatherExist) {
-                        str+=', поддерживает отношения';
-                    } else {
-                        str+=', отношения не поддерживает';
-                    }
+            if (Number($scope.cadet.familyComposition.withoutFather) == 1) {
+                str += ', родители в разводе';
+                if ($scope.cadet.familyComposition.fatherExist) {
+                    str += ', поддерживает отношения';
                 } else {
-                    str+=', отец умер';
+                    str += ', отношения не поддерживает';
                 }
-
-            }
-            if (Number($scope.cadet.familyComposition.compositionOfFamily) == 3) {
-                str= "без матери";
-
-                if (Number($scope.cadet.familyComposition.withoutMother) == 1) {
-                    str+=', родители в разводе';
-                    if ($scope.cadet.familyComposition.motherExist) {
-                        str+=', поддерживает отношения';
-                    } else {
-                        str+=', отношения не поддерживает';
-                    }
-                } else if (Number($scope.cadet.familyComposition.withoutMother) == 2) {
-                    str+=', мать ушла из семьи';
-                    if ($scope.cadet.familyComposition.motherExist) {
-                        str+=', поддерживает отношения';
-                    } else {
-                        str+=', отношения не поддерживает';
-                    }
+            } else if (Number($scope.cadet.familyComposition.withoutFather) == 2) {
+                str += ', отец ушел из семьи';
+                if ($scope.cadet.familyComposition.fatherExist) {
+                    str += ', поддерживает отношения';
                 } else {
-                    str+=', мать умерла';
+                    str += ', отношения не поддерживает';
                 }
-            }
-            if (Number($scope.cadet.familyComposition.compositionOfFamily) == 4) {
-                str= "сирота";
-                if ($scope.cadet.familyComposition.hasInformationAboutParents){
-                    str+=', имеет сведения о родителях';
-                } else {
-                    str+=', сведений о родителях не имеет';
-                }
+            } else {
+                str += ', отец умер';
             }
 
-            return str;
+        }
+        if (Number($scope.cadet.familyComposition.compositionOfFamily) == 3) {
+            str = "без матери";
+
+            if (Number($scope.cadet.familyComposition.withoutMother) == 1) {
+                str += ', родители в разводе';
+                if ($scope.cadet.familyComposition.motherExist) {
+                    str += ', поддерживает отношения';
+                } else {
+                    str += ', отношения не поддерживает';
+                }
+            } else if (Number($scope.cadet.familyComposition.withoutMother) == 2) {
+                str += ', мать ушла из семьи';
+                if ($scope.cadet.familyComposition.motherExist) {
+                    str += ', поддерживает отношения';
+                } else {
+                    str += ', отношения не поддерживает';
+                }
+            } else {
+                str += ', мать умерла';
+            }
+        }
+        if (Number($scope.cadet.familyComposition.compositionOfFamily) == 4) {
+            str = "сирота";
+            if ($scope.cadet.familyComposition.hasInformationAboutParents) {
+                str += ', имеет сведения о родителях';
+            } else {
+                str += ', сведений о родителях не имеет';
+            }
+        }
+
+        return str;
     };
 
     $scope.textByMarried = function () {
 
-        var str='';
+        var str = '';
 
         if (Number($scope.cadet.familyComposition.married) == 1) {
-            str= "холост";
-        } else if (Number($scope.cadet.familyComposition.married) == 2){
-            str= "женат";
-        } else if (Number($scope.cadet.familyComposition.married) == 3){
-            str= "в гражданском браке";
-        } else if (Number($scope.cadet.familyComposition.married) == 4){
-            str= "состоит в отношениях";
-        } else if (Number($scope.cadet.familyComposition.married) == 5){
-            str= "вдовец";
+            str = "холост";
+        } else if (Number($scope.cadet.familyComposition.married) == 2) {
+            str = "женат";
+        } else if (Number($scope.cadet.familyComposition.married) == 3) {
+            str = "в гражданском браке";
+        } else if (Number($scope.cadet.familyComposition.married) == 4) {
+            str = "состоит в отношениях";
+        } else if (Number($scope.cadet.familyComposition.married) == 5) {
+            str = "вдовец";
         }
 
         if (Number($scope.cadet.familyComposition.marrieds) == 1) {
-            str+= ", в браке не состоял";
-        } else if (Number($scope.cadet.familyComposition.marrieds) == 2){
-            str+= ", один брак";
-        } else if (Number($scope.cadet.familyComposition.marrieds) == 3){
-            str+= ", два брака";
-        } else if (Number($scope.cadet.familyComposition.marrieds) == 4){
-            str+= ", три брака";
-        } else if (Number($scope.cadet.familyComposition.marrieds) == 5){
-            str+= ", четыре и более брака";
+            str += ", в браке не состоял";
+        } else if (Number($scope.cadet.familyComposition.marrieds) == 2) {
+            str += ", один брак";
+        } else if (Number($scope.cadet.familyComposition.marrieds) == 3) {
+            str += ", два брака";
+        } else if (Number($scope.cadet.familyComposition.marrieds) == 4) {
+            str += ", три брака";
+        } else if (Number($scope.cadet.familyComposition.marrieds) == 5) {
+            str += ", четыре и более брака";
         }
 
         return str;
@@ -200,7 +200,12 @@ function initFamilyComposition($scope) {
             hasSuicideAttempts: null,
             hasADisability: null,
             hasDied: null,
-            isBroughtUpSeparately: null
+            isBroughtUpSeparately: null,
+            hasACriminalRecordDetails: '',
+            hasAMentalIllnessName: '',
+            hasDiedYear: '',
+            hasDiedCause: '',
+            hasDiedPlace: ''
         });
         $scope.familyMemberIndex = $scope.cadet.familyComposition.familyMembers.length - 1;
         $scope.familyMember = $scope.cadet.familyComposition.familyMembers[$scope.cadet.familyComposition.familyMembers.length - 1];
@@ -262,10 +267,10 @@ function initFamilyComposition($scope) {
             language: 'ru'
         });
 
-        fm = $scope.familyMember;
 
     };
     $scope.saveFamilyMember = function () {
+        fm = $scope.familyMember;
         $scope.cadet.familyComposition.familyMembers[$scope.familyMemberIndex] = $scope.familyMember;
         $('#familyMemberModal').modal('hide');
     };
@@ -448,6 +453,11 @@ function initFamilyComposition($scope) {
         var familyMembers_hasADisability = [];
         var familyMembers_hasDied = [];
         var familyMembers_isBroughtUpSeparately = [];
+        var familyMembers_hasDiedCause = [];
+        var familyMembers_hasDiedPlace = [];
+        var familyMembers_hasDiedYear = [];
+        var familyMembers_hasAMentalIllnessName = [];
+        var familyMembers_hasACriminalRecordDetails = [];
         $.each(familyComposition.familyMembers, function () {
             familyMembers_type.push(this.familyMemberType);
             familyMembers_firstName.push(this.firstName);
@@ -469,7 +479,32 @@ function initFamilyComposition($scope) {
             } else {
                 familyMembers_isBroughtUpSeparately.push(this.isBroughtUpSeparately);
             }
+            if (this.hasDiedCause == null || this.hasDiedPlace == '') {
+                familyMembers_hasDiedCause.push(' ');
+            } else {
+                familyMembers_hasDiedCause.push(this.hasDiedCause);
+            }
 
+            if (this.hasDiedPlace == null || this.hasDiedPlace == '') {
+                familyMembers_hasDiedPlace.push(' ');
+            } else {
+                familyMembers_hasDiedPlace.push(this.hasDiedPlace);
+            }
+            if (this.hasDiedYear == null || this.hasDiedYear == '') {
+                familyMembers_hasDiedYear.push(' ');
+            } else {
+                familyMembers_hasDiedYear.push(this.hasDiedYear);
+            }
+            if (this.hasAMentalIllnessName == null  || this.hasAMentalIllnessName == '') {
+                familyMembers_hasAMentalIllnessName.push(' ');
+            } else {
+                familyMembers_hasAMentalIllnessName.push(this.hasAMentalIllnessName);
+            }
+            if (this.hasACriminalRecordDetails == null || this.hasACriminalRecordDetails == '') {
+                familyMembers_hasACriminalRecordDetails.push(' ');
+            } else {
+                familyMembers_hasACriminalRecordDetails.push(this.hasACriminalRecordDetails);
+            }
         });
         familyComposition['familyMembers_type'] = familyMembers_type;
         familyComposition['familyMembers_firstName'] = familyMembers_firstName;
@@ -486,6 +521,11 @@ function initFamilyComposition($scope) {
         familyComposition['familyMembers_hasADisability'] = familyMembers_hasADisability;
         familyComposition['familyMembers_hasDied'] = familyMembers_hasDied;
         familyComposition['familyMembers_isBroughtUpSeparately'] = familyMembers_isBroughtUpSeparately;
+        familyComposition['familyMembers_hasDiedCause'] = familyMembers_hasDiedCause;
+        familyComposition['familyMembers_hasDiedPlace'] = familyMembers_hasDiedPlace;
+        familyComposition['familyMembers_hasDiedYear'] = familyMembers_hasDiedYear;
+        familyComposition['familyMembers_hasAMentalIllnessName'] = familyMembers_hasAMentalIllnessName;
+        familyComposition['familyMembers_hasACriminalRecordDetails'] = familyMembers_hasACriminalRecordDetails;
         familyComposition.familyMembers = [];
 
 

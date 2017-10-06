@@ -59,7 +59,20 @@ public class FamilyMember {
     Boolean isBroughtUpSeparately;
 
 
+    @Basic
+    String hasDiedCause;
 
+    @Basic
+    String hasDiedPlace;
+
+    @Basic
+    Integer hasDiedYear;
+
+    @Basic
+    String hasAMentalIllnessName;
+
+    @Basic
+    String hasACriminalRecordDetails;
 
 
     @Enumerated(EnumType.STRING)
@@ -202,5 +215,45 @@ public class FamilyMember {
 
     public void setBroughtUpSeparately(Boolean broughtUpSeparately) {
         isBroughtUpSeparately = broughtUpSeparately;
+    }
+
+    public String getHasDiedCause() {
+        return hasDiedCause;
+    }
+
+    public void setHasDiedCause(String hasDiedCause) {
+        this.hasDiedCause = hasDiedCause;
+    }
+
+    public String getHasDiedPlace() {
+        return hasDiedPlace;
+    }
+
+    public void setHasDiedPlace(String hasDiedPlace) {
+        this.hasDiedPlace = hasDiedPlace;
+    }
+
+    public Integer getHasDiedYear() {
+        return hasDiedYear;
+    }
+
+    public void setHasDiedYear(Integer hasDiedYear) {
+        this.hasDiedYear = hasDiedYear;
+    }
+
+    public String getHasAMentalIllnessName() {
+        return hasAMentalIllnessName;
+    }
+
+    public void setHasAMentalIllnessName(String hasAMentalIllnessName) {
+        this.hasAMentalIllnessName = hasAMentalIllnessName;
+    }
+
+    public String getHasACriminalRecordDetails() {
+        return hasACriminalRecordDetails;
+    }
+
+    public void setHasACriminalRecordDetails(String hasACriminalRecordDetails) {
+        this.hasACriminalRecordDetails = hasACriminalRecordDetails;
     }
 }

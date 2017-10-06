@@ -41,77 +41,77 @@ public class CadetController extends BaseController {
     @RequestMapping(value = "/saveCadet", method = RequestMethod.POST)
     public void saveCadet(
 
-            @RequestParam("addressData[subjectOfPlaceOfBirthType]") Integer subjectOfPlaceOfBirthType,
-            @RequestParam("addressData[subjectOfPlaceOfBirth]") String subjectOfPlaceOfBirth,
-            @RequestParam("addressData[cityOfPlaceOfBirthType]") Integer cityOfPlaceOfBirthType,
-            @RequestParam("addressData[cityOfPlaceOfBirth]") String cityOfPlaceOfBirth,
+            @RequestParam("totalInformation[name]") String name,
+            @RequestParam("totalInformation[surname]") String surname,
+            @RequestParam("totalInformation[patronymic]") String patronymic,
+            @RequestParam("totalInformation[dateOfBirth]") String dateOfBirthOri,
+            @RequestParam("totalInformation[nationality]") String nationality,
+            @RequestParam("totalInformation[religion][id]") Long religionId,
+            @RequestParam("totalInformation[customReligion]") String customReligion,
+            @RequestParam("totalInformation[militaryRank][id]") Long militaryRankId,
+            @RequestParam("totalInformation[division][id]") Long divisionId,
+            @RequestParam("totalInformation[post]") String post,
+            @RequestParam("totalInformation[passportNumber]") String passportNumber,
+            @RequestParam("totalInformation[militaryIdNumber]") String militaryIdNumber,
+            @RequestParam("totalInformation[phone]") String phone,
+            @RequestParam("totalInformation[faculty]") String faculty,
+            @RequestParam("totalInformation[speciality]") String speciality,
+            @RequestParam("totalInformation[yearOfAdmission]") Integer yearOfAdmission,
 
-            @RequestParam("addressData[subjectOfRegisteredAddressType]") Integer subjectOfRegisteredAddressType,
-            @RequestParam("addressData[subjectOfRegisteredAddress]") String subjectOfRegisteredAddress,
-            @RequestParam("addressData[cityOfRegisteredAddressType]") Integer cityOfRegisteredAddressType,
-            @RequestParam("addressData[cityOfRegisteredAddress]") String cityOfRegisteredAddress,
-            @RequestParam("addressData[streetOfRegisteredAddressType]") Integer streetOfRegisteredAddressType,
-            @RequestParam("addressData[streetOfRegisteredAddress]") String streetOfRegisteredAddress,
-            @RequestParam(value = "addressData[houseOfRegisteredAddress]", defaultValue = "") String houseOfRegisteredAddress,
-            @RequestParam(value = "addressData[buildingOfRegisteredAddress]", defaultValue = "") String buildingOfRegisteredAddress,
-            @RequestParam(value = "addressData[apartmentOfRegisteredAddress]", defaultValue = "") String apartmentOfRegisteredAddress,
-            @RequestParam(value = "addressData[indexOfRegisteredAddress]", defaultValue = "") String indexOfRegisteredAddress,
+            @RequestParam("addressData[birthData][subjectOfPlaceOfBirthType]") Integer subjectOfPlaceOfBirthType,
+            @RequestParam("addressData[birthData][subjectOfPlaceOfBirth]") String subjectOfPlaceOfBirth,
+            @RequestParam("addressData[birthData][cityOfPlaceOfBirthType]") Integer cityOfPlaceOfBirthType,
+            @RequestParam("addressData[birthData][cityOfPlaceOfBirth]") String cityOfPlaceOfBirth,
 
-            @RequestParam("addressData[subjectOfActualAddressType]") Integer subjectOfActualAddressType,
-            @RequestParam("addressData[subjectOfActualAddress]") String subjectOfActualAddress,
-            @RequestParam("addressData[cityOfActualAddressType]") Integer cityOfActualAddressType,
-            @RequestParam("addressData[cityOfActualAddress]") String cityOfActualAddress,
-            @RequestParam("addressData[streetOfActualAddressType]") Integer streetOfActualAddressType,
-            @RequestParam("addressData[streetOfActualAddress]") String streetOfActualAddress,
-            @RequestParam(value = "addressData[houseOfActualAddress]", defaultValue = "") String houseOfActualAddress,
-            @RequestParam(value = "addressData[buildingOfActualAddress]", defaultValue = "") String buildingOfActualAddress,
-            @RequestParam(value = "addressData[apartmentOfActualAddress]", defaultValue = "") String apartmentOfActualAddress,
-            @RequestParam(value = "addressData[indexOfActualAddress]", defaultValue = "") String indexOfActualAddress,
+            @RequestParam("addressData[registeredData][subjectOfRegisteredAddressType]") Integer subjectOfRegisteredAddressType,
+            @RequestParam("addressData[registeredData][subjectOfRegisteredAddress]") String subjectOfRegisteredAddress,
+            @RequestParam("addressData[registeredData][cityOfRegisteredAddressType]") Integer cityOfRegisteredAddressType,
+            @RequestParam("addressData[registeredData][cityOfRegisteredAddress]") String cityOfRegisteredAddress,
+            @RequestParam("addressData[registeredData][streetOfRegisteredAddressType]") Integer streetOfRegisteredAddressType,
+            @RequestParam("addressData[registeredData][streetOfRegisteredAddress]") String streetOfRegisteredAddress,
+            @RequestParam(value = "addressData[registeredData][houseOfRegisteredAddress]", defaultValue = "") String houseOfRegisteredAddress,
+            @RequestParam(value = "addressData[registeredData][buildingOfRegisteredAddress]", defaultValue = "") String buildingOfRegisteredAddress,
+            @RequestParam(value = "addressData[registeredData][apartmentOfRegisteredAddress]", defaultValue = "") String apartmentOfRegisteredAddress,
+            @RequestParam(value = "addressData[registeredData][indexOfRegisteredAddress]", defaultValue = "") String indexOfRegisteredAddress,
 
-            @RequestParam("concussionsWereNot") Boolean concussionsWereNot,
-            @RequestParam("traumaticBrainInjuryWasNot") Boolean traumaticBrainInjuryWasNot,
-            @RequestParam("theNarcologWasNot") Boolean theNarcologWasNot,
-            @RequestParam("thePsychiatristWasNot") Boolean thePsychiatristWasNot,
-            @RequestParam("thoughtsOfSuicideDoesNotHave") Boolean thoughtsOfSuicideDoesNotHave,
-            @RequestParam("suicideAttemptsDidNotCommit") Boolean suicideAttemptsDidNotCommit,
-            @RequestParam("administrativeOffenseDidNotCommit") Boolean administrativeOffenseDidNotCommit,
-            @RequestParam("policeRecordDoesNotHave") Boolean policeRecordDoesNotHave,
-            @RequestParam("criminalLiabilityWasNotInvolved") Boolean criminalLiabilityWasNotInvolved,
-            @RequestParam("relativesAndFriendsAbroad") Boolean relativesAndFriendsAbroad,
+            @RequestParam("addressData[actualData][subjectOfActualAddressType]") Integer subjectOfActualAddressType,
+            @RequestParam("addressData[actualData][subjectOfActualAddress]") String subjectOfActualAddress,
+            @RequestParam("addressData[actualData][cityOfActualAddressType]") Integer cityOfActualAddressType,
+            @RequestParam("addressData[actualData][cityOfActualAddress]") String cityOfActualAddress,
+            @RequestParam("addressData[actualData][streetOfActualAddressType]") Integer streetOfActualAddressType,
+            @RequestParam("addressData[actualData][streetOfActualAddress]") String streetOfActualAddress,
+            @RequestParam(value = "addressData[actualData][houseOfActualAddress]", defaultValue = "") String houseOfActualAddress,
+            @RequestParam(value = "addressData[actualData][buildingOfActualAddress]", defaultValue = "") String buildingOfActualAddress,
+            @RequestParam(value = "addressData[actualData][apartmentOfActualAddress]", defaultValue = "") String apartmentOfActualAddress,
+            @RequestParam(value = "addressData[actualData][indexOfActualAddress]", defaultValue = "") String indexOfActualAddress,
 
-            @RequestParam("surname") String surname,
-            @RequestParam("name") String name,
-            @RequestParam("patronymic") String patronymic,
-            @RequestParam("dateOfBirth") String dateOfBirth,
-            @RequestParam("nationality") String nationality,
 
-            @RequestParam("religion") String religion,
-            @RequestParam(value = "customReligion", defaultValue = "") String customReligion,
+            @RequestParam(value = "skills[]", defaultValue = "") String[] skills,
+            @RequestParam(value = "driversLicenses[]", defaultValue = "") String[] driversLicenses,
 
-            @RequestParam("militaryRank") String militaryRank,
+            @RequestParam(value = "educations_institutionType[]", defaultValue = "") String[] educations_institutionType,
+            @RequestParam(value = "educations_institutionName[]", defaultValue = "") String[] educations_institutionName,
+            @RequestParam(value = "educations_speciality[]", defaultValue = "") String[] educations_speciality,
+            @RequestParam(value = "educations_yearOfEnding[]", defaultValue = "") String[] educations_yearOfEnding,
+            @RequestParam(value = "educations_unfinished[]", defaultValue = "") String[] educations_unfinished,
+            @RequestParam(value = "educations_highAchiever[]", defaultValue = "") String[] educations_highAchiever,
+            @RequestParam(value = "educations_redDiploma[]", defaultValue = "") String[] educations_redDiploma,
 
-            @RequestParam("post") String post,
+            @RequestParam(value = "foreignLanguages_language[]", defaultValue = "") String[] foreignLanguages_language,
+            @RequestParam(value = "foreignLanguages_level[]", defaultValue = "") String[] foreignLanguages_level,
 
-            @RequestParam("passportNumber") String passportNumber,
-            @RequestParam("militaryIdNumber") String militaryIdNumber,
 
-            @RequestParam("phone") String phone,
 
-            @RequestParam("faculty") String faculty,
-            @RequestParam("speciality") String speciality,
-            @RequestParam("yearOfAdmission") Integer yearOfAdmission,
+            @RequestParam(value = "familyComposition[compositionOfFamily]", defaultValue = "0") String compositionOfFamily,
+            @RequestParam(value = "familyComposition[withoutFather]", defaultValue = "") String withoutFather,
+            @RequestParam(value = "familyComposition[withoutFather]", defaultValue = "") String withoutMother,
 
-            @RequestParam("compositionOfFamily") String compositionOfFamily,
+            @RequestParam(value = "familyComposition[fatherExist]", defaultValue = "") Boolean fatherExist,
+            @RequestParam(value = "familyComposition[motherExist]", defaultValue = "") Boolean motherExist,
+            @RequestParam(value = "familyComposition[hasInformationAboutParents]", defaultValue = "") Boolean hasInformationAboutParents,
 
-            @RequestParam(value = "withoutFather", defaultValue = "") String withoutFather,
-            @RequestParam(value = "withoutFather", defaultValue = "") String withoutMother,
-
-            @RequestParam(value = "fatherExist", defaultValue = "") Boolean fatherExist,
-            @RequestParam(value = "motherExist", defaultValue = "") Boolean motherExist,
-            @RequestParam(value = "hasInformationAboutParents", defaultValue = "") Boolean hasInformationAboutParents,
-
-            @RequestParam("married") String married,
-            @RequestParam("marrieds") String marrieds,
+            @RequestParam("familyComposition[married]") String married,
+            @RequestParam("familyComposition[marrieds]") String marrieds,
 
             @RequestParam(value = "familyMembers_type[]", defaultValue = "0") Integer[] familyMembers_type,
             @RequestParam(value = "familyMembers_firstName[]", defaultValue = "") String[] familyMembers_firstName,
@@ -128,22 +128,29 @@ public class CadetController extends BaseController {
             @RequestParam(value = "familyMembers_hasADisability[]", defaultValue = "") String[] familyMembers_hasADisability,
             @RequestParam(value = "familyMembers_hasDied[]", defaultValue = "") String[] familyMembers_hasDied,
             @RequestParam(value = "familyMembers_isBroughtUpSeparately[]", defaultValue = "") String[] familyMembers_isBroughtUpSeparately,
+            @RequestParam(value = "familyMembers_hasDiedCause[]", defaultValue = "") String[] familyMembers_hasDiedCause,
+            @RequestParam(value = "familyMembers_hasDiedPlace[]", defaultValue = "") String[] familyMembers_hasDiedPlace,
+            @RequestParam(value = "familyMembers_hasDiedYear[]", defaultValue = "") String[] familyMembers_hasDiedYear,
+            @RequestParam(value = "familyMembers_hasAMentalIllnessName[]", defaultValue = "") String[] familyMembers_hasAMentalIllnessName,
+            @RequestParam(value = "familyMembers_hasACriminalRecordDetails[]", defaultValue = "") String[] familyMembers_hasACriminalRecordDetails,
 
-            @RequestParam("alcohol") String alcohol,
-            @RequestParam("drugUse") String drugUse,
 
-            @RequestParam(value = "chronicDiseases", defaultValue = "") String chronicDiseases,
-            @RequestParam(value = "validityCategory", defaultValue = "") String validityCategory,
+            @RequestParam(value = "health[concussionsWereNot]", defaultValue = "false") Boolean concussionsWereNot,
+            @RequestParam(value = "health[traumaticBrainInjuryWasNot]", defaultValue = "false") Boolean traumaticBrainInjuryWasNot,
+            @RequestParam(value = "health[theNarcologWasNot]", defaultValue = "false") Boolean theNarcologWasNot,
+            @RequestParam(value = "health[thePsychiatristWasNot]", defaultValue = "false") Boolean thePsychiatristWasNot,
+            @RequestParam(value = "health[alcohol]", defaultValue = "0") Integer alcohol,
+            @RequestParam(value = "health[drugUse]", defaultValue = "0") Integer drugUse,
+            @RequestParam(value = "health[chronicDiseases]", defaultValue = "") String chronicDiseases,
+            @RequestParam(value = "health[validityCategory]", defaultValue = "") String validityCategory,
 
-            @RequestParam(value = "scars", defaultValue = "") String scars,
-            @RequestParam(value = "tattoo", defaultValue = "") String tattoo,
-            @RequestParam(value = "abroad", defaultValue = "") String abroad,
 
-            @RequestParam(value = "driversLicenses[]", defaultValue = "") String[] driversLicenses,
+            @RequestParam(value = "behavior[thoughtsOfSuicideDoesNotHave]", defaultValue = "false") Boolean thoughtsOfSuicideDoesNotHave,
+            @RequestParam(value = "behavior[suicideAttemptsDidNotCommit]", defaultValue = "false") Boolean suicideAttemptsDidNotCommit,
+            @RequestParam(value = "behavior[administrativeOffenseDidNotCommit]", defaultValue = "false") Boolean administrativeOffenseDidNotCommit,
+            @RequestParam(value = "behavior[policeRecordDoesNotHave]", defaultValue = "false") Boolean policeRecordDoesNotHave,
+            @RequestParam(value = "behavior[criminalLiabilityWasNotInvolved]", defaultValue = "false") Boolean criminalLiabilityWasNotInvolved,
 
-            @RequestParam(value = "division", defaultValue = "0") Long divisionId,
-
-            @RequestParam(value = "skills[]", defaultValue = "") String[] skills,
             @RequestParam(value = "tripsAbroads_who[]", defaultValue = "") String[] tripsAbroads_who,
             @RequestParam(value = "tripsAbroads_firstName[]", defaultValue = "") String[] tripsAbroads_firstName,
             @RequestParam(value = "tripsAbroads_lastName[]", defaultValue = "") String[] tripsAbroads_lastName,
@@ -151,16 +158,10 @@ public class CadetController extends BaseController {
             @RequestParam(value = "tripsAbroads_country[]", defaultValue = "") String[] tripsAbroads_country,
             @RequestParam(value = "tripsAbroads_doMaintainARelationship[]", defaultValue = "") String[] tripsAbroads_doMaintainARelationship,
 
-            @RequestParam(value = "educations_institutionType[]", defaultValue = "") String[] educations_institutionType,
-            @RequestParam(value = "educations_institutionName[]", defaultValue = "") String[] educations_institutionName,
-            @RequestParam(value = "educations_speciality[]", defaultValue = "") String[] educations_speciality,
-            @RequestParam(value = "educations_yearOfEnding[]", defaultValue = "") String[] educations_yearOfEnding,
-            @RequestParam(value = "educations_unfinished[]", defaultValue = "") String[] educations_unfinished,
-            @RequestParam(value = "educations_highAchiever[]", defaultValue = "") String[] educations_highAchiever,
-            @RequestParam(value = "educations_redDiploma[]", defaultValue = "") String[] educations_redDiploma,
 
-            @RequestParam(value = "foreignLanguages_language[]", defaultValue = "") String[] foreignLanguages_language,
-            @RequestParam(value = "foreignLanguages_level[]", defaultValue = "") String[] foreignLanguages_level,
+            @RequestParam(value = "additionally[scars]", defaultValue = "") String scars,
+            @RequestParam(value = "additionally[tattoo]", defaultValue = "") String tattoo,
+            @RequestParam(value = "additionally[abroad]", defaultValue = "") String abroad,
 
             HttpServletResponse response) throws UnsupportedEncodingException {
 
@@ -169,8 +170,28 @@ public class CadetController extends BaseController {
         try {
 
             Division division = divisionRepository.findOne(divisionId);
-
             cadet.setDivision(division);
+
+            cadet.setSurname(surname);
+            cadet.setName(name);
+            cadet.setPatronymic(patronymic);
+            cadet.setDateOfBirth(RuarmyUtils.SIMPLE_DATE_FORMAT.parse(dateOfBirthOri));
+            cadet.setNationality(nationality);
+            if (religionId.equals(10)) {
+                cadet.setReligion(customReligion);
+            } else {
+                cadet.setReligion(religionId.toString());
+            }
+            cadet.setMilitaryRank(militaryRankId.toString());
+            cadet.setPost(post);
+            cadet.setPassportNumber(passportNumber);
+            cadet.setMilitaryIdNumber(militaryIdNumber);
+            cadet.setPhone(phone);
+            cadet.setFaculty(faculty);
+            cadet.setSpeciality(speciality);
+            cadet.setYearOfAdmission(yearOfAdmission);
+
+
             cadet.getAddressData().setSubjectOfPlaceOfBirthType(subjectOfPlaceOfBirthType);
             cadet.getAddressData().setSubjectOfPlaceOfBirth(subjectOfPlaceOfBirth);
             cadet.getAddressData().setCityOfPlaceOfBirthType(cityOfPlaceOfBirthType);
@@ -199,54 +220,28 @@ public class CadetController extends BaseController {
             cadet.getAddressData().setIndexOfActualAddress(indexOfActualAddress);
 
 
-            cadet.setConcussionsWereNot(concussionsWereNot);
-            cadet.setTraumaticBrainInjuryWasNot(traumaticBrainInjuryWasNot);
-            cadet.setTheNarcologWasNot(theNarcologWasNot);
-            cadet.setThePsychiatristWasNot(thePsychiatristWasNot);
-            cadet.setThoughtsOfSuicideDoesNotHave(thoughtsOfSuicideDoesNotHave);
-            cadet.setAdministrativeOffenseDidNotCommit(administrativeOffenseDidNotCommit);
-            cadet.setPoliceRecordDoesNotHave(policeRecordDoesNotHave);
-            cadet.setCriminalLiabilityWasNotInvolved(criminalLiabilityWasNotInvolved);
-            cadet.setRelativesAndFriendsAbroad(relativesAndFriendsAbroad);
-
-
-            cadet.setSurname(surname);
-            cadet.setName(name);
-            cadet.setPatronymic(patronymic);
-            cadet.setDateOfBirth(RuarmyUtils.SIMPLE_DATE_FORMAT.parse(dateOfBirth));
-            cadet.setNationality(nationality);
-
-
-            if ("10".equals(religion)) {
-                cadet.setReligion(customReligion);
-            } else {
-                cadet.setReligion(religion);
+            cadet.setEducations(new ArrayList<>());
+            for (int i = 0; i < educations_institutionType.length; i++) {
+                Education education = new Education();
+                education.setCadet(cadet);
+                education.setInstitutionType(educations_institutionType[i]);
+                education.setInstitutionName(educations_institutionName[i]);
+                education.setSpeciality(educations_speciality[i].replace("||comma||",","));
+                education.setYearOfEnding(educations_yearOfEnding[i]);
+                education.setUnfinished("true".equals(educations_unfinished[i]));
+                education.setHighAchiever("true".equals(educations_highAchiever[i]));
+                education.setRedDiploma("true".equals(educations_redDiploma[i]));
+                cadet.getEducations().add(education);
             }
 
-            cadet.setMilitaryRank(militaryRank);
-
-            cadet.setPost(post);
-
-            cadet.setPassportNumber(passportNumber);
-            cadet.setMilitaryIdNumber(militaryIdNumber);
-
-            cadet.setPhone(phone);
-
-
-            cadet.setFaculty(faculty);
-            cadet.setSpeciality(speciality);
-            cadet.setYearOfAdmission(yearOfAdmission);
-
-
-            cadet.setAlcohol(alcohol);
-            cadet.setDrugUse(drugUse);
-
-            cadet.setChronicDiseases(chronicDiseases);
-            cadet.setValidityCategory(validityCategory);
-
-            cadet.setScars(scars);
-            cadet.setTattoo(tattoo);
-            cadet.setAbroad(abroad);
+            cadet.setForeignLanguages(new ArrayList<>());
+            for (int i = 0; i < foreignLanguages_language.length; i++) {
+                ForeignLanguage foreignLanguage = new ForeignLanguage();
+                foreignLanguage.setCadet(cadet);
+                foreignLanguage.setLanguage(foreignLanguages_language[i]);
+                foreignLanguage.setLevel(foreignLanguages_level[i]);
+                cadet.getForeignLanguages().add(foreignLanguage);
+            }
 
             String dlsStr = "";
             if (driversLicenses.length > 0) {
@@ -256,7 +251,6 @@ public class CadetController extends BaseController {
                 cadet.setDrivingLicense(dlsStr.substring(0, dlsStr.length() - 1));
             }
 
-
             String skillsStr = "";
             if (skills.length > 0) {
                 for (String skill : skills) {
@@ -265,18 +259,6 @@ public class CadetController extends BaseController {
                 cadet.setSkills(skillsStr.substring(0, skillsStr.length() - 1));
             }
 
-
-            for (int i = 0; i < tripsAbroads_who.length; i++) {
-                TripsAbroad tripsAbroad = new TripsAbroad();
-                tripsAbroad.setCadet(cadet);
-                tripsAbroad.setWho(tripsAbroads_who[i]);
-                tripsAbroad.setFirstName(tripsAbroads_firstName[i]);
-                tripsAbroad.setLastName(tripsAbroads_lastName[i]);
-                tripsAbroad.setPatronymic(tripsAbroads_patronymic[i]);
-                tripsAbroad.setCountry(tripsAbroads_country[i]);
-                tripsAbroad.setDoMaintainARelationship("true".equals(tripsAbroads_doMaintainARelationship[i]));
-                cadet.getTripsAbroads().add(tripsAbroad);
-            }
 
 
             cadet.setCompositionOfFamily(compositionOfFamily);
@@ -288,6 +270,8 @@ public class CadetController extends BaseController {
             cadet.setWithoutMother(withoutMother);
             cadet.setMarried(married);
             cadet.setMarrieds(marrieds);
+
+            cadet.setFamilyMembers(new ArrayList<>());
 
             for (int i = 0; i < familyMembers_firstName.length; i++) {
                 FamilyMember familyMember = new FamilyMember();
@@ -309,33 +293,61 @@ public class CadetController extends BaseController {
                 familyMember.setHasADisability("true".equals(familyMembers_hasADisability[i]));
                 familyMember.setHasDied("true".equals(familyMembers_hasDied[i]));
                 familyMember.setBroughtUpSeparately("true".equals(familyMembers_isBroughtUpSeparately[i]));
+
+                familyMember.setHasDiedCause(familyMembers_hasDiedCause[i]);
+                familyMember.setHasDiedPlace(familyMembers_hasDiedPlace[i]);
+                try{
+                    familyMember.setHasDiedYear(Integer.parseInt(familyMembers_hasDiedYear[i]));
+                } catch (Exception e){
+
+                }
+                familyMember.setHasAMentalIllnessName(familyMembers_hasAMentalIllnessName[i]);
+                familyMember.setHasACriminalRecordDetails(familyMembers_hasACriminalRecordDetails[i]);
+
                 cadet.getFamilyMembers().add(familyMember);
             }
 
 
-            for (int i = 0; i < educations_institutionType.length; i++) {
-                Education education = new Education();
-                education.setCadet(cadet);
-                education.setInstitutionType(educations_institutionType[i]);
-                education.setInstitutionName(educations_institutionName[i]);
-                education.setSpeciality(educations_speciality[i]);
-                education.setYearOfEnding(educations_yearOfEnding[i]);
-                education.setUnfinished("true".equals(educations_unfinished[i]));
-                education.setHighAchiever("true".equals(educations_highAchiever[i]));
-                education.setRedDiploma("true".equals(educations_redDiploma[i]));
-                cadet.getEducations().add(education);
+            cadet.setConcussionsWereNot(concussionsWereNot);
+            cadet.setTraumaticBrainInjuryWasNot(traumaticBrainInjuryWasNot);
+            cadet.setTheNarcologWasNot(theNarcologWasNot);
+            cadet.setThePsychiatristWasNot(thePsychiatristWasNot);
+            cadet.setAlcohol(alcohol.toString());
+            cadet.setDrugUse(drugUse.toString());
+            cadet.setChronicDiseases(chronicDiseases);
+            cadet.setValidityCategory(validityCategory);
+
+            cadet.setThoughtsOfSuicideDoesNotHave(thoughtsOfSuicideDoesNotHave);
+            cadet.setSuicideAttemptsDidNotCommit(suicideAttemptsDidNotCommit);
+            cadet.setAdministrativeOffenseDidNotCommit(administrativeOffenseDidNotCommit);
+            cadet.setPoliceRecordDoesNotHave(policeRecordDoesNotHave);
+            cadet.setCriminalLiabilityWasNotInvolved(criminalLiabilityWasNotInvolved);
+
+
+            cadet.setTripsAbroads(new ArrayList<>());
+            for (int i = 0; i < tripsAbroads_who.length; i++) {
+                TripsAbroad tripsAbroad = new TripsAbroad();
+                tripsAbroad.setCadet(cadet);
+                tripsAbroad.setWho(tripsAbroads_who[i]);
+                tripsAbroad.setFirstName(tripsAbroads_firstName[i]);
+                tripsAbroad.setLastName(tripsAbroads_lastName[i]);
+                tripsAbroad.setPatronymic(tripsAbroads_patronymic[i]);
+                tripsAbroad.setCountry(tripsAbroads_country[i]);
+                tripsAbroad.setDoMaintainARelationship("true".equals(tripsAbroads_doMaintainARelationship[i]));
+                cadet.getTripsAbroads().add(tripsAbroad);
             }
 
-            for (int i = 0; i < foreignLanguages_language.length; i++) {
-                ForeignLanguage foreignLanguage = new ForeignLanguage();
-                foreignLanguage.setCadet(cadet);
-                foreignLanguage.setLanguage(foreignLanguages_language[i]);
-                foreignLanguage.setLevel(foreignLanguages_level[i]);
-                cadet.getForeignLanguages().add(foreignLanguage);
-            }
+
+
+            cadet.setScars(scars);
+            cadet.setTattoo(tattoo);
+            cadet.setAbroad(abroad);
+
+
 
 
             cadetRepository.save(cadet);
+
             printSuccessStatus(response);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -361,22 +373,138 @@ public class CadetController extends BaseController {
             for (Cadet cadet : cadets) {
                 jsonWriter.beginObject();
                 jsonWriter.name("id").value(cadet.getId());
+
+
+
                 jsonWriter.name("cursantId").value(cadet.getId());
                 jsonWriter.name("fio").value(cadet.getName() + " " + cadet.getSurname() + " " + cadet.getPatronymic());
-                jsonWriter.name("militaryRank").value(cadet.getMilitaryRank());
+
+                jsonWriter.name("militaryRank").value(
+                        ruarmyResources.getString(
+                                MilitaryRank.getByInt(Integer.valueOf(cadet.getMilitaryRank()) - 1).getResourceKey()
+                        ));
+
                 jsonWriter.name("post").value(cadet.getPost());
                 jsonWriter.name("division").value(cadet.getDivision() == null ? "" : cadet.getDivision().getName());
                 jsonWriter.name("faculty").value(cadet.getFaculty());
                 jsonWriter.name("speciality").value(cadet.getSpeciality());
                 jsonWriter.name("nationality").value(cadet.getNationality());
-                jsonWriter.name("religion").value(cadet.getReligion());
 
-                String family = "";
-                family += cadet.getCompositionOfFamily() + " " + cadet.getHasInformationAboutParents() + " " +
-                        cadet.getWithoutFather() + " " + cadet.getWithoutMother() + " " +
-                        cadet.getFatherExist() + " " + cadet.getMotherExist() + " " + cadet.getMarried();
 
-                jsonWriter.name("family").value(family);
+                if ("1".equals(cadet.getReligion()) ||
+                        "2".equals(cadet.getReligion()) ||
+                        "3".equals(cadet.getReligion()) ||
+                        "4".equals(cadet.getReligion()) ||
+                        "5".equals(cadet.getReligion()) ||
+                        "6".equals(cadet.getReligion()) ||
+                        "7".equals(cadet.getReligion()) ||
+                        "8".equals(cadet.getReligion()) ||
+                        "9".equals(cadet.getReligion())
+                        ) {
+                    jsonWriter.name("religion").value(
+                            ruarmyResources.getString(
+                                    Religion.getByInt(Integer.valueOf(cadet.getReligion()) - 1).getResourceKey()
+                            ));
+                } else {
+                    jsonWriter.name("religion").value(cadet.getReligion());
+                }
+
+
+
+
+
+
+                String str="";
+
+                if (cadet.getCompositionOfFamily().equals("1")) {
+                    str= "полная";
+                }
+                if (cadet.getCompositionOfFamily().equals("2")) {
+                    str= "без отца";
+
+                    if (cadet.getWithoutFather().equals("1")) {
+                        str+=", родители в разводе";
+                        if (cadet.getFatherExist()) {
+                            str+=", поддерживает отношения";
+                        } else {
+                            str+=", отношения не поддерживает";
+                        }
+                    } else if (cadet.getWithoutFather().equals("2")) {
+                        str+=", отец ушел из семьи";
+                        if (cadet.getFatherExist()) {
+                            str+=", поддерживает отношения";
+                        } else {
+                            str+=", отношения не поддерживает";
+                        }
+                    } else {
+                        str+=", отец умер";
+                    }
+
+                }
+                if (cadet.getCompositionOfFamily().equals("3")) {
+                    str= "без матери";
+
+                    if (cadet.getWithoutMother().equals("1")) {
+                        str+=", родители в разводе";
+                        if (cadet.getMotherExist()) {
+                            str+=", поддерживает отношения";
+                        } else {
+                            str+=", отношения не поддерживает";
+                        }
+                    } else if (cadet.getWithoutMother().equals("2")) {
+                        str+=", мать ушла из семьи";
+                        if (cadet.getMotherExist()) {
+                            str+=", поддерживает отношения";
+                        } else {
+                            str+=", отношения не поддерживает";
+                        }
+                    } else {
+                        str+=", мать умерла";
+                    }
+                }
+                if (cadet.getCompositionOfFamily().equals("4")) {
+                    str= "сирота";
+                    if (cadet.getHasInformationAboutParents()){
+                        str+=", имеет сведения о родителях";
+                    } else {
+                        str+=", сведений о родителях не имеет";
+                    }
+                }
+
+
+
+                String str2="";
+
+                if (cadet.getMarried().equals("1")) {
+                    str2= "холост";
+                } else if (cadet.getMarried().equals("2")){
+                    str2= "женат";
+                } else if (cadet.getMarried().equals("3")){
+                    str2= "в гражданском браке";
+                } else if (cadet.getMarried().equals("4")){
+                    str2= "состоит в отношениях";
+                } else if (cadet.getMarried().equals("5")){
+                    str2= "вдовец";
+                }
+
+                if (cadet.getMarrieds().equals("1")) {
+                    str2+= ", в браке не состоял";
+                } else if (cadet.getMarrieds().equals("2")){
+                    str2+= ", один брак";
+                } else if (cadet.getMarrieds().equals("3")){
+                    str2+= ", два брака";
+                } else if (cadet.getMarrieds().equals("4")){
+                    str2+= ", три брака";
+                } else if (cadet.getMarrieds().equals("5")){
+                    str2+= ", четыре и более брака";
+                }
+
+
+                jsonWriter.name("family").value(str+"; "+str2);
+
+
+
+
                 jsonWriter.name("validityCategory").value(cadet.getValidityCategory());
 
                 jsonWriter.name("actualAddress").value(cadet.getAddressData().getActualAddress());
@@ -413,50 +541,47 @@ public class CadetController extends BaseController {
             jsonWriter.name("birthData");
             jsonWriter.beginObject();
             jsonWriter.name("subjectOfPlaceOfBirthType").value(nnl(cadet.getAddressData().getSubjectOfPlaceOfBirthType()));
-
-            jsonWriter.name("subjectOfPlaceOfBirthTypeName").value(
-                    ruarmyResources.getString(
-                            SubjectType.getByInt(cadet.getAddressData().getSubjectOfPlaceOfBirthType() - 1).getResourceKey()
-                    ));
-
+            String subjectOfPlaceOfBirthTypeName= ruarmyResources.getString(
+                    SubjectType.getByInt(cadet.getAddressData().getSubjectOfPlaceOfBirthType() - 1).getResourceKey()
+            );
+            jsonWriter.name("subjectOfPlaceOfBirthTypeName").value(subjectOfPlaceOfBirthTypeName);
+            if (cadet.getAddressData().getSubjectOfPlaceOfBirthType().equals(3)){
+                jsonWriter.name("subjectOfPlaceOfBirthFullName").value(subjectOfPlaceOfBirthTypeName+" "+nnl(cadet.getAddressData().getSubjectOfPlaceOfBirth()));
+            } else {
+                jsonWriter.name("subjectOfPlaceOfBirthFullName").value(nnl(cadet.getAddressData().getSubjectOfPlaceOfBirth())+" "+subjectOfPlaceOfBirthTypeName);
+            }
             jsonWriter.name("subjectOfPlaceOfBirth").value(nnl(cadet.getAddressData().getSubjectOfPlaceOfBirth()));
-
-
             jsonWriter.name("cityOfPlaceOfBirthType").value(nnl(cadet.getAddressData().getCityOfPlaceOfBirthType()));
-
             jsonWriter.name("cityOfPlaceOfBirthTypeName").value(
                     ruarmyResources.getString(
                             CityType.getByInt(cadet.getAddressData().getCityOfPlaceOfBirthType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("cityOfPlaceOfBirth").value(nnl(cadet.getAddressData().getCityOfPlaceOfBirth()));
-
             jsonWriter.endObject();
             jsonWriter.name("registeredData");
             jsonWriter.beginObject();
             jsonWriter.name("subjectOfRegisteredAddressType").value(nnl(cadet.getAddressData().getSubjectOfRegisteredAddressType()));
-
-            jsonWriter.name("subjectOfRegisteredAddressTypeName").value(
-                    ruarmyResources.getString(
-                            SubjectType.getByInt(cadet.getAddressData().getSubjectOfRegisteredAddressType() - 1).getResourceKey()
-                    ));
-
+            String subjectOfRegisteredAddressTypeName= ruarmyResources.getString(
+                    SubjectType.getByInt(cadet.getAddressData().getSubjectOfRegisteredAddressType() - 1).getResourceKey()
+            );
+            jsonWriter.name("subjectOfRegisteredAddressTypeName").value(subjectOfRegisteredAddressTypeName);
+            if (cadet.getAddressData().getSubjectOfRegisteredAddressType().equals(3)){
+                jsonWriter.name("subjectOfRegisteredAddressFullName").value(subjectOfRegisteredAddressTypeName+" "+nnl(cadet.getAddressData().getSubjectOfRegisteredAddress()));
+            } else {
+                jsonWriter.name("subjectOfRegisteredAddressFullName").value(nnl(cadet.getAddressData().getSubjectOfRegisteredAddress())+" "+subjectOfRegisteredAddressTypeName);
+            }
             jsonWriter.name("subjectOfRegisteredAddress").value(nnl(cadet.getAddressData().getSubjectOfRegisteredAddress()));
             jsonWriter.name("cityOfRegisteredAddressType").value(nnl(cadet.getAddressData().getCityOfRegisteredAddressType()));
-
             jsonWriter.name("cityOfRegisteredAddressTypeName").value(
                     ruarmyResources.getString(
                             CityType.getByInt(cadet.getAddressData().getCityOfRegisteredAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("cityOfRegisteredAddress").value(nnl(cadet.getAddressData().getCityOfRegisteredAddress()));
             jsonWriter.name("streetOfRegisteredAddressType").value(nnl(cadet.getAddressData().getStreetOfRegisteredAddressType()));
-
             jsonWriter.name("streetOfRegisteredAddressTypeName").value(
                     ruarmyResources.getString(
                             StreetType.getByInt(cadet.getAddressData().getStreetOfRegisteredAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("streetOfRegisteredAddress").value(nnl(cadet.getAddressData().getStreetOfRegisteredAddress()));
             jsonWriter.name("houseOfRegisteredAddress").value(nnl(cadet.getAddressData().getHouseOfRegisteredAddress()));
             jsonWriter.name("buildingOfRegisteredAddress").value(nnl(cadet.getAddressData().getBuildingOfRegisteredAddress()));
@@ -466,28 +591,27 @@ public class CadetController extends BaseController {
             jsonWriter.name("actualData");
             jsonWriter.beginObject();
             jsonWriter.name("subjectOfActualAddressType").value(nnl(cadet.getAddressData().getSubjectOfActualAddressType()));
-
-            jsonWriter.name("subjectOfActualAddressTypeName").value(
-                    ruarmyResources.getString(
-                            SubjectType.getByInt(cadet.getAddressData().getSubjectOfActualAddressType() - 1).getResourceKey()
-                    ));
-
+            String subjectOfActualAddressTypeName= ruarmyResources.getString(
+                    SubjectType.getByInt(cadet.getAddressData().getSubjectOfActualAddressType() - 1).getResourceKey()
+            );
+            jsonWriter.name("subjectOfActualAddressTypeName").value(subjectOfActualAddressTypeName);
+            if (cadet.getAddressData().getSubjectOfActualAddressType().equals(3)){
+                jsonWriter.name("subjectOfActualAddressFullName").value(subjectOfActualAddressTypeName+" "+nnl(cadet.getAddressData().getSubjectOfActualAddress()));
+            } else {
+                jsonWriter.name("subjectOfActualAddressFullName").value(nnl(cadet.getAddressData().getSubjectOfActualAddress())+" "+subjectOfActualAddressTypeName);
+            }
             jsonWriter.name("subjectOfActualAddress").value(nnl(cadet.getAddressData().getSubjectOfActualAddress()));
             jsonWriter.name("cityOfActualAddressType").value(nnl(cadet.getAddressData().getCityOfActualAddressType()));
-
             jsonWriter.name("cityOfActualAddressTypeName").value(
                     ruarmyResources.getString(
                             CityType.getByInt(cadet.getAddressData().getCityOfActualAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("cityOfActualAddress").value(nnl(cadet.getAddressData().getCityOfActualAddress()));
             jsonWriter.name("streetOfActualAddressType").value(nnl(cadet.getAddressData().getStreetOfActualAddressType()));
-
             jsonWriter.name("streetOfActualAddressTypeName").value(
                     ruarmyResources.getString(
                             StreetType.getByInt(cadet.getAddressData().getStreetOfActualAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("streetOfActualAddress").value(nnl(cadet.getAddressData().getStreetOfActualAddress()));
             jsonWriter.name("houseOfActualAddress").value(nnl(cadet.getAddressData().getHouseOfActualAddress()));
             jsonWriter.name("buildingOfActualAddress").value(nnl(cadet.getAddressData().getBuildingOfActualAddress()));
@@ -549,6 +673,11 @@ public class CadetController extends BaseController {
                 jsonWriter.name("hasADisability").value(nnl(familyMember.getHasADisability()));
                 jsonWriter.name("hasDied").value(nnl(familyMember.getHasDied()));
                 jsonWriter.name("broughtUpSeparately").value(nnl(familyMember.getBroughtUpSeparately()));
+                jsonWriter.name("hasDiedCause").value(nnl(familyMember.getHasDiedCause()));
+                jsonWriter.name("hasDiedPlace").value(nnl(familyMember.getHasDiedPlace()));
+                jsonWriter.name("hasDiedYear").value(nnl(familyMember.getHasDiedYear()));
+                jsonWriter.name("hasAMentalIllnessName").value(nnl(familyMember.getHasAMentalIllnessName()));
+                jsonWriter.name("hasACriminalRecordDetails").value(nnl(familyMember.getHasACriminalRecordDetails()));
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();
@@ -1020,50 +1149,47 @@ public class CadetController extends BaseController {
             jsonWriter.name("birthData");
             jsonWriter.beginObject();
             jsonWriter.name("subjectOfPlaceOfBirthType").value(nnl(cadet.getAddressData().getSubjectOfPlaceOfBirthType()));
-
-            jsonWriter.name("subjectOfPlaceOfBirthTypeName").value(
-                    ruarmyResources.getString(
-                            SubjectType.getByInt(cadet.getAddressData().getSubjectOfPlaceOfBirthType() - 1).getResourceKey()
-                    ));
-
+            String subjectOfPlaceOfBirthTypeName= ruarmyResources.getString(
+                    SubjectType.getByInt(cadet.getAddressData().getSubjectOfPlaceOfBirthType() - 1).getResourceKey()
+            );
+            jsonWriter.name("subjectOfPlaceOfBirthTypeName").value(subjectOfPlaceOfBirthTypeName);
+            if (cadet.getAddressData().getSubjectOfPlaceOfBirthType().equals(3)){
+                jsonWriter.name("subjectOfPlaceOfBirthFullName").value(subjectOfPlaceOfBirthTypeName+" "+nnl(cadet.getAddressData().getSubjectOfPlaceOfBirth()));
+            } else {
+                jsonWriter.name("subjectOfPlaceOfBirthFullName").value(nnl(cadet.getAddressData().getSubjectOfPlaceOfBirth())+" "+subjectOfPlaceOfBirthTypeName);
+            }
             jsonWriter.name("subjectOfPlaceOfBirth").value(nnl(cadet.getAddressData().getSubjectOfPlaceOfBirth()));
-
-
             jsonWriter.name("cityOfPlaceOfBirthType").value(nnl(cadet.getAddressData().getCityOfPlaceOfBirthType()));
-
             jsonWriter.name("cityOfPlaceOfBirthTypeName").value(
                     ruarmyResources.getString(
                             CityType.getByInt(cadet.getAddressData().getCityOfPlaceOfBirthType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("cityOfPlaceOfBirth").value(nnl(cadet.getAddressData().getCityOfPlaceOfBirth()));
-
             jsonWriter.endObject();
             jsonWriter.name("registeredData");
             jsonWriter.beginObject();
             jsonWriter.name("subjectOfRegisteredAddressType").value(nnl(cadet.getAddressData().getSubjectOfRegisteredAddressType()));
-
-            jsonWriter.name("subjectOfRegisteredAddressTypeName").value(
-                    ruarmyResources.getString(
-                            SubjectType.getByInt(cadet.getAddressData().getSubjectOfRegisteredAddressType() - 1).getResourceKey()
-                    ));
-
+            String subjectOfRegisteredAddressTypeName= ruarmyResources.getString(
+                    SubjectType.getByInt(cadet.getAddressData().getSubjectOfRegisteredAddressType() - 1).getResourceKey()
+            );
+            jsonWriter.name("subjectOfRegisteredAddressTypeName").value(subjectOfRegisteredAddressTypeName);
+            if (cadet.getAddressData().getSubjectOfRegisteredAddressType().equals(3)){
+                jsonWriter.name("subjectOfRegisteredAddressFullName").value(subjectOfRegisteredAddressTypeName+" "+nnl(cadet.getAddressData().getSubjectOfRegisteredAddress()));
+            } else {
+                jsonWriter.name("subjectOfRegisteredAddressFullName").value(nnl(cadet.getAddressData().getSubjectOfRegisteredAddress())+" "+subjectOfRegisteredAddressTypeName);
+            }
             jsonWriter.name("subjectOfRegisteredAddress").value(nnl(cadet.getAddressData().getSubjectOfRegisteredAddress()));
             jsonWriter.name("cityOfRegisteredAddressType").value(nnl(cadet.getAddressData().getCityOfRegisteredAddressType()));
-
             jsonWriter.name("cityOfRegisteredAddressTypeName").value(
                     ruarmyResources.getString(
                             CityType.getByInt(cadet.getAddressData().getCityOfRegisteredAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("cityOfRegisteredAddress").value(nnl(cadet.getAddressData().getCityOfRegisteredAddress()));
             jsonWriter.name("streetOfRegisteredAddressType").value(nnl(cadet.getAddressData().getStreetOfRegisteredAddressType()));
-
             jsonWriter.name("streetOfRegisteredAddressTypeName").value(
                     ruarmyResources.getString(
                             StreetType.getByInt(cadet.getAddressData().getStreetOfRegisteredAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("streetOfRegisteredAddress").value(nnl(cadet.getAddressData().getStreetOfRegisteredAddress()));
             jsonWriter.name("houseOfRegisteredAddress").value(nnl(cadet.getAddressData().getHouseOfRegisteredAddress()));
             jsonWriter.name("buildingOfRegisteredAddress").value(nnl(cadet.getAddressData().getBuildingOfRegisteredAddress()));
@@ -1073,28 +1199,27 @@ public class CadetController extends BaseController {
             jsonWriter.name("actualData");
             jsonWriter.beginObject();
             jsonWriter.name("subjectOfActualAddressType").value(nnl(cadet.getAddressData().getSubjectOfActualAddressType()));
-
-            jsonWriter.name("subjectOfActualAddressTypeName").value(
-                    ruarmyResources.getString(
-                            SubjectType.getByInt(cadet.getAddressData().getSubjectOfActualAddressType() - 1).getResourceKey()
-                    ));
-
+            String subjectOfActualAddressTypeName= ruarmyResources.getString(
+                    SubjectType.getByInt(cadet.getAddressData().getSubjectOfActualAddressType() - 1).getResourceKey()
+            );
+            jsonWriter.name("subjectOfActualAddressTypeName").value(subjectOfActualAddressTypeName);
+            if (cadet.getAddressData().getSubjectOfActualAddressType().equals(3)){
+                jsonWriter.name("subjectOfActualAddressFullName").value(subjectOfActualAddressTypeName+" "+nnl(cadet.getAddressData().getSubjectOfActualAddress()));
+            } else {
+                jsonWriter.name("subjectOfActualAddressFullName").value(nnl(cadet.getAddressData().getSubjectOfActualAddress())+" "+subjectOfActualAddressTypeName);
+            }
             jsonWriter.name("subjectOfActualAddress").value(nnl(cadet.getAddressData().getSubjectOfActualAddress()));
             jsonWriter.name("cityOfActualAddressType").value(nnl(cadet.getAddressData().getCityOfActualAddressType()));
-
             jsonWriter.name("cityOfActualAddressTypeName").value(
                     ruarmyResources.getString(
                             CityType.getByInt(cadet.getAddressData().getCityOfActualAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("cityOfActualAddress").value(nnl(cadet.getAddressData().getCityOfActualAddress()));
             jsonWriter.name("streetOfActualAddressType").value(nnl(cadet.getAddressData().getStreetOfActualAddressType()));
-
             jsonWriter.name("streetOfActualAddressTypeName").value(
                     ruarmyResources.getString(
                             StreetType.getByInt(cadet.getAddressData().getStreetOfActualAddressType() - 1).getResourceKey()
                     ));
-
             jsonWriter.name("streetOfActualAddress").value(nnl(cadet.getAddressData().getStreetOfActualAddress()));
             jsonWriter.name("houseOfActualAddress").value(nnl(cadet.getAddressData().getHouseOfActualAddress()));
             jsonWriter.name("buildingOfActualAddress").value(nnl(cadet.getAddressData().getBuildingOfActualAddress()));
@@ -1141,6 +1266,11 @@ public class CadetController extends BaseController {
                                              @RequestParam(value = "familyMembers_hasADisability[]", defaultValue = "") String[] familyMembers_hasADisability,
                                              @RequestParam(value = "familyMembers_hasDied[]", defaultValue = "") String[] familyMembers_hasDied,
                                              @RequestParam(value = "familyMembers_isBroughtUpSeparately[]", defaultValue = "") String[] familyMembers_isBroughtUpSeparately,
+                                             @RequestParam(value = "familyMembers_hasDiedCause[]", defaultValue = "") String[] familyMembers_hasDiedCause,
+                                             @RequestParam(value = "familyMembers_hasDiedPlace[]", defaultValue = "") String[] familyMembers_hasDiedPlace,
+                                             @RequestParam(value = "familyMembers_hasDiedYear[]", defaultValue = "") String[] familyMembers_hasDiedYear,
+                                             @RequestParam(value = "familyMembers_hasAMentalIllnessName[]", defaultValue = "") String[] familyMembers_hasAMentalIllnessName,
+                                             @RequestParam(value = "familyMembers_hasACriminalRecordDetails[]", defaultValue = "") String[] familyMembers_hasACriminalRecordDetails,
 
                                              HttpServletResponse response) throws UnsupportedEncodingException {
         try {
@@ -1180,6 +1310,17 @@ public class CadetController extends BaseController {
                 familyMember.setHasADisability("true".equals(familyMembers_hasADisability[i]));
                 familyMember.setHasDied("true".equals(familyMembers_hasDied[i]));
                 familyMember.setBroughtUpSeparately("true".equals(familyMembers_isBroughtUpSeparately[i]));
+
+                familyMember.setHasDiedCause(familyMembers_hasDiedCause[i]);
+                familyMember.setHasDiedPlace(familyMembers_hasDiedPlace[i]);
+                try{
+                    familyMember.setHasDiedYear(Integer.parseInt(familyMembers_hasDiedYear[i]));
+                } catch (Exception e){
+
+                }
+                familyMember.setHasAMentalIllnessName(familyMembers_hasAMentalIllnessName[i]);
+                familyMember.setHasACriminalRecordDetails(familyMembers_hasACriminalRecordDetails[i]);
+
                 cadet.getFamilyMembers().add(familyMember);
             }
 
@@ -1219,6 +1360,11 @@ public class CadetController extends BaseController {
                 jsonWriter.name("hasADisability").value(nnl(familyMember.getHasADisability()));
                 jsonWriter.name("hasDied").value(nnl(familyMember.getHasDied()));
                 jsonWriter.name("broughtUpSeparately").value(nnl(familyMember.getBroughtUpSeparately()));
+                jsonWriter.name("hasDiedCause").value(nnl(familyMember.getHasDiedCause()));
+                jsonWriter.name("hasDiedPlace").value(nnl(familyMember.getHasDiedPlace()));
+                jsonWriter.name("hasDiedYear").value(nnl(familyMember.getHasDiedYear()));
+                jsonWriter.name("hasAMentalIllnessName").value(nnl(familyMember.getHasAMentalIllnessName()));
+                jsonWriter.name("hasACriminalRecordDetails").value(nnl(familyMember.getHasACriminalRecordDetails()));
                 jsonWriter.endObject();
             }
             jsonWriter.endArray();

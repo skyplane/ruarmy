@@ -8,16 +8,15 @@ function initTotalInformation($scope){
 
 
 
-    $scope.showCustomReligion = function () {
-        $('#customReligion').attr('style', '');
-        $scope.cadet.totalInformation.customReligion = '';
+    $scope.hideOrShowCustomReligion = function () {
+        if (Number($scope.cadet.totalInformation.religion.id) < 10) {
+            $('#customReligion').attr('style', 'display: none');
+            $scope.cadet.totalInformation.customReligion = '';
+        } else {
+            $('#customReligion').attr('style', '');
+            $scope.cadet.totalInformation.customReligion = '';
+        }
     };
-
-    $scope.hideCustomReligion = function () {
-        $('#customReligion').attr('style', 'display: none');
-        $scope.cadet.totalInformation.customReligion = '';
-    };
-
 
     $scope.divisions = [];
     $.post(
@@ -52,6 +51,14 @@ function initTotalInformation($scope){
     $.validator.addMethod("militaryId", function (value, element) {
         return this.optional(element) || /^[А-Я][А-Я]\s\d{7}$/.test(value);
     }, "Пожалуйста, введите номер военного билета в формате  AA 1234567");
+
+    $.validator.addMethod("year", function (value, element) {
+        return this.optional(element) || /^\d{4}$/.test(value);
+    }, "Пожалуйста, введите год в формате 1234");
+
+    $.validator.addMethod("valueNotEquals", function (value, element, arg) {
+        return arg != value;
+    }, "Выберите нужное значение");
 
     $scope.editTotalInformation = function (){
         $('#totalInformationShow').toggle();

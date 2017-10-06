@@ -14,10 +14,11 @@ function loadSubjectsByIdAndType(subjectId, objectId, type) {
 }
 
 var k;
-
+var kd;
 
 
 var app = angular.module('cadetApp', ["checklist-model"]);
+
 
 app.directive('uiPassport', function () {
     return {
@@ -27,6 +28,16 @@ app.directive('uiPassport', function () {
         }
     };
 });
+
+app.directive('uiYear', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("0000");
+        }
+    };
+});
+
 app.directive('uiMilitaryTicket', function () {
     return {
         require: '?ngModel',
@@ -65,11 +76,53 @@ app.controller('cadetCtrl', function ($scope) {
     $scope.cadet = {};
     $scope.options = {};
 
+    $scope.cadet.totalInformation = {};
+    $scope.cadet.addressData = {};
+    $scope.cadet.addressData.birthData = {};
+    $scope.cadet.addressData.registeredData = {};
+    $scope.cadet.addressData.actualData = {};
 
-    $scope.driversLicensesAll = ['M', 'A', 'B', 'C', 'D', 'A1', 'B1', 'C1', 'D1', 'BE', 'CE', 'DE', 'C1E', 'D1E'];
-    $scope.driversLicenses = [];
+    $scope.cadet.educationAndSkills = {};
+    $scope.cadet.educationAndSkills.skills = [];
+    $scope.cadet.educationAndSkills.educations = [];
+    $scope.cadet.educationAndSkills.foreignLanguages = [];
+    $scope.cadet.educationAndSkills.driversLicenses = [];
+
+    $scope.cadet.familyComposition = {};
+    $scope.cadet.familyComposition.familyMembers = [];
+
+    $scope.cadet.behavior = {};
+    $scope.cadet.health = {};
+
+    $scope.cadet.tripsAbroad = [];
 
 
+    initTotalInformation($scope);
+    initEducationAndSkills($scope);
+    initAddressData($scope);
+
+    $scope.cadet.addressData.birthData.subjectOfPlaceOfBirthType="1";
+    $scope.cadet.addressData.birthData.cityOfPlaceOfBirthType="1";
+    loadSubjectsByIdAndType('subjectOfPlaceOfBirth', 'cityOfPlaceOfBirth', 1);
+
+    $scope.cadet.addressData.registeredData.subjectOfRegisteredAddressType="1";
+    loadSubjectsByIdAndType('subjectOfRegisteredAddress', 'cityOfRegisteredAddress', 1);
+    $scope.cadet.addressData.registeredData.cityOfRegisteredAddressType="1";
+    $scope.cadet.addressData.registeredData.streetOfRegisteredAddressType="1";
+
+    $scope.cadet.addressData.actualData.subjectOfActualAddressType="1";
+    loadSubjectsByIdAndType('subjectOfActualAddress', 'cityOfActualAddress', 1);;
+    $scope.cadet.addressData.actualData.cityOfActualAddressType="1";
+    $scope.cadet.addressData.actualData.streetOfActualAddressType="1";
+
+    initFamilyComposition($scope);
+    initHealth($scope);
+    initBehavior($scope);
+    initTripsAbroad($scope);
+    initAdditionally($scope);
+
+
+/*
     $scope.division = {};
     $scope.divisions = [];
     $.post(
@@ -132,100 +185,27 @@ app.controller('cadetCtrl', function ($scope) {
         $('#tripsAbroadModal').modal('hide');
     };
 
-    $scope.systemSkills = [];
-    $scope.skills = [];
-    $scope.actualSkills = [];
 
 
     $scope.cadet.addressData = {};
 
     $scope.selectedFieldOfActivityCategory = 1;
 
-    $scope.skillsTextByFoa1 = '';
-    $scope.skillsTextByFoa2 = '';
-    $scope.skillsTextByFoa3 = '';
-    $scope.skillsTextByFoa4 = '';
-
-    $scope.getSkillsTextByFoa = function (val) {
-        var str = '';
 
 
-        $.each($scope.skills, function () {
-            var skVal = this;
-            $.each($scope.systemSkills, function () {
-                if (this.foa == val && this.id == skVal) {
-                    str += this.name + ', ';
-                }
-            });
-        });
-        if (str == '') {
-            return 'не определён';
-        } else {
-            return str.substr(0, str.length - 2);
-        }
-    };
 
-    $scope.loadSkillsByFoaTimer = function () {
-        setTimeout(function () {
-            $scope.loadSkillsByFoa();
-            $scope.loadSkillsByFoaTimer();
-        }, 5000);
-    };
-    $scope.loadSkillsByFoa = function () {
-        $scope.skillsTextByFoa1 = $scope.getSkillsTextByFoa(1);
-        $scope.skillsTextByFoa2 = $scope.getSkillsTextByFoa(2);
-        $scope.skillsTextByFoa3 = $scope.getSkillsTextByFoa(3);
-        $scope.skillsTextByFoa4 = $scope.getSkillsTextByFoa(4);
-    };
 
-    $scope.loadSkillsByFoa();
-    $scope.loadSkillsByFoaTimer();
 
-    $scope.skillsRunByFieldOfActivity = function (val) {
-        $.get(
-            "../api/skill/loadByFieldOfActivity?fieldOfActivity=" + val
-            , function (json) {
-                $scope.$apply(function () {
-                    $.each(json.data, function () {
-                        $scope.systemSkills.push({id: this.id, name: this.name, foa: val});
-                    });
-                });
-            },
-            "json"
-        );
-    };
-
-    $scope.skillsRunByFieldOfActivity(1);
-    $scope.skillsRunByFieldOfActivity(2);
-    $scope.skillsRunByFieldOfActivity(3);
-    $scope.skillsRunByFieldOfActivity(4);
-
-    $scope.skillsByFieldOfActivity = function (val) {
-        $('#skillsModal').modal('show');
-        $scope.selectedFieldOfActivityCategory = val;
-        $.get(
-            "../api/skill/loadByFieldOfActivity?fieldOfActivity=" + $scope.selectedFieldOfActivityCategory
-            , function (json) {
-                $scope.$apply(function () {
-                    $scope.actualSkills = [];
-                    $.each(json.data, function () {
-                        $scope.actualSkills.push({id: this.id, name: this.name, foa: val});
-                    });
-                });
-            },
-            "json"
-        );
-    };
 
 
     $scope.familyMember = {};
     $scope.cadet.familyMembers = [];
 
-    $scope.education = {};
-    $scope.cadet.educations = [];
+
 
     $scope.cadet.foreignLanguages = [];
 
+    $scope.cadet.addressData.subjectOfPlaceOfBirthType = '1';
     $scope.cadet.addressData.subjectOfBirthAddressType = '1';
     $scope.cadet.addressData.subjectOfRegisteredAddressType = '1';
     $scope.cadet.addressData.subjectOfActualAddressType = '1';
@@ -235,18 +215,7 @@ app.controller('cadetCtrl', function ($scope) {
     $scope.cadet.addressData.indexOfRegisteredAddress = '';
 
 
-    $scope.updateActualAddressByRegistered = function () {
-        $scope.cadet.addressData.subjectOfActualdAddressType = $scope.cadet.addressData.subjectOfRegisteredAddressType;
-        $scope.cadet.addressData.subjectOfActualAddress = $('#subjectOfRegisteredAddress').val();
-        $scope.cadet.addressData.cityOfActualAddressType = $scope.cadet.addressData.cityOfRegisteredAddressType;
-        $scope.cadet.addressData.cityOfActualAddress = $('#cityOfRegisteredAddress').val();
-        $scope.cadet.addressData.streetOfActualAddressType = $scope.cadet.addressData.streetOfRegisteredAddressType;
-        $scope.cadet.addressData.streetOfActualAddress = $scope.cadet.addressData.streetOfRegisteredAddress;
-        $scope.cadet.addressData.houseOfActualAddress = $scope.cadet.addressData.houseOfRegisteredAddress;
-        $scope.cadet.addressData.buildingOfActualAddress = $scope.cadet.addressData.buildingOfRegisteredAddress;
-        $scope.cadet.addressData.apartmentOfActualAddress = $scope.cadet.addressData.apartmentOfRegisteredAddress;
-        $scope.cadet.addressData.indexOfActualAddress = $scope.cadet.addressData.indexOfRegisteredAddress;
-    };
+
 
 
     $scope.clearFamilyMember = function () {
@@ -328,65 +297,6 @@ app.controller('cadetCtrl', function ($scope) {
     };
 
 
-    $scope.educationIndex = 0;
-    $scope.addEducation = function () {
-        $scope.cadet.educations.push({
-            institutionType: '',
-            institutionName: '',
-            speciality: '',
-            yearOfEnding: '',
-            unfinished: null,
-            highAchiever: null,
-            redDiploma: null
-        });
-        $scope.educationIndex = $scope.cadet.educations.length - 1;
-        $scope.education = $scope.cadet.educations[$scope.cadet.educations.length - 1];
-        $scope.setEducationUnfinished($scope.education.unfinished);
-        $scope.setEducationHighAchiever($scope.education.highAchiever);
-        $scope.setEducationRedDiploma($scope.education.redDiploma);
-        $('#educationModal').modal('show');
-    };
-    $scope.editEducation = function (index) {
-        $scope.educationIndex = index;
-        $scope.education = $scope.cadet.educations[index];
-        $scope.setEducationUnfinished($scope.education.unfinished);
-        $scope.setEducationHighAchiever($scope.education.highAchiever);
-        $scope.setEducationRedDiploma($scope.education.redDiploma);
-        $('#educationModal').modal('show');
-    };
-    $scope.removeEducation = function (index) {
-        $scope.cadet.educations.splice(index, 1);
-    };
-    $scope.saveEducation = function () {
-        $scope.cadet.educations[$scope.educationIndex] = $scope.education;
-        $('#educationModal').modal('hide');
-    };
-
-    $scope.addForeignLanguage = function () {
-        $scope.cadet.foreignLanguages.push({
-            language: 1,
-            level: 1
-        });
-    };
-    $scope.removeForeignLanguage = function (index) {
-        $scope.cadet.foreignLanguages.splice(index, 1);
-    };
-
-    $scope.changeInstitutionType = function () {
-        if (Number($scope.education.institutionType) < 5) {
-            $('#highAchieverDiv').attr('style', 'display:none');
-            $('#redDiplomaDiv').attr('style', '');
-            $('#unfinishedDiv').attr('style', '');
-            $('#notSchoolEducationDiv').attr('style', '');
-            $scope.setEducationHighAchiever(null);
-        } else {
-            $('#redDiplomaDiv').attr('style', 'display:none');
-            $('#highAchieverDiv').attr('style', 'display:none');
-            $('#unfinishedDiv').attr('style', 'display:none');
-            $('#notSchoolEducationDiv').attr('style', 'display:none');
-            $scope.setEducationRedDiploma(null);
-        }
-    };
 
     $scope.toggleHasACriminalRecord = function () {
         if ($scope.familyMember.hasACriminalRecord) {
@@ -576,21 +486,6 @@ app.controller('cadetCtrl', function ($scope) {
         $scope.cadet.hasInformationAboutParents = val;
     };
 
-    $scope.education.unfinished = null;
-    $scope.setEducationUnfinished = function (val) {
-        $scope.toggleWithCustomItem('EducationUnfinished', val);
-        $scope.education.unfinished = val;
-    };
-    $scope.education.highAchiever = null;
-    $scope.setEducationHighAchiever = function (val) {
-        $scope.toggleWithCustomItem('EducationHighAchiever', val);
-        $scope.education.highAchiever = val;
-    };
-    $scope.education.redDiploma = null;
-    $scope.setEducationRedDiploma = function (val) {
-        $scope.toggleWithCustomItem('EducationRedDiploma', val);
-        $scope.education.redDiploma = val;
-    };
 
 
     $scope.tripsAbroad.doMaintainARelationship = null;
@@ -650,15 +545,15 @@ app.controller('cadetCtrl', function ($scope) {
     };
 
 
-    $scope.showCustomReligion = function () {
-        $('#customReligion').attr('style', '');
-        $scope.cadet.customReligion = '';
-    };
-
-    $scope.hideCustomReligion = function () {
-        $('#customReligion').attr('style', 'display: none');
-        $scope.cadet.customReligion = '';
-    };
+    $scope.hideOrShowCustomReligion = function () {
+        if (Number($scope.cadet.religion) < 10) {
+            $('#customReligion').attr('style', 'display: none');
+            $scope.cadet.customReligion = '';
+        } else {
+            $('#customReligion').attr('style', '');
+            $scope.cadet.customReligion = '';
+        }
+    };*/
 
     $scope.init = function () {
 
@@ -672,8 +567,8 @@ app.controller('cadetCtrl', function ($scope) {
                         alert('Проверьте данные формы');
                         return false;
                     } else {
-                        if ($scope.cadet.religion == "10") {
-                            if ($scope.cadet.customReligion.length == "") {
+                        if ($scope.cadet.totalInformation.religion == "10") {
+                            if ($scope.cadet.totalInformation.customReligion.length == "") {
                                 $('#customReligionLabel').text("Укажите религию");
                                 return false;
                             } else {
@@ -706,24 +601,24 @@ app.controller('cadetCtrl', function ($scope) {
                 }
                 if ($('#tab7').hasClass('active')) {
 
-                    if ($scope.cadet.compositionOfFamily == 2 && $scope.cadet.withoutFather == undefined) {
+                    if ($scope.cadet.familyComposition.compositionOfFamily == 2 && $scope.cadet.familyComposition.withoutFather == undefined) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.compositionOfFamily == 3 && $scope.cadet.withoutMother == undefined) {
+                    if ($scope.cadet.familyComposition.compositionOfFamily == 3 && $scope.cadet.familyComposition.withoutMother == undefined) {
                         alert('Проверьте данные формы');
                         return false;
                     }
 
 
-                    if ($scope.cadet.compositionOfFamily == 2 || $scope.cadet.compositionOfFamily == 3) {
-                        if (($scope.cadet.withoutFather == 1 || $scope.cadet.withoutFather == 2)
-                            && $scope.cadet.fatherExist == null) {
+                    if ($scope.cadet.familyComposition.compositionOfFamily == 2 || $scope.cadet.familyComposition.compositionOfFamily == 3) {
+                        if (($scope.cadet.familyComposition.withoutFather == 1 || $scope.cadet.familyComposition.withoutFather == 2)
+                            && $scope.cadet.familyComposition.fatherExist == null) {
                             alert('Проверьте данные формы');
                             return false;
                         }
-                        if (($scope.cadet.withoutMother == 1 || $scope.cadet.withoutMother == 2)
-                            && $scope.cadet.motherExist == null) {
+                        if (($scope.cadet.familyComposition.withoutMother == 1 || $scope.cadet.familyComposition.withoutMother == 2)
+                            && $scope.cadet.familyComposition.motherExist == null) {
                             alert('Проверьте данные формы');
                             return false;
                         }
@@ -740,19 +635,19 @@ app.controller('cadetCtrl', function ($scope) {
                         $('.finish').attr('style', '');
                     }
 
-                    if ($scope.cadet.concussionsWereNot == null) {
+                    if ($scope.cadet.health.concussionsWereNot == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.traumaticBrainInjuryWasNot == null) {
+                    if ($scope.cadet.health.traumaticBrainInjuryWasNot == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.theNarcologWasNot == null) {
+                    if ($scope.cadet.health.theNarcologWasNot == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.thePsychiatristWasNot == null) {
+                    if ($scope.cadet.health.thePsychiatristWasNot == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
@@ -761,23 +656,23 @@ app.controller('cadetCtrl', function ($scope) {
                 }
                 if ($('#tab9').hasClass('active')) {
 
-                    if ($scope.cadet.thoughtsOfSuicideDoesNotHave == null) {
+                    if ($scope.cadet.behavior.thoughtsOfSuicideDoesNotHave == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.suicideAttemptsDidNotCommit == null) {
+                    if ($scope.cadet.behavior.suicideAttemptsDidNotCommit == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.administrativeOffenseDidNotCommit == null) {
+                    if ($scope.cadet.behavior.administrativeOffenseDidNotCommit == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.policeRecordDoesNotHave == null) {
+                    if ($scope.cadet.behavior.policeRecordDoesNotHave == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-                    if ($scope.cadet.criminalLiabilityWasNotInvolved == null) {
+                    if ($scope.cadet.behavior.criminalLiabilityWasNotInvolved == null) {
                         alert('Проверьте данные формы');
                         return false;
                     }
@@ -788,35 +683,12 @@ app.controller('cadetCtrl', function ($scope) {
 
         $('.next').removeClass("disabled").removeClass('hidden');
 
-        loadSubjectsByIdAndType('subjectOfPlaceOfBirth', 'cityOfPlaceOfBirth', 1);
-        loadSubjectsByIdAndType('subjectOfRegisteredAddress', 'cityOfRegisteredAddress', 1);
-        loadSubjectsByIdAndType('subjectOfActualAddress', 'cityOfActualAddress', 1);
-
         $('#dateOfBirth').datepicker({
             language: 'ru'
         });
 
 
-        $.validator.addMethod("date", function (value, element) {
-            return this.optional(element) || /^\d{1,2}\.\d{1,2}\.\d{4}$/.test(value);
-        }, "Пожалуйста, введите дату в формате DD.MM.YYYY");
 
-        $.validator.addMethod("phone", function (value, element) {
-            return this.optional(element) || /^\+7\(9\d{2}\)\d{3}-\d{4}$/.test(value);
-        }, "Пожалуйста, введите номер телефона в формате +7(9**)***-****");
-
-        $.validator.addMethod("passportNumber", function (value, element) {
-            return this.optional(element) || /^\d{4}\s\d{6}$/.test(value);
-        }, "Пожалуйста, введите номер паспорта в формате 1234 123456");
-
-        $.validator.addMethod("militaryId", function (value, element) {
-            return this.optional(element) || /^[А-Я][А-Я]\s\d{7}$/.test(value);
-        }, "Пожалуйста, введите номер военного билета в формате  AA 1234567");
-
-
-        $.validator.addMethod("valueNotEquals", function (value, element, arg) {
-            return arg != value;
-        }, "Выберите нужное значение");
 
 
         $("#cadetForm").validate({
@@ -831,9 +703,7 @@ app.controller('cadetCtrl', function ($scope) {
                 },
                 yearOfAdmission: {
                     required: true,
-                    number: true,
-                    minlength: 4,
-                    maxlength: 4
+                    year: true
                 },
                 militaryRank: {
                     valueNotEquals: "? undefined:undefined ?"
@@ -948,6 +818,7 @@ app.controller('cadetCtrl', function ($scope) {
 
     };
 
+/*
 
     $scope.textByFamilyMemberType = function (type) {
         if (type == "1")
@@ -972,36 +843,6 @@ app.controller('cadetCtrl', function ($scope) {
             return "дочь";
     };
 
-    $scope.textByInstitutionType = function (type) {
-        if (type == "1")
-            return "Высшее профессиональное (магистр)";
-        if (type == "2")
-            return "Высшее профессиональное";
-        if (type == "3")
-            return "Среднее профессиональное";
-        if (type == "4")
-            return "Начальное профессиональное";
-        if (type == "5")
-            return "Среднее полное (11 классов)";
-        if (type == "6")
-            return "Среднее общее (9 классов)";
-        if (type == "7")
-            return "Среднее начальное (4 класса)";
-    };
-
-    $scope.educationSubData = function (education) {
-        var str = '';
-        if (education.unfinished) {
-            str += ', неоконченное';
-        }
-        if (education.highAchiever) {
-            str += ', отличник';
-        }
-        if (education.redDiploma) {
-            str += ', красный диплом';
-        }
-        return str;
-    };
 
     $scope.compositionOfFamily = function () {
         if (Number($scope.cadet.compositionOfFamily) == 1) {
@@ -1012,7 +853,6 @@ app.controller('cadetCtrl', function ($scope) {
         if (Number($scope.cadet.compositionOfFamily) == 2) {
             $('#withoutMotherId').attr('style', 'display: none');
             $('#withoutFatherId').attr('style', '');
-
 
 
             $('#hasInformationAboutParentsId').attr('style', 'display: none');
@@ -1035,6 +875,7 @@ app.controller('cadetCtrl', function ($scope) {
         // $scope.company.companyName = '';
     };
 
+*/
 
     $scope.submit = function () {
         /*var $valid = angular.element('#cadetForm').valid(),
@@ -1045,9 +886,9 @@ app.controller('cadetCtrl', function ($scope) {
 
         var cadetOri = jQuery.extend(true, {}, $scope.cadet);
         var cadet = withCsrfData(cadetOri);
-        cadet['driversLicenses'] = $scope.driversLicenses;
-        cadet['division'] = $scope.division;
-        cadet['skills'] = $scope.skills;
+        cadet['driversLicenses'] = cadetOri.educationAndSkills.driversLicenses;
+        cadet['division'] = cadetOri.totalInformation.division;
+        cadet['skills'] = cadetOri.educationAndSkills.skills;
 
 
         var tripsAbroads_who = [];
@@ -1056,7 +897,7 @@ app.controller('cadetCtrl', function ($scope) {
         var tripsAbroads_patronymic = [];
         var tripsAbroads_country = [];
         var tripsAbroads_doMaintainARelationship = [];
-        $.each(cadet.tripsAbroads, function () {
+        $.each(cadet.tripsAbroad, function () {
             tripsAbroads_who.push(this.who);
             tripsAbroads_firstName.push(this.firstName);
             tripsAbroads_lastName.push(this.lastName);
@@ -1070,7 +911,7 @@ app.controller('cadetCtrl', function ($scope) {
         cadet['tripsAbroads_patronymic'] = tripsAbroads_patronymic;
         cadet['tripsAbroads_country'] = tripsAbroads_country;
         cadet['tripsAbroads_doMaintainARelationship'] = tripsAbroads_doMaintainARelationship;
-        cadet.tripsAbroads = [];
+        cadet.tripsAbroad = [];
 
         var familyMembers_type = [];
         var familyMembers_firstName = [];
@@ -1087,7 +928,12 @@ app.controller('cadetCtrl', function ($scope) {
         var familyMembers_hasADisability = [];
         var familyMembers_hasDied = [];
         var familyMembers_isBroughtUpSeparately = [];
-        $.each(cadet.familyMembers, function () {
+        var familyMembers_hasDiedCause = [];
+        var familyMembers_hasDiedPlace = [];
+        var familyMembers_hasDiedYear = [];
+        var familyMembers_hasAMentalIllnessName = [];
+        var familyMembers_hasACriminalRecordDetails = [];
+        $.each(cadet.familyComposition.familyMembers, function () {
             familyMembers_type.push(this.familyMemberType);
             familyMembers_firstName.push(this.firstName);
             familyMembers_lastName.push(this.lastName);
@@ -1103,12 +949,37 @@ app.controller('cadetCtrl', function ($scope) {
             familyMembers_hasADisability.push(this.hasADisability);
             familyMembers_hasDied.push(this.hasDied);
 
-            if (this.isBroughtUpSeparately==null){
+            if (this.isBroughtUpSeparately == null) {
                 familyMembers_isBroughtUpSeparately.push(false);
             } else {
                 familyMembers_isBroughtUpSeparately.push(this.isBroughtUpSeparately);
             }
+            if (this.hasDiedCause == null || this.hasDiedPlace == '') {
+                familyMembers_hasDiedCause.push(' ');
+            } else {
+                familyMembers_hasDiedCause.push(this.hasDiedCause);
+            }
 
+            if (this.hasDiedPlace == null || this.hasDiedPlace == '') {
+                familyMembers_hasDiedPlace.push(' ');
+            } else {
+                familyMembers_hasDiedPlace.push(this.hasDiedPlace);
+            }
+            if (this.hasDiedYear == null || this.hasDiedYear == '') {
+                familyMembers_hasDiedYear.push(' ');
+            } else {
+                familyMembers_hasDiedYear.push(this.hasDiedYear);
+            }
+            if (this.hasAMentalIllnessName == null  || this.hasAMentalIllnessName == '') {
+                familyMembers_hasAMentalIllnessName.push(' ');
+            } else {
+                familyMembers_hasAMentalIllnessName.push(this.hasAMentalIllnessName);
+            }
+            if (this.hasACriminalRecordDetails == null || this.hasACriminalRecordDetails == '') {
+                familyMembers_hasACriminalRecordDetails.push(' ');
+            } else {
+                familyMembers_hasACriminalRecordDetails.push(this.hasACriminalRecordDetails);
+            }
         });
         cadet['familyMembers_type'] = familyMembers_type;
         cadet['familyMembers_firstName'] = familyMembers_firstName;
@@ -1125,7 +996,12 @@ app.controller('cadetCtrl', function ($scope) {
         cadet['familyMembers_hasADisability'] = familyMembers_hasADisability;
         cadet['familyMembers_hasDied'] = familyMembers_hasDied;
         cadet['familyMembers_isBroughtUpSeparately'] = familyMembers_isBroughtUpSeparately;
-        cadet.familyMembers = [];
+        cadet['familyMembers_hasDiedCause'] = familyMembers_hasDiedCause;
+        cadet['familyMembers_hasDiedPlace'] = familyMembers_hasDiedPlace;
+        cadet['familyMembers_hasDiedYear'] = familyMembers_hasDiedYear;
+        cadet['familyMembers_hasAMentalIllnessName'] = familyMembers_hasAMentalIllnessName;
+        cadet['familyMembers_hasACriminalRecordDetails'] = familyMembers_hasACriminalRecordDetails;
+        cadet.familyComposition.familyMembers = [];
 
         var educations_institutionType = [];
         var educations_institutionName = [];
@@ -1134,34 +1010,34 @@ app.controller('cadetCtrl', function ($scope) {
         var educations_unfinished = [];
         var educations_highAchiever = [];
         var educations_redDiploma = [];
-        $.each(cadet.educations, function () {
+        $.each(cadet.educationAndSkills.educations, function () {
             educations_institutionType.push(this.institutionType);
-            if (this.institutionName==null){
+            if (this.institutionName == null) {
                 educations_institutionName.push('');
             } else {
                 educations_institutionName.push(this.institutionName);
             }
-            if (this.speciality==null){
+            if (this.speciality == null) {
                 educations_speciality.push('');
             } else {
-                educations_speciality.push(this.speciality);
+                educations_speciality.push(this.speciality.replace(',', '||comma||'));
             }
-            if (this.yearOfEnding==null){
+            if (this.yearOfEnding == null) {
                 educations_yearOfEnding.push(0);
             } else {
                 educations_yearOfEnding.push(this.yearOfEnding);
             }
-            if (this.unfinished==null){
+            if (this.unfinished == null) {
                 educations_unfinished.push(false);
             } else {
                 educations_unfinished.push(this.unfinished);
             }
-            if (this.highAchiever==null){
+            if (this.highAchiever == null) {
                 educations_highAchiever.push(false);
             } else {
                 educations_highAchiever.push(this.highAchiever);
             }
-            if (this.redDiploma==null){
+            if (this.redDiploma == null) {
                 educations_redDiploma.push(false);
             } else {
                 educations_redDiploma.push(this.redDiploma);
@@ -1174,20 +1050,18 @@ app.controller('cadetCtrl', function ($scope) {
         cadet['educations_unfinished'] = educations_unfinished;
         cadet['educations_highAchiever'] = educations_highAchiever;
         cadet['educations_redDiploma'] = educations_redDiploma;
-        cadet.educations = [];
+        cadet.educationAndSkills.educations = [];
 
 
         var foreignLanguages_language = [];
         var foreignLanguages_level = [];
-        $.each(cadet.foreignLanguages, function () {
+        $.each(cadet.educationAndSkills.foreignLanguages, function () {
             foreignLanguages_language.push(this.language);
             foreignLanguages_level.push(this.level);
         });
         cadet['foreignLanguages_language'] = foreignLanguages_language;
         cadet['foreignLanguages_level'] = foreignLanguages_level;
-        cadet.foreignLanguages = [];
-
-        k=cadet;
+        cadet.educationAndSkills.foreignLanguages = [];
 
         $.post(
             "../api/cadet/saveCadet",
@@ -1204,7 +1078,6 @@ app.controller('cadetCtrl', function ($scope) {
 
 });
 
-var k;
 
 function withCsrfData(param) {
     var csrfName = $('#csrfParameter').attr('name');

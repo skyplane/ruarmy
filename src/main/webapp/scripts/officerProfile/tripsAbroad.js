@@ -61,16 +61,6 @@ function initTripsAbroad($scope){
     };
 
 
-
-
-
-
-
-
-
-
-
-
     $scope.editTripsAbroad = function (){
         $('#tripsAbroadShow').toggle();
         $('#tripsAbroadEdit').toggle();
