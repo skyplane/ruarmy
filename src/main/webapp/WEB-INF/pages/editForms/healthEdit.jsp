@@ -119,8 +119,10 @@
 <br>
 <div class="row">
     <div class="col-sm-6 info" align="right">Категория годности</div>
-    <div class="col-sm-6" align="left">
-        <input type="text" class="form-control" name="validityCategory"
-               id="validityCategory" ng-model="cadet.health.validityCategory">
+    <div class="col-sm-6" align="center">
+        <label ng-repeat="vc in options.health.validityCategoryAll  track by $index">
+            {{vc}}&nbsp;<input type="radio" value="{{vc}}" ng-model="cadet.health.validityCategory" name="rating" class="radio">
+            &nbsp;
+        </label>
     </div>
 </div>

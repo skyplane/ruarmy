@@ -6,6 +6,10 @@ var k;
 
 function initHealth($scope) {
 
+    $scope.options.health={};
+    $scope.options.health.validityCategoryAll = ['А1', 'А2', 'А3', 'А4', 'Б1', 'Б2', 'Б3', 'Б4', 'В', 'Г', 'Д'];
+
+
     $scope.basicHealthText = function () {
         var str = '';
 
