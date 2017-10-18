@@ -25,6 +25,15 @@ app.directive('uiYear', function () {
     };
 });
 
+app.directive('uiIndex', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("000000");
+        }
+    };
+});
+
 app.directive('uiMilitaryTicket', function () {
     return {
         require: '?ngModel',
@@ -57,7 +66,7 @@ app.directive('uiPhone', function () {
 });
 
 
-app.controller('officerProfileCtrl', function ($scope) {
+app.controller('officerProfileCtrl', function ($scope, $filter) {
 
     $scope.toggleWithCustomItem = function (item, val) {
         if (val == null) {
@@ -93,9 +102,9 @@ app.controller('officerProfileCtrl', function ($scope) {
             });
 
             initTotalInformation($scope);
-            initEducationAndSkills($scope);
+            initEducationAndSkills($scope, $filter);
             initAddressData($scope);
-            initFamilyComposition($scope);
+            initFamilyComposition($scope, $filter);
             initHealth($scope);
             initBehavior($scope);
             initTripsAbroad($scope);

@@ -5,7 +5,7 @@
 
 var fm;
 
-function initFamilyComposition($scope) {
+function initFamilyComposition($scope, $filter) {
 
     $scope.familyMember = {};
 
@@ -186,7 +186,7 @@ function initFamilyComposition($scope) {
     $scope.familyMemberIndex = 0;
     $scope.addFamilyMember = function () {
         $scope.cadet.familyComposition.familyMembers.push({
-            familyMemberType: '1',
+            familyMemberType: '',
             firstName: '',
             lastName: '',
             patronymic: '',
@@ -209,6 +209,10 @@ function initFamilyComposition($scope) {
         });
         $scope.familyMemberIndex = $scope.cadet.familyComposition.familyMembers.length - 1;
         $scope.familyMember = $scope.cadet.familyComposition.familyMembers[$scope.cadet.familyComposition.familyMembers.length - 1];
+
+        $scope.cadet.familyComposition.familyMembers.splice($scope.cadet.familyComposition.familyMembers.length - 1, 1);
+        $scope.tmpFamilyMember = null;
+
         $scope.setFamilyMemberWasTreatedForAlcoholism($scope.familyMember.wasTreatedForAlcoholism);
         $scope.setFamilyMemberWasTreatedForAddiction($scope.familyMember.wasTreatedForAddiction);
         $scope.setFamilyMemberHasACriminalRecord($scope.familyMember.hasACriminalRecord);
@@ -225,6 +229,9 @@ function initFamilyComposition($scope) {
     $scope.editFamilyMember = function (index) {
         $scope.familyMemberIndex = index;
         $scope.familyMember = $scope.cadet.familyComposition.familyMembers[index];
+
+        $scope.cadet.familyComposition.familyMembers.splice(index, 1);
+        $scope.tmpFamilyMember = angular.copy($scope.familyMember);
 
         if ($scope.familyMember.wasTreatedForAlcoholism == "false")
             $scope.familyMember.wasTreatedForAlcoholism = false;
@@ -267,21 +274,32 @@ function initFamilyComposition($scope) {
             language: 'ru'
         });
 
-
     };
+
+    $scope.restoreFamilyMember = function () {
+        if ($scope.tmpFamilyMember!=null){
+            $scope.cadet.familyComposition.familyMembers.push($scope.tmpFamilyMember);
+            $scope.cadet.familyComposition.familyMembers =
+                $filter('orderBy')($scope.cadet.familyComposition.familyMembers, ['familyMemberType', 'firstName']);
+        }
+    };
+
     $scope.saveFamilyMember = function () {
         var minLength = 3;
-        if (($scope.familyMember.firstName.length>=minLength ||
-            $scope.familyMember.lastName.length>=minLength) &&
-            $scope.familyMember.wasTreatedForAlcoholism!=null &&
-            $scope.familyMember.wasTreatedForAddiction!=null &&
-            $scope.familyMember.hasACriminalRecord!=null &&
-            $scope.familyMember.hasAMentalIllness!=null &&
-            $scope.familyMember.hasSuicideAttempts!=null &&
-            $scope.familyMember.hasADisability!=null &&
-            $scope.familyMember.hasDied!=null
-        ){
-            $scope.cadet.familyComposition.familyMembers[$scope.familyMemberIndex] = $scope.familyMember;
+        if (($scope.familyMember.firstName.length >= minLength ||
+            $scope.familyMember.lastName.length >= minLength) &&
+            $scope.familyMember.wasTreatedForAlcoholism != null &&
+            $scope.familyMember.wasTreatedForAddiction != null &&
+            $scope.familyMember.hasACriminalRecord != null &&
+            $scope.familyMember.hasAMentalIllness != null &&
+            $scope.familyMember.hasSuicideAttempts != null &&
+            $scope.familyMember.hasADisability != null &&
+            $scope.familyMember.hasDied != null &&
+            $scope.familyMember.familyMemberType != ''
+        ) {
+            $scope.cadet.familyComposition.familyMembers.push($scope.familyMember);
+            $scope.cadet.familyComposition.familyMembers =
+                $filter('orderBy')($scope.cadet.familyComposition.familyMembers, ['familyMemberType', 'firstName']);
             $('#familyMemberModal').modal('hide');
         } else {
             alert('Проверьте данные формы.');
@@ -509,7 +527,7 @@ function initFamilyComposition($scope) {
             } else {
                 familyMembers_hasDiedYear.push(this.hasDiedYear);
             }
-            if (this.hasAMentalIllnessName == null  || this.hasAMentalIllnessName == '') {
+            if (this.hasAMentalIllnessName == null || this.hasAMentalIllnessName == '') {
                 familyMembers_hasAMentalIllnessName.push(' ');
             } else {
                 familyMembers_hasAMentalIllnessName.push(this.hasAMentalIllnessName);

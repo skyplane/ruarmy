@@ -149,7 +149,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-default" ng-click="restoreEducation()" data-dismiss="modal">Отмена</button>
                 <button type="button" class="btn btn-primary" ng-click="saveEducation()">Сохранить</button>
             </div>
         </div>
@@ -170,10 +170,12 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row" ng-repeat="skill in options.educationAndSkills.actualSkills">
-                        <div class="col-lg-12">
-                            <input type="checkbox" checklist-model="cadet.educationAndSkills.skills"
-                                   checklist-value="skill.id">
-                            {{skill.name}}
+                        <div class="col-md-5">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-7" align="left">
+                            <label class="checkbox-label info2"><input type="checkbox" checklist-model="cadet.educationAndSkills.skills"
+                                                                 checklist-value="skill.id">&nbsp;&nbsp;{{skill.name}}</label>
                         </div>
                     </div>
                 </div>

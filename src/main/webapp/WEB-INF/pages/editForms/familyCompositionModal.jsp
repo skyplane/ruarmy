@@ -304,7 +304,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="restoreFamilyMember()">Отмена</button>
                 <button type="button" class="btn btn-primary" ng-click="saveFamilyMember()">Сохранить</button>
             </div>
         </div>

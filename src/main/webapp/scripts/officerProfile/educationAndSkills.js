@@ -2,7 +2,7 @@
  * Created by skyplane on 20.09.17.
  */
 
-function initEducationAndSkills($scope) {
+function initEducationAndSkills($scope, $filter) {
 
     $scope.options.educationAndSkills = {};
     $scope.options.educationAndSkills.driversLicensesAll = ['M', 'A', 'B', 'C', 'D', 'A1', 'B1', 'C1', 'D1', 'BE', 'CE', 'DE', 'C1E', 'D1E'];
@@ -85,6 +85,7 @@ function initEducationAndSkills($scope) {
         );
     };
 
+
     $scope.options.educationAndSkills.educationIndex = 0;
     $scope.addEducation = function () {
         $scope.cadet.educationAndSkills.educations.push({
@@ -93,20 +94,24 @@ function initEducationAndSkills($scope) {
             speciality: '',
             yearOfEnding: '',
             unfinished: null,
-            highAchiever: null,
-            redDiploma: null
+            redDiploma: null,
+            highAchiever: null
         });
         $scope.options.educationAndSkills.educationIndex = $scope.cadet.educationAndSkills.educations.length - 1;
         $scope.options.educationAndSkills.education =
             $scope.cadet.educationAndSkills.educations[$scope.cadet.educationAndSkills.educations.length - 1];
+        $scope.cadet.educationAndSkills.educations.splice($scope.cadet.educationAndSkills.educations.length - 1, 1);
         $scope.setEducationUnfinished($scope.options.educationAndSkills.education.unfinished);
         $scope.setEducationHighAchiever($scope.options.educationAndSkills.education.highAchiever);
         $scope.setEducationRedDiploma($scope.options.educationAndSkills.education.redDiploma);
+        $scope.options.educationAndSkills.tmpEducation=null;
         $('#educationModal').modal('show');
     };
     $scope.editEducation = function (index) {
         $scope.options.educationAndSkills.educationIndex = index;
         $scope.options.educationAndSkills.education = $scope.cadet.educationAndSkills.educations[index];
+        $scope.cadet.educationAndSkills.educations.splice(index, 1);
+        $scope.options.educationAndSkills.tmpEducation = angular.copy($scope.options.educationAndSkills.education);
         $scope.setEducationUnfinished($scope.options.educationAndSkills.education.unfinished);
         $scope.setEducationHighAchiever($scope.options.educationAndSkills.education.highAchiever);
         $scope.setEducationRedDiploma($scope.options.educationAndSkills.education.redDiploma);
@@ -115,9 +120,36 @@ function initEducationAndSkills($scope) {
     $scope.removeEducation = function (index) {
         $scope.cadet.educationAndSkills.educations.splice(index, 1);
     };
+    $scope.restoreEducation = function () {
+        if ($scope.options.educationAndSkills.tmpEducation!=null){
+            $scope.cadet.educationAndSkills.educations.push($scope.options.educationAndSkills.tmpEducation);
+            $scope.cadet.educationAndSkills.educations =
+                $filter('orderBy')($scope.cadet.educationAndSkills.educations, ['institutionType', 'yearOfEnding']);
+        }
+    };
+
     $scope.saveEducation = function () {
-        $scope.cadet.educationAndSkills.educations[$scope.options.educationAndSkills.educationIndex] = $scope.options.educationAndSkills.education;
-        $('#educationModal').modal('hide');
+        var verify = true;
+        var edctn = $scope.options.educationAndSkills.education;
+        if (edctn.institutionType == '') {
+            alert('Проверьте данные формы');
+            verify = false;
+        } else if (Number(edctn.institutionType) < 5) {
+            if (edctn.institutionName == '' || edctn.speciality == '' || edctn.yearOfEnding == '' ||
+                edctn.unfinished == null || edctn.redDiploma == null ||
+                    Number(edctn.yearOfEnding)<1970 || Number(edctn.yearOfEnding)<3000
+            ) {
+                alert('Проверьте данные формы');
+                verify = false;
+            }
+        }
+        if (verify) {
+            $scope.cadet.educationAndSkills.educations.push($scope.options.educationAndSkills.education);
+            $scope.cadet.educationAndSkills.educations =
+                $filter('orderBy')($scope.cadet.educationAndSkills.educations, ['institutionType', 'yearOfEnding']);
+
+            $('#educationModal').modal('hide');
+        }
     };
 
     $scope.textByInstitutionType = function (type) {

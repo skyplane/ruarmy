@@ -16,6 +16,12 @@ function loadSubjectsByIdAndType(subjectId, objectId, type) {
 
 function initAddressData($scope) {
 
+
+    $.validator.addMethod("postIndex", function (value, element) {
+        return this.optional(element) || /^\d{6}$/.test(value);
+    }, "Пожалуйста, введите почтовый индекс в формате 123456");
+
+
     $scope.options.addressData = {};
 
     $scope.options.addressData.cityTypes = [

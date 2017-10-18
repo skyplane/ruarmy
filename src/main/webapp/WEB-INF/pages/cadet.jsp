@@ -158,6 +158,12 @@
             color: #777777;
         }
 
+        label.checkbox-label input[type=checkbox]{
+            position: relative;
+            vertical-align: middle;
+            bottom: 1px;
+        }
+
     </style>
 
 </head>

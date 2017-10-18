@@ -129,7 +129,8 @@
     <div class="col-sm-3">
         <input type="text" class="form-control" name="indexOfRegisteredAddress"
                id="indexOfRegisteredAddress"
-               ng-model="cadet.addressData.registeredData.indexOfRegisteredAddress">
+               ng-model="cadet.addressData.registeredData.indexOfRegisteredAddress"
+               placeholder="******" ui-index>
     </div>
 </div>
 <hr>
@@ -222,6 +223,7 @@
     <div class="col-sm-3">
         <input type="text" class="form-control" name="indexOfActualAddress"
                id="indexOfActualAddress"
-               ng-model="cadet.addressData.actualData.indexOfActualAddress">
+               ng-model="cadet.addressData.actualData.indexOfActualAddress"
+               placeholder="******" ui-index>
     </div>
 </div>

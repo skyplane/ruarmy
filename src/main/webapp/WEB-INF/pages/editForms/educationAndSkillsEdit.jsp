@@ -9,22 +9,27 @@
     </div>
 </div>
 <br>
-<div class="row" ng-repeat="education in cadet.educationAndSkills.educations track by $index">
-    <div class="col-sm-10 info2">
-        {{textByInstitutionType(education.institutionType)+
-        (education.institutionType<5?(', '+education.institutionName+', '+education.speciality+', '+
-        education.yearOfEnding+educationSubData(education)):'')}}
-    </div>
-    <div class="col-sm-2">
-        <div class="row">
-            <button class="btn btn-xs btn-info" ng-click="editEducation($index)">Редактировать</button>
+
+<div ng-repeat="education in cadet.educationAndSkills.educations track by $index">
+    <div class="row">
+        <div class="col-sm-10 info2">
+            {{textByInstitutionType(education.institutionType)+
+            (education.institutionType<5?(', '+education.institutionName+', '+education.speciality+', '+
+            education.yearOfEnding+educationSubData(education)):'')}}
         </div>
-        <div class="row">
-            <button class="btn btn-xs btn-danger" ng-click="removeEducation($index)">Удалить</button>
+        <div class="col-sm-2">
+            <div class="row">
+                <button class="btn btn-xs btn-info" ng-click="editEducation($index)">Редактировать</button>
+            </div>
+            <div class="row">
+                <button class="btn btn-xs btn-danger" ng-click="removeEducation($index)">Удалить</button>
+            </div>
         </div>
     </div>
+    <br>
 </div>
 <hr>
+
 <div class="row" align="left">
     <div class="col-md-6 infoCB" align="left">
         Иностранные языки
@@ -60,14 +65,13 @@
 </div>
 <hr>
 <div class="row" align="left">
-    <div class="col-md-12 infoCB">Категории водительских прав</div>
-</div>
-<br>
-<div class="row" align="center">
-    <label ng-repeat="driverLicense in options.educationAndSkills.driversLicensesAll">
-        <input type="checkbox" checklist-model="cadet.educationAndSkills.driversLicenses"
-               checklist-value="driverLicense"> {{driverLicense}}&nbsp;
-    </label>
+    <div class="col-md-4 infoCB">Категории водительских прав</div>
+    <div class="col-md-8">
+        <label ng-repeat="driverLicense in options.educationAndSkills.driversLicensesAll">
+            <input type="checkbox" checklist-model="cadet.educationAndSkills.driversLicenses"
+                   checklist-value="driverLicense"> {{driverLicense}}&nbsp;
+        </label>
+    </div>
 </div>
 <hr>
 <div class="row" align="left">

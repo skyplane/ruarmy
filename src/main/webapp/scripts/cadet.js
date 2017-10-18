@@ -38,6 +38,15 @@ app.directive('uiYear', function () {
     };
 });
 
+app.directive('uiIndex', function () {
+    return {
+        require: '?ngModel',
+        link: function ($scope, element, attrs, controller) {
+            element.mask("000000");
+        }
+    };
+});
+
 app.directive('uiMilitaryTicket', function () {
     return {
         require: '?ngModel',
@@ -70,7 +79,7 @@ app.directive('uiPhone', function () {
 });
 
 
-app.controller('cadetCtrl', function ($scope) {
+app.controller('cadetCtrl', function ($scope, $filter) {
 
 
     $scope.cadet = {};
@@ -93,13 +102,12 @@ app.controller('cadetCtrl', function ($scope) {
 
     $scope.cadet.behavior = {};
     $scope.cadet.health = {};
-    $scope.cadet.health.validityCategory = [];
 
     $scope.cadet.tripsAbroad = [];
 
 
     initTotalInformation($scope);
-    initEducationAndSkills($scope);
+    initEducationAndSkills($scope, $filter);
     initAddressData($scope);
 
     $scope.cadet.addressData.birthData.subjectOfPlaceOfBirthType="1";
@@ -116,7 +124,7 @@ app.controller('cadetCtrl', function ($scope) {
     $scope.cadet.addressData.actualData.cityOfActualAddressType="1";
     $scope.cadet.addressData.actualData.streetOfActualAddressType="1";
 
-    initFamilyComposition($scope);
+    initFamilyComposition($scope, $filter);
     initHealth($scope);
     initBehavior($scope);
     initTripsAbroad($scope);
@@ -169,6 +177,21 @@ app.controller('cadetCtrl', function ($scope) {
                 }
                 if ($('#tab7').hasClass('active')) {
 
+
+                    if ($scope.cadet.familyComposition.compositionOfFamily == undefined) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.familyComposition.married == undefined) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+                    if ($scope.cadet.familyComposition.marrieds == undefined) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
+
+
                     if ($scope.cadet.familyComposition.compositionOfFamily == 2 && $scope.cadet.familyComposition.withoutFather == undefined) {
                         alert('Проверьте данные формы');
                         return false;
@@ -219,7 +242,10 @@ app.controller('cadetCtrl', function ($scope) {
                         alert('Проверьте данные формы');
                         return false;
                     }
-
+                    if ($scope.cadet.health.validityCategory == null) {
+                        alert('Проверьте данные формы');
+                        return false;
+                    }
 
                 }
                 if ($('#tab9').hasClass('active')) {
@@ -294,8 +320,7 @@ app.controller('cadetCtrl', function ($scope) {
                 },
                 passportNumber: {
                     required: true,
-                    passportNumber: true,
-                    minlength: 3
+                    passportNumber: true
                 },
                 militaryIdNumber: {
                     required: true,
@@ -348,6 +373,10 @@ app.controller('cadetCtrl', function ($scope) {
                     required: true,
                     minlength: 3
                 },
+                indexOfRegisteredAddress: {
+                    required: false,
+                    postIndex: true
+                },
                 streetOfRegisteredAddress: {
                     required: true,
                     minlength: 3
@@ -364,6 +393,10 @@ app.controller('cadetCtrl', function ($scope) {
                     required: true,
                     minlength: 3
                 },
+                indexOfActualAddress: {
+                    required: false,
+                    postIndex: true
+                },
                 compositionOfFamily: {
                     valueNotEquals: "? undefined:undefined ?"
                 },
@@ -374,10 +407,6 @@ app.controller('cadetCtrl', function ($scope) {
                     valueNotEquals: "? undefined:undefined ?"
                 },
                 chronicDiseases: {
-                    required: true,
-                    minlength: 3
-                },
-                validityCategory: {
                     required: true,
                     minlength: 3
                 }
