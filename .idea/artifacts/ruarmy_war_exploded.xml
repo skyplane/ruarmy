@@ -47,6 +47,8 @@
           <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.3.7.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aspects:4.3.7.RELEASE" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.8.12" />
         </element>
       </element>
       <element id="directory" name="META-INF">

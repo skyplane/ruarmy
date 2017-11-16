@@ -2,14 +2,53 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
     <context:component-scan base-package="ruarmy"/>
     <context:component-scan base-package="ruarmy.controller"/>
+
+    <context:component-scan base-package="ruarmy.handler" />
+
+
+
+
+    <context:annotation-config />
+    <aop:aspectj-autoproxy />
+
+<!--    <bean id="aspectBean" class="ruarmy.handler.Aspect" init-method="addAppender"/>
+    <aop:config>
+        <aop:aspect ref="aspectBean">
+            <aop:pointcut id="performerPointcut"  expression="@annotation(ruarmy.annotation.Trottling) && @annotation(trottling)"/>
+            <aop:before  arg-names="trottling" method="before" pointcut-ref="performerPointcut"/>
+            <aop:after method="after" pointcut-ref="performerPointcut"/>
+        </aop:aspect>
+    </aop:config>-->
+
+
+   <!-- <bean id="customizableTraceInterceptor" class="ruarmy.handler.CentralLoggingHandler">
+    </bean>
+    <aop:config>
+
+        <aop:aspect id="aspectLoggging" ref="customizableTraceInterceptor" >
+
+            &lt;!&ndash; @Before &ndash;&gt;
+            <aop:pointcut id="pointCutBefore"
+                          expression="@annotation(org.springframework.web.bind.annotation.RequestMapping)" />
+
+            <aop:before method="logControllerAccess" pointcut-ref="pointCutBefore" />
+
+        </aop:aspect>
+
+    </aop:config>-->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>

@@ -2,8 +2,6 @@ package ruarmy.controller;
 
 import com.google.gson.stream.JsonWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ruarmy.domain.City;
 import ruarmy.domain.Country;
 import ruarmy.domain.Subject;
+import ruarmy.annotation.Trottling;
 import ruarmy.repository.CityRepository;
 import ruarmy.repository.CountryRepository;
 import ruarmy.repository.SubjectRepository;
@@ -61,7 +60,7 @@ public class AutocompleteController  extends BaseController {
     }
 
 
-
+    @Trottling(ip="subjectByTerm")
     @RequestMapping(value = "/subjectByTerm", method = RequestMethod.GET)
     public void subjectByTerm(@RequestParam("type") Integer type, @RequestParam("query") String query, HttpServletResponse response) throws UnsupportedEncodingException {
         List<Subject> subjects = subjectRepository.findByTypeAndNameLike(type, "%"+query+"%");
@@ -86,6 +85,7 @@ public class AutocompleteController  extends BaseController {
     }
 
 
+    @Trottling(ip="cityByTerm")
     @RequestMapping(value = "/cityByTerm", method = RequestMethod.GET)
     public void cityByTerm(@RequestParam("subjectId") Integer subjectId, @RequestParam("query") String query, HttpServletResponse response) throws UnsupportedEncodingException {
         List<City> cities = cityRepository.findBySubjectCodeAndNameLike(subjectId, "%"+query+"%");
